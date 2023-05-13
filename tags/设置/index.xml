@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设置 on Even - A super concise theme for Hugo</title>
+    <link>https://xiaoyume.github.io/tags/%E8%AE%BE%E7%BD%AE/</link>
+    <description>Recent content in 设置 on Even - A super concise theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 13 May 2023 11:11:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/tags/%E8%AE%BE%E7%BD%AE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>第一篇博客，开山之作</title>
+      <link>https://xiaoyume.github.io/post/first/</link>
+      <pubDate>Sat, 13 May 2023 11:11:21 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/first/</guid>
+      <description>第一篇博客，在此记录</description>
+    </item>
+    
+  </channel>
+</rss>
