@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://xiaoyume.github.io/sitemap.xml
