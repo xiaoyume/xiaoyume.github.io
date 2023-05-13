@@ -3,14 +3,21 @@
   
   <url>
     <loc>https://xiaoyume.github.io/</loc>
-    <lastmod>2023-05-13T15:11:21+08:00</lastmod>
+    <lastmod>2023-05-13T15:33:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/post/1.fortran95%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2023-05-13T15:33:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaoyume.github.io/post/</loc>
-    <lastmod>2023-05-13T15:11:21+08:00</lastmod>
+    <lastmod>2023-05-13T15:33:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

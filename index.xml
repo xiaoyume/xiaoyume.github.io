@@ -6,7 +6,16 @@
     <description>Recent content on Even - A super concise theme for Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 13 May 2023 15:11:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 13 May 2023 15:33:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>fortran95</title>
+      <link>https://xiaoyume.github.io/post/1.fortran95%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sat, 13 May 2023 15:33:21 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/1.fortran95%E7%AC%94%E8%AE%B0/</guid>
+      <description>🎲Fortran95笔记摘要 1 2 3 &amp;lt;font style=&amp;#34;background:yellow&amp;#34;&amp;gt; &amp;lt;font style=&amp;#34;background:pink&amp;#34;&amp;gt; &amp;lt;font style=&amp;#34;background: MediumSpringGreen&amp;#34;&amp;gt; 目录 [[TOC]] [TOC] 1.Fortran历史介绍 Fortran是英文FORmula TRANslation的</description>
+    </item>
+    
     <item>
       <title>test</title>
       <link>https://xiaoyume.github.io/post/1.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/</link>
