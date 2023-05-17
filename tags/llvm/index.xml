@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>llvm on Even - A super concise theme for Hugo</title>
+    <link>https://xiaoyume.github.io/tags/llvm/</link>
+    <description>Recent content in llvm on Even - A super concise theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 17 May 2023 21:07:05 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/tags/llvm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>llvm指令添加</title>
+      <link>https://xiaoyume.github.io/post/llvm%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4/</link>
+      <pubDate>Wed, 17 May 2023 21:07:05 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/llvm%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4/</guid>
+      <description>目标指令 添加指令 ace_cmd 指令作用 ace cmd指令可以使用将两个通用寄存器中的值赋给一个256位专用寄存器ace_reg的高128位或者低128位 指令使</description>
+    </item>
+    
+  </channel>
+</rss>

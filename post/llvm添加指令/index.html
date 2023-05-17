@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>llvm指令添加 - Even - A super concise theme for Hugo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoyume" /><meta name="description" content="目标指令 添加指令 ace_cmd 指令作用 ace cmd指令可以使用将两个通用寄存器中的值赋给一个256位专用寄存器ace_reg的高128位或者低128位 指令使" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.111.3 with theme even" />
+
+
+<link rel="canonical" href="https://xiaoyume.github.io/post/llvm%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="llvm指令添加" />
+<meta property="og:description" content="目标指令 添加指令 ace_cmd 指令作用 ace cmd指令可以使用将两个通用寄存器中的值赋给一个256位专用寄存器ace_reg的高128位或者低128位 指令使" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaoyume.github.io/post/llvm%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-17T21:07:05+08:00" />
+<meta property="article:modified_time" content="2023-05-17T21:07:05+08:00" />
+<meta itemprop="name" content="llvm指令添加">
+<meta itemprop="description" content="目标指令 添加指令 ace_cmd 指令作用 ace cmd指令可以使用将两个通用寄存器中的值赋给一个256位专用寄存器ace_reg的高128位或者低128位 指令使"><meta itemprop="datePublished" content="2023-05-17T21:07:05+08:00" />
+<meta itemprop="dateModified" content="2023-05-17T21:07:05+08:00" />
+<meta itemprop="wordCount" content="1359">
+<meta itemprop="keywords" content="llvm," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="llvm指令添加"/>
+<meta name="twitter:description" content="目标指令 添加指令 ace_cmd 指令作用 ace cmd指令可以使用将两个通用寄存器中的值赋给一个256位专用寄存器ace_reg的高128位或者低128位 指令使"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">xiaoyume&lt;</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">xiaoyume&lt;</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">llvm指令添加</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-17 </span>
+        
+          <span class="more-meta"> 约 1359 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#目标指令">目标指令</a>
+          <ul>
+            <li><a href="#添加指令"><strong>添加指令</strong></a></li>
+            <li><a href="#指令作用"><strong>指令作用</strong></a></li>
+            <li><a href="#指令使用方法"><strong>指令使用方法</strong></a></li>
+            <li><a href="#指令格式"><strong>指令格式</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#llvm添加指令">llvm添加指令</a>
+          <ul>
+            <li><a href="#添加专用寄存器">添加专用寄存器</a></li>
+            <li><a href="#添加扩展指令的指令format">添加扩展指令的指令Format</a></li>
+            <li><a href="#添加扩展指令的opcode">添加扩展指令的OpCode</a></li>
+            <li><a href="#添加指令所需其他类型">添加指令所需其他类型</a></li>
+            <li><a href="#添加risc-vformats">添加RISC-VFormats</a></li>
+            <li><a href="#添加risc-v指令">添加RISC-V指令</a></li>
+            <li><a href="#添加desiassembler">添加Desiassembler</a></li>
+          </ul>
+        </li>
+        <li><a href="#添加测试">添加测试</a>
+          <ul>
+            <li><a href="#测试文件">测试文件</a></li>
+            <li><a href="#执行测试">执行测试</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="目标指令">目标指令</h2>
+<h3 id="添加指令"><strong>添加指令</strong></h3>
+<p>ace_cmd</p>
+<h3 id="指令作用"><strong>指令作用</strong></h3>
+<p>ace cmd指令可以使用将两个通用寄存器中的值赋给一个256位专用寄存器ace_reg的高128位或者低128位</p>
+<h3 id="指令使用方法"><strong>指令使用方法</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">long long rs1 = 1;
+</span></span><span class="line"><span class="cl">long long rs2 = 2;
+</span></span><span class="line"><span class="cl">__asm__ __volatile__ (&#34;ace_cmd %0, %1, ace_reg_1, 0\n&#34;
+</span></span><span class="line"><span class="cl">                      :
+</span></span><span class="line"><span class="cl">                      : &#34;r&#34; (rs1), &#34;r&#34; (rs2)
+</span></span><span class="line"><span class="cl">                      :
+</span></span><span class="line"><span class="cl">                      );
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用通用寄存器，变量rs1和rs2，写入ace_reg[1]的低128位。</p>
+<p>其中ace_reg位256位专用寄存器。</p>
+<h3 id="指令格式"><strong>指令格式</strong></h3>
+<table>
+<thead>
+<tr>
+<th>31 25</th>
+<th>24 20</th>
+<th>19 15</th>
+<th>14 12</th>
+<th>11 11</th>
+<th>10 7</th>
+<th>6 0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0000100</td>
+<td>din_high</td>
+<td>din_low</td>
+<td>000</td>
+<td>ace.reg.off</td>
+<td>ace.reg.idx</td>
+<td>0x7b</td>
+</tr>
+</tbody>
+</table>
+<p>[6: 0] riscv标准，custom3 指令扩展类型；</p>
+<p>[10 : 7] ace.reg.idx 表示第几个专用寄存器，因为字段用了4位表示，共2的4次方=16个ace_reg寄存器；</p>
+<p>[11] ace.reg.offset 表示配置寄存器的高128还是低128位。1：高128位；0：低128位；</p>
+<p>[14 : 12] 固定编码；</p>
+<p>[19 : 15] ace_reg赋值的128位中，低64位值存在的通用寄存器index。如X[3] = 45； 需要将45赋值到ace_reg[2]的最低64位[63 : 0]，可以配置din_low = 3，ace.reg_offset = 0, ace.reg.idx = 2；</p>
+<p>[24 : 20] ace_reg赋值的128位中，高64位值存在的通用寄存器index。</p>
+<p>[31 : 25]固定编码； [31 : 25] + [14 : 12] + [6 : 0] 确定了指令唯一标识。</p>
+<h2 id="llvm添加指令">llvm添加指令</h2>
+<h3 id="添加专用寄存器">添加专用寄存器</h3>
+<p>在llvm/lib/Target/RISCV/RISCVRegisterInfo.td中添加</p>
+<p>A：扩展专用寄存器的表示</p>
+<p>用4位来寄存器的数目，即[15 , 0]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">// RegACE - 4-bit register for RISC-V ACE inst
+</span></span><span class="line"><span class="cl">class RISCVRegACE&lt;bits&lt;4&gt; Enc, string n, list&lt;string&gt; alt = []&gt; : Register&lt;n&gt; {
+</span></span><span class="line"><span class="cl">  let HWEncoding{3-0} = Enc;
+</span></span><span class="line"><span class="cl">  let AltNames = alt;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>B：定义寄存器族</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">// Define a ACE Register class for RISC-V
+</span></span><span class="line"><span class="cl">def ACE : RegisterClass&lt;&#34;RISCV&#34;, [i16], 4, (add
+</span></span><span class="line"><span class="cl">    ACE0, ACE1, ACE2, ACE3, ACE4, ACE5, ACE6, ACE7,
+</span></span><span class="line"><span class="cl">    ACE8, ACE9, ACE10,ACE11,ACE12,ACE13,ACE14,ACE15
+</span></span><span class="line"><span class="cl">    )&gt;;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>C：定义寄存器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">// Define the ACE registers
+</span></span><span class="line"><span class="cl">let RegAltNameIndices = [ABIRegAltName] in {
+</span></span><span class="line"><span class="cl">  def ACE0  : RISCVRegACE&lt;0, &#34;ace_reg_0&#34;, [&#34;ace_reg_0&#34;]&gt;, DwarfRegNum&lt;[0]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE1  : RISCVRegACE&lt;1, &#34;ace_reg_1&#34;, [&#34;ace_reg_1&#34;]&gt;, DwarfRegNum&lt;[1]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE2  : RISCVRegACE&lt;2, &#34;ace_reg_2&#34;, [&#34;ace_reg_2&#34;]&gt;, DwarfRegNum&lt;[2]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE3  : RISCVRegACE&lt;3, &#34;ace_reg_3&#34;, [&#34;ace_reg_3&#34;]&gt;, DwarfRegNum&lt;[3]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE4  : RISCVRegACE&lt;4, &#34;ace_reg_4&#34;, [&#34;ace_reg_4&#34;]&gt;, DwarfRegNum&lt;[4]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE5  : RISCVRegACE&lt;5, &#34;ace_reg_5&#34;, [&#34;ace_reg_5&#34;]&gt;, DwarfRegNum&lt;[5]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE6  : RISCVRegACE&lt;6, &#34;ace_reg_6&#34;, [&#34;ace_reg_6&#34;]&gt;, DwarfRegNum&lt;[6]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE7  : RISCVRegACE&lt;7, &#34;ace_reg_7&#34;, [&#34;ace_reg_7&#34;]&gt;, DwarfRegNum&lt;[7]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE8  : RISCVRegACE&lt;8, &#34;ace_reg_8&#34;, [&#34;ace_reg_8&#34;]&gt;, DwarfRegNum&lt;[8]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE9  : RISCVRegACE&lt;9, &#34;ace_reg_9&#34;, [&#34;ace_reg_9&#34;]&gt;, DwarfRegNum&lt;[9]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE10 : RISCVRegACE&lt;10,&#34;ace_reg_10&#34;,[&#34;ace_reg_10&#34;]&gt;,DwarfRegNum&lt;[10]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE11 : RISCVRegACE&lt;11,&#34;ace_reg_11&#34;,[&#34;ace_reg_11&#34;]&gt;,DwarfRegNum&lt;[11]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE12 : RISCVRegACE&lt;12,&#34;ace_reg_12&#34;,[&#34;ace_reg_12&#34;]&gt;,DwarfRegNum&lt;[12]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE13 : RISCVRegACE&lt;13,&#34;ace_reg_13&#34;,[&#34;ace_reg_13&#34;]&gt;,DwarfRegNum&lt;[13]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE14 : RISCVRegACE&lt;14,&#34;ace_reg_14&#34;,[&#34;ace_reg_14&#34;]&gt;,DwarfRegNum&lt;[14]&gt;;
+</span></span><span class="line"><span class="cl">  def ACE15 : RISCVRegACE&lt;15,&#34;ace_reg_15&#34;,[&#34;ace_reg_15&#34;]&gt;,DwarfRegNum&lt;[15]&gt;;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="添加扩展指令的指令format">添加扩展指令的指令Format</h3>
+<p>llvm/lib/Target/RISCV/MCTargetDesc/RISCVBaseInfo.h</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">45： InstFormatACE = 17，
+</span></span><span class="line"><span class="cl">46： InstFormatOther = 18，
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>llvm/lib/Target/RISCV/RISCVInstrFormats.td</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">50： def InstFormatACE    : InstFormat&lt;17&gt;;
+</span></span><span class="line"><span class="cl">51： def InstFormatOther  : InstFormat&lt;18&gt;;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="添加扩展指令的opcode">添加扩展指令的OpCode</h3>
+<p>OpCode对应了指令格式中的[6 : 0]，位域定义riscv 的custom3 扩展指令位0x7b。</p>
+<p>llvm/lib/Target/RISCV/RISCVInstrFormats.td</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">135： def OPC_ACE     : RISCVOpcode&lt;0b1111011&gt;;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="添加指令所需其他类型">添加指令所需其他类型</h3>
+<p>uimm1类型，对应了指令格式中的[11 :11]</p>
+<p>llvm/lib/Target/RISCV/RISCVInstrInfo.td</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">162: // define a uimm with 1-bit
+</span></span><span class="line"><span class="cl">def uimm1 : Operand&lt;XLenVT&gt;, ImmLeaf&lt;XLenVT, [{return isUInt&lt;1&gt;(Imm);}]&gt; {
+</span></span><span class="line"><span class="cl">  let ParserMatchClass = UImmAsmOperand&lt;1&gt;;
+</span></span><span class="line"><span class="cl">  let DecoderMethod = &#34;decodeUImmOperand&lt;1&gt;&#34;;
+</span></span><span class="line"><span class="cl">  let OperandType = &#34;OPERAND_UIMM1&#34;;
+</span></span><span class="line"><span class="cl">  let OperandNamespace = &#34;RISCVOp&#34;;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>llvm/lib/Target/RISCV/RISCVInstrInfo.cpp</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">869: case RISCVOp::OPERAND_UIMM1:
+</span></span><span class="line"><span class="cl">          Ok = isUInt&lt;1&gt;(Imm);
+</span></span><span class="line"><span class="cl">          break;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>llvm/lib/Target/RISCV/MCTargetDesc/RISCVBaseInfo.h</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">163: OPERAND_UIMM1,
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>llvm/lib/Target/RISCV/AsmParser/RISCVAsmParser.cpp</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">516: bool isUImm1() const {
+</span></span><span class="line"><span class="cl">    int64_t Imm;
+</span></span><span class="line"><span class="cl">    RISCVMCExpr::VariantKind VK = RISCVMCExpr::VK_RISCV_None;
+</span></span><span class="line"><span class="cl">    if (!isImm())
+</span></span><span class="line"><span class="cl">      return false;
+</span></span><span class="line"><span class="cl">    bool IsConstantImm = evaluateConstantImm(getImm(), Imm, VK);
+</span></span><span class="line"><span class="cl">    return IsConstantImm &amp;&amp; isUInt&lt;1&gt;(Imm) &amp;&amp; VK == RISCVMCExpr::VK_RISCV_None;
+</span></span><span class="line"><span class="cl">  }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="添加risc-vformats">添加RISC-VFormats</h3>
+<p>llvm/lib/Target/RISCV/RISCVInstrFormats.td</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">412： class RVInstACE&lt;bits&lt;7&gt; funct7, bits&lt;4&gt; funct4, RISCVOpcode opcode, dag outs, dag ins,
+</span></span><span class="line"><span class="cl">      string opcodestr, string argstr&gt;
+</span></span><span class="line"><span class="cl">  : RVInst&lt;outs, ins, opcodestr, argstr, [], InstFormatACE&gt; {
+</span></span><span class="line"><span class="cl">  bits&lt;5&gt; rs1;
+</span></span><span class="line"><span class="cl">  bits&lt;5&gt; rs2;
+</span></span><span class="line"><span class="cl">  bits&lt;3&gt; ace3;
+</span></span><span class="line"><span class="cl">  bits&lt;1&gt; imm1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  let Inst{31-25} = funct7;
+</span></span><span class="line"><span class="cl">  let Inst{24-20} = rs1;
+</span></span><span class="line"><span class="cl">  let Inst{19-15} = rs2;
+</span></span><span class="line"><span class="cl">  let Inst{14-11} = funct4;
+</span></span><span class="line"><span class="cl">  let Inst{10} = imm1;
+</span></span><span class="line"><span class="cl">  let Inst{9-7} = ace3;
+</span></span><span class="line"><span class="cl">  let Opcode = opcode.Value;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="添加risc-v指令">添加RISC-V指令</h3>
+<p>llvm/lib/Target/RISCV/RISCVInstrInfo.td</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">//===----------------------------------------------------------------------===//
+</span></span><span class="line"><span class="cl">// RISCV-V ACE instruction
+</span></span><span class="line"><span class="cl">//===----------------------------------------------------------------------===//
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// write register ace instruction
+</span></span><span class="line"><span class="cl">let hasSideEffects = 0, mayLoad = 0, mayStore = 0 in
+</span></span><span class="line"><span class="cl">def ACE_CMD :
+</span></span><span class="line"><span class="cl">    RVInstACE&lt;0b0000100, 0b0000, OPC_ACE, (outs),
+</span></span><span class="line"><span class="cl">    (ins GPR:$rs1, GPR:$rs2, ACE:$ace3, uimm1:$imm1),
+</span></span><span class="line"><span class="cl">    &#34;ace_cmd&#34;, &#34;$rs1, $rs2, $ace3, $imm1&#34;&gt;, Sched&lt;[]&gt;;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="添加desiassembler">添加Desiassembler</h3>
+<p>llvm/lib/Target/RISCV/Disassembler/RISCVDisassembler.cpp</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">78 ： // Decode of ACE Register for RISC-V inst
+</span></span><span class="line"><span class="cl">static DecodeStatus DecodeACERegisterClass(MCInst &amp;Inst, uint64_t RegNo,
+</span></span><span class="line"><span class="cl">                                           uint64_t Address,
+</span></span><span class="line"><span class="cl">                                           const void *Decoder) {
+</span></span><span class="line"><span class="cl">  const FeatureBitset &amp;FeatureBits =
+</span></span><span class="line"><span class="cl">      static_cast&lt;const MCDisassembler *&gt;(Decoder)
+</span></span><span class="line"><span class="cl">          -&gt;getSubtargetInfo()
+</span></span><span class="line"><span class="cl">          .getFeatureBits();
+</span></span><span class="line"><span class="cl">  bool IsRV32E = FeatureBits[RISCV::FeatureRV32E];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  if (RegNo &gt;= 32 || (IsRV32E &amp;&amp; RegNo &gt;= 16))
+</span></span><span class="line"><span class="cl">    return MCDisassembler::Fail;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  MCRegister Reg = RISCV::ACE0 + RegNo;
+</span></span><span class="line"><span class="cl">  Inst.addOperand(MCOperand::createReg(Reg));
+</span></span><span class="line"><span class="cl">  return MCDisassembler::Success;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="添加测试">添加测试</h2>
+<h3 id="测试文件">测试文件</h3>
+<p>test_ace.c</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">int main() {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  int a, b;
+</span></span><span class="line"><span class="cl">  a = 1;
+</span></span><span class="line"><span class="cl">  b = 1;
+</span></span><span class="line"><span class="cl">  asm volatile
+</span></span><span class="line"><span class="cl">      (&#34;ace_cmd %0, %1, ace_reg_4, 0b0\n&#34;
+</span></span><span class="line"><span class="cl">       :
+</span></span><span class="line"><span class="cl">       : &#34;r&#34; (a), &#34;r&#34; (b)
+</span></span><span class="line"><span class="cl">       : &#34;memory&#34;
+</span></span><span class="line"><span class="cl">      );
+</span></span><span class="line"><span class="cl">  return 0;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="执行测试">执行测试</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">clang --target=riscv64 test_ace.c -c -save-temps -v
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以通过llvm dump看指令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">llvm-objdump -d test_ace.o
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoyume</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-17
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/llvm/">llvm</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/%E5%88%A9%E7%94%A8hugo%E5%92%8Cgithubpages%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+            <span class="next-text nav-default">利用hugo和githubpages创建个人博客，超详细，点击就会</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://xiaoyume.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>xiaoyume</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
