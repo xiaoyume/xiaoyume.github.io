@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://xiaoyume.github.io/categories/</loc>
+    <lastmod>2023-05-18T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://xiaoyume.github.io/</loc>
     <lastmod>2023-05-18T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -30,6 +37,13 @@
   </url>
   
   <url>
+    <loc>https://xiaoyume.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2023-05-18T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://xiaoyume.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2023-05-18T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -38,6 +52,13 @@
   
   <url>
     <loc>https://xiaoyume.github.io/tags/llvm/</loc>
+    <lastmod>2023-05-17T21:07:05+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/categories/llvm/</loc>
     <lastmod>2023-05-17T21:07:05+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -74,13 +95,6 @@
   <url>
     <loc>https://xiaoyume.github.io/post/1.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2023-05-13T15:11:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://xiaoyume.github.io/categories/</loc>
-    <lastmod>2023-05-13T11:11:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
