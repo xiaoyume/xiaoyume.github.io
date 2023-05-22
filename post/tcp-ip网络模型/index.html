@@ -48,7 +48,7 @@
 <meta itemprop="name" content="TCP/IP网络模型">
 <meta itemprop="description" content="TCP/IP网络模型 两个系统中实体通信是一个很复杂的过程，为了降低协议设计和调试流程的复杂性，也为了便于对网络进行研究】实现和维护，促进标准"><meta itemprop="datePublished" content="2023-05-18T14:53:29+08:00" />
 <meta itemprop="dateModified" content="2023-05-21T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2049">
+<meta itemprop="wordCount" content="2645">
 <meta itemprop="keywords" content="计算机网络," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TCP/IP网络模型"/>
 <meta name="twitter:description" content="TCP/IP网络模型 两个系统中实体通信是一个很复杂的过程，为了降低协议设计和调试流程的复杂性，也为了便于对网络进行研究】实现和维护，促进标准"/>
@@ -131,8 +131,8 @@
         <div class="post-category">
             <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"> 计算机基础 </a>
             </div>
-          <span class="more-meta"> 约 2049 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+          <span class="more-meta"> 约 2645 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -151,6 +151,7 @@
       </ul>
     </li>
     <li><a href="#网络接口层">网络接口层</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav>
   </div>
@@ -219,6 +220,20 @@
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-21%20171924.png" alt=""></p>
 <h1 id="网络接口层">网络接口层</h1>
+<p>生成IP头部之后，需要交给网络接口层（Link Layer）在IP头部前面加上MAC头部，并封装成数据帧（Data frame）发送到网络上。</p>
+<ul>
+<li>IP头部中的接受方IP地址表示网络包的目的地，通过这个地址可以判断要将包发送到哪里，但是在<strong>以太网</strong>中，这个思路是行不通的。</li>
+<li>以太网：电脑上的以太网接口，wifi接口以及以太网交换机，路由器上的以太网口，还有网线，它们都是以太网的组成部分。以太网就是一种在局域网内，把附件设备连接起来，使他们之间可以进行通讯的技术。</li>
+<li>以太网在判断网络包目的地时和IP的方式不同，因此必须采用相匹配的方式才能在以太网中将包发送给目的地，而MAC头部就是起这个作用的，所以在以太网进行通讯时需要用到MAC地址。</li>
+<li>MAC头部时以太网使用的头部，它包含了接收方和发送方的MAC地址等信息，我们可以通过ARP协议获取对方的MAC地址。</li>
+<li>网络接口层主要位网络层提发送<strong>链路级别</strong>传输的服务，负责在以太网、wifi这样的底层网络上发送原始数据包，工作在网卡这个层次，使用MAC地址来标识网络上的设备。</li>
+</ul>
+<h1 id="总结">总结</h1>
+<p>综上所述，TCP/IP 网络通常是由上到下分成 4 层，分别是<strong>应用层，传输层，网络层和网络接口层</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-21%20221709.png" alt=""></p>
+<p>每一层的封装格式：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-21%20221825.png" alt=""></p>
+<p>网络接口层的传输单位时帧(frame)，IP层(网络)的传输单位时包(pocket)，TCP层（传输）的传输单位是段(segment)，HTTP的传输单位是消息或报文（message）。</p>
 
     </div>
 
