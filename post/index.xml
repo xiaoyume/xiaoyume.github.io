@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Even - A super concise theme for Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 18 May 2023 14:53:29 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 May 2023 20:15:10 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>输入网址的网页显示期间的二三事</title>
+      <link>https://xiaoyume.github.io/post/%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
+      <pubDate>Mon, 22 May 2023 20:15:10 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
+      <description>输入网址到网页显示，期间发生了什么？ 下面将以下图一个叫简单的网络拓扑模型为例，探究期间发生了什么 HTTP 浏览器第一步工作是解析URL</description>
+    </item>
+    
     <item>
       <title>TCP/IP网络模型</title>
       <link>https://xiaoyume.github.io/post/tcp-ip%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/</link>
