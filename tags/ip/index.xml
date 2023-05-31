@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>IP on Even - A super concise theme for Hugo</title>
+    <link>https://xiaoyume.github.io/tags/ip/</link>
+    <description>Recent content in IP on Even - A super concise theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 29 May 2023 20:15:10 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/tags/ip/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>输入网址的网页显示期间的二三事(2)-IP.MAC</title>
+      <link>https://xiaoyume.github.io/post/%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B2/</link>
+      <pubDate>Mon, 29 May 2023 20:15:10 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B2/</guid>
+      <description>从输入网址到网页显示，期间发现了什么？ IP- 远程定位 上一步成了带TCP头的TCP报文，其执行收发操作时，需要委托IP模块将数据封装成网络包发送给</description>
+    </item>
+    
+  </channel>
+</rss>
