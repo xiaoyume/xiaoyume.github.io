@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on Even - A super concise theme for Hugo</title>
+    <link>https://xiaoyume.github.io/categories/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on Even - A super concise theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 01 Jun 2023 11:11:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/categories/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>自记录拿下算法之dps与bfs</title>
+      <link>https://xiaoyume.github.io/post/%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E6%94%BB%E5%85%8B1/</link>
+      <pubDate>Thu, 01 Jun 2023 11:11:21 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E6%94%BB%E5%85%8B1/</guid>
+      <description>深度优先及广度优先 图结构体定义 1 2 3 4 struct Graph { int vnum; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; mat; }; 已知一个节点求这点的第一个邻节点 1 2 3 4 5 6 7 8 int firstNeigbor(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; mat, int v) { for (int i = v + 1; i &amp;lt; mat.size(); i++) {/</description>
+    </item>
+    
+  </channel>
+</rss>

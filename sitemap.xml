@@ -2,28 +2,63 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://xiaoyume.github.io/</loc>
-    <lastmod>2023-05-29T00:00:00+00:00</lastmod>
+    <loc>https://xiaoyume.github.io/tags/bfs/</loc>
+    <lastmod>2023-06-01T11:11:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaoyume.github.io/tags/ip/</loc>
-    <lastmod>2023-05-29T00:00:00+00:00</lastmod>
+    <loc>https://xiaoyume.github.io/categories/</loc>
+    <lastmod>2023-06-01T11:11:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/tags/dfs/</loc>
+    <lastmod>2023-06-01T11:11:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/</loc>
+    <lastmod>2023-06-01T11:11:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaoyume.github.io/post/</loc>
-    <lastmod>2023-05-29T00:00:00+00:00</lastmod>
+    <lastmod>2023-06-01T11:11:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaoyume.github.io/tags/</loc>
+    <lastmod>2023-06-01T11:11:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/categories/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2023-06-01T11:11:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/post/%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E6%94%BB%E5%85%8B1/</loc>
+    <lastmod>2023-06-01T11:11:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/tags/ip/</loc>
     <lastmod>2023-05-29T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -53,13 +88,6 @@
   <url>
     <loc>https://xiaoyume.github.io/post/%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B1/</loc>
     <lastmod>2023-05-29T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://xiaoyume.github.io/categories/</loc>
-    <lastmod>2023-05-22T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
