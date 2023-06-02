@@ -48,7 +48,7 @@
 <meta itemprop="name" content="自记录拿下算法之dps与bfs">
 <meta itemprop="description" content="深度优先及广度优先 图结构体定义 1 2 3 4 struct Graph { int vnum; vector&lt;vector&lt;int&gt;&gt; mat; }; 已知一个节点求这点的第一个邻节点 1 2 3 4 5 6 7 8 int firstNeigbor(vector&lt;vector&lt;int&gt;&gt;&amp; mat, int v) { for (int i = v &#43; 1; i &lt; mat.size(); i&#43;&#43;) {/"><meta itemprop="datePublished" content="2023-06-01T11:11:21+08:00" />
 <meta itemprop="dateModified" content="2023-06-01T11:11:21+08:00" />
-<meta itemprop="wordCount" content="548">
+<meta itemprop="wordCount" content="852">
 <meta itemprop="keywords" content="dfs,bfs," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="自记录拿下算法之dps与bfs"/>
 <meta name="twitter:description" content="深度优先及广度优先 图结构体定义 1 2 3 4 struct Graph { int vnum; vector&lt;vector&lt;int&gt;&gt; mat; }; 已知一个节点求这点的第一个邻节点 1 2 3 4 5 6 7 8 int firstNeigbor(vector&lt;vector&lt;int&gt;&gt;&amp; mat, int v) { for (int i = v &#43; 1; i &lt; mat.size(); i&#43;&#43;) {/"/>
@@ -131,7 +131,7 @@
         <div class="post-category">
             <a href="/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
             </div>
-          <span class="more-meta"> 约 548 字 </span>
+          <span class="more-meta"> 约 852 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -147,6 +147,7 @@
         <li><a href="#dfs">DFS</a></li>
         <li><a href="#bfs">BFS</a></li>
         <li><a href="#测试">测试</a></li>
+        <li><a href="#dijkstra算法">Dijkstra算法</a></li>
       </ul>
     </li>
   </ul>
@@ -320,6 +321,75 @@
 </span></span><span class="line"><span class="cl">    queue&lt;int&gt; queue;
 </span></span><span class="line"><span class="cl">    bfs(g.mat, 0, queue, isVisted);
 </span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="dijkstra算法">Dijkstra算法</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">void dijkstra(vector&lt;vector&lt;int&gt;&gt; &amp;mat, int v, vector&lt;int&gt; &amp;dis){
+</span></span><span class="line"><span class="cl">    /*算法原理，假设从v出发
+</span></span><span class="line"><span class="cl">        定义一个集合存放未确定的节点，定义一个dis数组用于存储单源距离
+</span></span><span class="line"><span class="cl">        初始化距离dis[v] = 0, 其余为INF,注意可能会溢出，定义一个比较大的数就可以
+</span></span><span class="line"><span class="cl">        初始化集合，把除v其他全部放入集合里，这里用一个bool数组可以？
+</span></span><span class="line"><span class="cl">        n-1轮遍历，每次收缩距离
+</span></span><span class="line"><span class="cl">        取最小的距离作为下一轮的中枢节点
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    */
+</span></span><span class="line"><span class="cl">   dis[v] = 0;
+</span></span><span class="line"><span class="cl">   vector&lt;bool&gt; isfinal(mat.size(), 0);
+</span></span><span class="line"><span class="cl">   isfinal[v] = 1;
+</span></span><span class="line"><span class="cl">   int curpos = v;
+</span></span><span class="line"><span class="cl">   for(int i = 0; i &lt; mat.size(); i++){
+</span></span><span class="line"><span class="cl">        for(int j = 0; j &lt; mat.size(); j++){
+</span></span><span class="line"><span class="cl">            if(isfinal[j] == 0 &amp;&amp; dis[curpos] + mat[curpos][j] &lt; dis[j]){
+</span></span><span class="line"><span class="cl">                dis[j] = dis[curpos] + mat[curpos][j];
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }//收缩距离
+</span></span><span class="line"><span class="cl">        int mindis = INF;//维护一个最小距离
+</span></span><span class="line"><span class="cl">        for(int k = 0; k &lt; mat.size(); k++){
+</span></span><span class="line"><span class="cl">            if(isfinal[k] == 0 &amp;&amp; dis[k] &lt; mindis){
+</span></span><span class="line"><span class="cl">                mindis = dis[k];
+</span></span><span class="line"><span class="cl">                
+</span></span><span class="line"><span class="cl">                curpos = k;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }//获得最小距离对应的k
+</span></span><span class="line"><span class="cl">        isfinal[curpos] = 1;
+</span></span><span class="line"><span class="cl">   } 
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></td></tr></table>
 </div>
