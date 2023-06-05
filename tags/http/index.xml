@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HTTP on Even - A super concise theme for Hugo</title>
+    <link>https://xiaoyume.github.io/tags/http/</link>
+    <description>Recent content in HTTP on Even - A super concise theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 05 Jun 2023 11:11:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/tags/http/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTTP面试题目</title>
+      <link>https://xiaoyume.github.io/post/http/</link>
+      <pubDate>Mon, 05 Jun 2023 11:11:21 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/http/</guid>
+      <description>HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使</description>
+    </item>
+    
+  </channel>
+</rss>

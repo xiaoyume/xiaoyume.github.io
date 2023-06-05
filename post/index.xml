@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Even - A super concise theme for Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 01 Jun 2023 11:11:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 05 Jun 2023 11:11:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTTP面试题目</title>
+      <link>https://xiaoyume.github.io/post/http/</link>
+      <pubDate>Mon, 05 Jun 2023 11:11:21 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/http/</guid>
+      <description>HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使</description>
+    </item>
+    
     <item>
       <title>自记录拿下算法之dps与bfs</title>
       <link>https://xiaoyume.github.io/post/%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E6%94%BB%E5%85%8B1/</link>
