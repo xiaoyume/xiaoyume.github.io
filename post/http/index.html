@@ -48,7 +48,7 @@
 <meta itemprop="name" content="HTTP面试题目">
 <meta itemprop="description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使"><meta itemprop="datePublished" content="2023-06-05T11:11:21+08:00" />
 <meta itemprop="dateModified" content="2023-06-05T11:11:21+08:00" />
-<meta itemprop="wordCount" content="2306">
+<meta itemprop="wordCount" content="3796">
 <meta itemprop="keywords" content="HTTP," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="HTTP面试题目"/>
 <meta name="twitter:description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使"/>
@@ -131,8 +131,8 @@
         <div class="post-category">
             <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"> 计算机基础 </a>
             </div>
-          <span class="more-meta"> 约 2306 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+          <span class="more-meta"> 约 3796 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -158,6 +158,14 @@
             <li><a href="#get方法和post方法都是安全且幂等的吗">GET方法和POST方法都是安全且幂等的吗？</a></li>
           </ul>
         </li>
+        <li><a href="#http缓存技术">HTTP缓存技术</a>
+          <ul>
+            <li><a href="#http缓存有哪些实现方式">HTTP缓存有哪些实现方式</a></li>
+            <li><a href="#强制缓存">强制缓存</a></li>
+            <li><a href="#协商缓存">协商缓存</a></li>
+          </ul>
+        </li>
+        <li><a href="#http特性">HTTP特性</a></li>
       </ul>
     </li>
   </ul>
@@ -297,6 +305,51 @@
 <li>GET方法就是安全等幂的，因为是只读操作。所以，<strong>可以对 GET 请求的数据做缓存，这个缓存可以做到浏览器本身上（彻底避免浏览器发请求），也可以做到代理上（如nginx），而且在浏览器中 GET 请求可以保存为书签</strong>。</li>
 <li>POST是新增或提交数据操作，会修改服务器上的资源，所以<strong>不安全</strong>，多次提交会创建多个资源，所以不是等幂的。所以浏览器一般不会缓存POST请求，也不能把POST请求保存为书签。</li>
 </ul>
+<h2 id="http缓存技术">HTTP缓存技术</h2>
+<h3 id="http缓存有哪些实现方式">HTTP缓存有哪些实现方式</h3>
+<p>对于一些重复性的HTTP请求，我们可以把<code>请求-响应</code>的数据都缓存到本地，下次直接读取本地数据。</p>
+<p><strong>强制缓存</strong>和<strong>协商缓存</strong></p>
+<h3 id="强制缓存">强制缓存</h3>
+<p>只只要浏览器判断缓存没有过期，则直接使用浏览器的本地缓存，决定是否使用缓存的主动性在浏览器这边。</p>
+<p><code>Status Code: 200 (from disk cache)</code></p>
+<p>强制缓存时利用下面两个HTTP响应头字段实现的，它们都用来表示资源在客户端缓存的有效期：</p>
+<ul>
+<li>Cache-Control,是一个相对时间</li>
+<li>Expires， 是一个绝对时间</li>
+</ul>
+<p>Cache-Control的优先级较高</p>
+<p>Cache-Control选项更多一点，设置更加精细。具体实现流程如下</p>
+<ul>
+<li>当浏览器第一次请求访问服务器资源时，服务器会在返回这个资源的同时，在 Response 头部加上 Cache-Control，Cache-Control 中设置了过期时间大小；</li>
+<li>浏览器再次请求访问服务器中的该资源时，会先<strong>通过请求资源的时间与 Cache-Control 中设置的过期时间大小，来计算出该资源是否过期</strong>，如果没有，则使用该缓存，否则重新请求服务器；</li>
+<li>服务器再次收到请求后，会再次更新 Response 头部的 Cache-Control。</li>
+</ul>
+<h3 id="协商缓存">协商缓存</h3>
+<p>当我们在浏览器使用开发者工具的时候，你可能会看到过某些请求的响应码是 <code>304</code>，这个是告诉浏览器可以使用本地缓存的资源，通常这种通过<strong>服务端告知客户端</strong>是否可以使用缓存的方式被称为协商缓存。</p>
+<p><strong>协商缓存就是与服务端协商之后，通过协商结果来判断是否使用本地缓存</strong>。</p>
+<p>协商缓存可以基于两种头部来实现。</p>
+<p>第一种：请求头部中的 <code>If-Modified-Since</code> 字段与响应头部中的 <code>Last-Modified</code> 字段实现，这两个字段的意思是：</p>
+<ul>
+<li>响应头部中的 <code>Last-Modified</code>：标示这个响应资源的最后修改时间；</li>
+<li>请求头部中的 <code>If-Modified-Since</code>：当资源过期了，发现响应头中具有 Last-Modified 声明，<strong>则再次发起请求的时候带上 Last-Modified 的时间</strong>，服务器收到请求后发现有 If-Modified-Since 则与被请求资源的最后修改时间进行对比（Last-Modified），如果最后修改时间较新（大），说明资源又被改过，则返回最新资源，HTTP 200 OK；如果最后修改时间较旧（小），说明资源无新修改，响应 HTTP 304 走缓存。</li>
+</ul>
+<p>第二种：请求头部中的 <code>If-None-Match</code> 字段与响应头部中的 <code>ETag</code> 字段，这两个字段的意思是：</p>
+<ul>
+<li>响应头部中 <code>Etag</code>：唯一标识响应资源；</li>
+<li>请求头部中的 <code>If-None-Match</code>：当资源过期时，浏览器发现响应头里有 Etag，则再次向服务器发起请求时，会将请求头 If-None-Match 值设置为 Etag 的值。服务器收到请求后进行比对，如果资源没有变化返回 304，如果资源变化了返回 200。</li>
+</ul>
+<p>第一种实现方式是基于时间实现的，第二种实现方式是基于一个唯一标识实现的，相对来说后者可以更加准确地判断文件内容是否被修改，避免由于时间篡改导致的不可靠问题。</p>
+<p>如果在第一次请求资源的时候，服务端返回的 HTTP 响应头部同时有 Etag 和 Last-Modified 字段，那么客户端再下一次请求的时候，如果带上了 ETag 和 Last-Modified 字段信息给服务端，<strong>这时 Etag 的优先级更高</strong>，也就是服务端先会判断 Etag 是否变化了，如果 Etag 有变化就不用在判断 Last-Modified 了，如果 Etag 没有变化，然后再看 Last-Modified。</p>
+<p>**为什么 ETag 的优先级更高？**这是因为 ETag 主要能解决 Last-Modified 几个比较难以解决的问题：</p>
+<ol>
+<li>在没有修改文件内容情况下文件的最后修改时间可能也会改变，这会导致客户端认为这文件被改动了，从而重新请求；</li>
+<li>可能有些文件是在秒级以内修改的，<code>If-Modified-Since</code> 能检查到的粒度是秒级的，使用 Etag就能够保证这种需求下客户端在 1 秒内能刷新多次；</li>
+<li>有些服务器不能精确获取文件的最后修改时间。</li>
+</ol>
+<p>注意，<strong>协商缓存这两个字段都需要配合强制缓存中 Cache-Control 字段来使用，只有在未能命中强制缓存的时候，才能发起带有协商缓存字段的请求</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-06-06%20105951.png" alt=""></p>
+<p>上图是强制缓存和协商缓存的工作流程</p>
+<h2 id="http特性">HTTP特性</h2>
 
     </div>
 
