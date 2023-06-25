@@ -51,6 +51,20 @@
   </url>
   
   <url>
+    <loc>https://xiaoyume.github.io/post/linux%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E6%94%B6%E5%8F%91%E7%BD%91%E7%BB%9C%E5%8C%85/</loc>
+    <lastmod>2023-06-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2023-06-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://xiaoyume.github.io/tags/bfs/</loc>
     <lastmod>2023-06-01T11:11:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
