@@ -9,10 +9,10 @@
     <lastBuildDate>Thu, 01 Jun 2023 11:11:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/tags/dfs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>自记录拿下算法之dps与bfs</title>
-      <link>https://xiaoyume.github.io/post/%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E6%94%BB%E5%85%8B1/</link>
+      <link>https://xiaoyume.github.io/post/9.%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E6%94%BB%E5%85%8B1/</link>
       <pubDate>Thu, 01 Jun 2023 11:11:21 +0800</pubDate>
       
-      <guid>https://xiaoyume.github.io/post/%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E6%94%BB%E5%85%8B1/</guid>
+      <guid>https://xiaoyume.github.io/post/9.%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E6%94%BB%E5%85%8B1/</guid>
       <description>深度优先及广度优先 图结构体定义 1 2 3 4 struct Graph { int vnum; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; mat; }; 已知一个节点求这点的第一个邻节点 1 2 3 4 5 6 7 8 int firstNeigbor(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; mat, int v) { for (int i = v + 1; i &amp;lt; mat.size(); i++) {/</description>
     </item>
     

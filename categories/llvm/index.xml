@@ -9,10 +9,10 @@
     <lastBuildDate>Wed, 17 May 2023 21:07:05 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/categories/llvm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>llvm指令添加</title>
-      <link>https://xiaoyume.github.io/post/llvm%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4/</link>
+      <link>https://xiaoyume.github.io/post/5.llvm%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4/</link>
       <pubDate>Wed, 17 May 2023 21:07:05 +0800</pubDate>
       
-      <guid>https://xiaoyume.github.io/post/llvm%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4/</guid>
+      <guid>https://xiaoyume.github.io/post/5.llvm%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4/</guid>
       <description>目标指令 添加指令 ace_cmd 指令作用 ace cmd指令可以使用将两个通用寄存器中的值赋给一个256位专用寄存器ace_reg的高128位或者低128位 指令使</description>
     </item>
     

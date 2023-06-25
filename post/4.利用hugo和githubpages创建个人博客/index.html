@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>利用hugo和githubpages创建个人博客，超详细，点击就会 - Even - A super concise theme for Hugo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoyume" /><meta name="description" content="利用hugo和githubpages创建个人博客 1.hugo安装 点击进入官网下载 选择对应版本，以64位windows版本为例 解压后得到hug" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.111.3 with theme even" />
+
+
+<link rel="canonical" href="https://xiaoyume.github.io/post/4.%E5%88%A9%E7%94%A8hugo%E5%92%8Cgithubpages%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="利用hugo和githubpages创建个人博客，超详细，点击就会" />
+<meta property="og:description" content="利用hugo和githubpages创建个人博客 1.hugo安装 点击进入官网下载 选择对应版本，以64位windows版本为例 解压后得到hug" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaoyume.github.io/post/4.%E5%88%A9%E7%94%A8hugo%E5%92%8Cgithubpages%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-13T21:05:26+08:00" />
+<meta property="article:modified_time" content="2023-05-14T00:00:00+00:00" />
+<meta itemprop="name" content="利用hugo和githubpages创建个人博客，超详细，点击就会">
+<meta itemprop="description" content="利用hugo和githubpages创建个人博客 1.hugo安装 点击进入官网下载 选择对应版本，以64位windows版本为例 解压后得到hug"><meta itemprop="datePublished" content="2023-05-13T21:05:26+08:00" />
+<meta itemprop="dateModified" content="2023-05-14T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1180">
+<meta itemprop="keywords" content="博客创建," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="利用hugo和githubpages创建个人博客，超详细，点击就会"/>
+<meta name="twitter:description" content="利用hugo和githubpages创建个人博客 1.hugo安装 点击进入官网下载 选择对应版本，以64位windows版本为例 解压后得到hug"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">xiaoyume&lt;</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">xiaoyume&lt;</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">利用hugo和githubpages创建个人博客，超详细，点击就会</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-13 </span>
+        
+          <span class="more-meta"> 约 1180 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#利用hugo和githubpages创建个人博客">利用hugo和githubpages创建个人博客</a>
+      <ul>
+        <li><a href="#1hugo安装">1.hugo安装</a></li>
+        <li><a href="#2hugo使用">2.hugo使用</a></li>
+        <li><a href="#3新建md文件博客内容所在">3.新建md文件，博客内容所在</a></li>
+        <li><a href="#4配置githubpages">4.配置githubpages</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="利用hugo和githubpages创建个人博客">利用hugo和githubpages创建个人博客</h1>
+<h2 id="1hugo安装">1.hugo安装</h2>
+<p><a href="https://github.com/gohugoio/hugo/releases">点击进入官网下载</a></p>
+<p>选择对应版本，以64位windows版本为例</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-13%20231606.png" alt=""></p>
+<p>解压后得到<strong>hugo.exe</strong>文件</p>
+<p>找一个安装目录，例如<strong>D:\code\hugo</strong></p>
+<p>在hugo目录下新建一个新的文件夹<strong>bin</strong>,将上面得到的hugo.exe文件复制到bin文件夹里</p>
+<p>将bin所在目录放到<strong>系统环境变量</strong>的Path里</p>
+<p>运行cmd</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-13%20232857.png" alt=""></p>
+<p>显示如图所示即为安装成功</p>
+<h2 id="2hugo使用">2.hugo使用</h2>
+<p>选择合适的目录，建立博客，这里名称为xiaoyume</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo new site xiaoyume
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>自动生成test文件夹以及其下的一堆子文件，<strong>博客初始化成功</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd xiaoyume
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>进入到xiaoyume目录下面</p>
+<p>下载一个hugo主题，用以网站页面显示，这里选择<strong>even</strong>主题</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone https://github.com/olOwOlo/hugo-theme-even themes/even
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在themes目录下出现了一个even目录，这就是主题资源</p>
+<p>在even/exampleSite目录下有一个<strong>config.toml</strong></p>
+<p>复制其中所有内容到test目录下面的同名config.toml里，这个就是配置文件，用以控制页面效果</p>
+<h2 id="3新建md文件博客内容所在">3.新建md文件，博客内容所在</h2>
+<p>使用下面命令新建一个md文件，默认生成在content目录下，请加上post文件夹</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo new post/test.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>生成的md文件会带有如图所示的文件信息，<strong>draft表示是否是草稿，不显示，请改为false</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-13%20234628.png" alt=""></p>
+<p>在md文件中输入文档信息，这些内容后续会显示在网页上</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo server
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行后会在本地运行服务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-13%20234207.png" alt=""></p>
+<p>运行成功后如上图显示，在浏览器中输入<strong>http://localhost:1313</strong>可以访问本地网页信息</p>
+<blockquote>
+<p>注意在运行时可能会报错，跟版本有关，如果出现错误，请删除themes/even/layouts/partials/head.html文件里</p>
+<p>{{- template &ldquo;_internal/google_news.html&rdquo; . -}}这行代码</p>
+</blockquote>
+<h2 id="4配置githubpages">4.配置githubpages</h2>
+<p>githup上新建仓库，名称为<strong>用户名.github.io</strong>,注意勾选上readme.md，这里是为了创建main分支</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-14%20143655.png" alt=""></p>
+<p>找一个合适的目录把这个仓库clone到本地</p>
+<p>例如目录是D:\code\git\xiaoyume.github.io</p>
+<p>因为使用githubpages托管网页需要先使用hugo生成静态页面，hugo执行后生成的文件在博客目录里的public文件夹内，到时候需要把这个目录的文件全部push到githubpage的仓库里，所以这里可以对<strong>public文件夹和本地库</strong>做一个<strong>软链接</strong>，<strong>需要先把public文件夹删除</strong></p>
+<p>win11使用桌面右键win图标，**终端（管理员）**模式，注意默认启动的是powershell，需要在里面切换cmd</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-14%20144556.png" alt=""></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mklink /j D:\code\git\xiaoyume\public D:\code\git\xiaoyume.github.io
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>链接完成后执行hugo生成的文件会直接到本地库里</p>
+<p>在博客目录xiaoyume下面，依次执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo
+</span></span><span class="line"><span class="cl">cd public
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m &#34;auto&#34;
+</span></span><span class="line"><span class="cl">git push
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不出意外的话，push到远程库后等待githubpages完成部署，就能通过链接xiaoyume.github.io访问到博客了</p>
+<p>到此就结束了，至于主题页面的设置的话，后面再结束</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoyume</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-14
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA/">博客创建</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/5.llvm%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">llvm指令添加</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/3.fortran95%E7%AC%94%E8%AE%B0/">
+            <span class="next-text nav-default">fortran95</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://xiaoyume.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>xiaoyume</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

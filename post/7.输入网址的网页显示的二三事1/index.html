@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>输入网址的网页显示期间的二三事(1)-HTTP.TCP - Even - A super concise theme for Hugo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoyume" /><meta name="description" content="输入网址到网页显示，期间发生了什么？ 下面将以下图一个叫简单的网络拓扑模型为例，探究期间发生了什么 HTTP 浏览器第一步工作是解析URL 浏览器第一就要" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.111.3 with theme even" />
+
+
+<link rel="canonical" href="https://xiaoyume.github.io/post/7.%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="输入网址的网页显示期间的二三事(1)-HTTP.TCP" />
+<meta property="og:description" content="输入网址到网页显示，期间发生了什么？ 下面将以下图一个叫简单的网络拓扑模型为例，探究期间发生了什么 HTTP 浏览器第一步工作是解析URL 浏览器第一就要" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaoyume.github.io/post/7.%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-22T20:15:10+08:00" />
+<meta property="article:modified_time" content="2023-05-29T00:00:00+00:00" />
+<meta itemprop="name" content="输入网址的网页显示期间的二三事(1)-HTTP.TCP">
+<meta itemprop="description" content="输入网址到网页显示，期间发生了什么？ 下面将以下图一个叫简单的网络拓扑模型为例，探究期间发生了什么 HTTP 浏览器第一步工作是解析URL 浏览器第一就要"><meta itemprop="datePublished" content="2023-05-22T20:15:10+08:00" />
+<meta itemprop="dateModified" content="2023-05-29T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2199">
+<meta itemprop="keywords" content="计算机网络,TCP," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="输入网址的网页显示期间的二三事(1)-HTTP.TCP"/>
+<meta name="twitter:description" content="输入网址到网页显示，期间发生了什么？ 下面将以下图一个叫简单的网络拓扑模型为例，探究期间发生了什么 HTTP 浏览器第一步工作是解析URL 浏览器第一就要"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">xiaoyume&lt;</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">xiaoyume&lt;</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">输入网址的网页显示期间的二三事(1)-HTTP.TCP</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-22 </span>
+        
+          <span class="more-meta"> 约 2199 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#输入网址到网页显示期间发生了什么">输入网址到网页显示，期间发生了什么？</a>
+      <ul>
+        <li><a href="#http">HTTP</a></li>
+        <li><a href="#dns">DNS</a></li>
+        <li><a href="#协议栈">协议栈</a></li>
+        <li><a href="#tcp-可靠传输">TCP 可靠传输</a>
+          <ul>
+            <li><a href="#tcp三次握手">TCP三次握手</a></li>
+            <li><a href="#查看tcp的连接状态">查看TCP的连接状态</a></li>
+            <li><a href="#tcp数据分割">TCP数据分割</a></li>
+            <li><a href="#tcp报文生成">TCP报文生成</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="输入网址到网页显示期间发生了什么">输入网址到网页显示，期间发生了什么？</h1>
+<p>下面将以下图一个叫简单的网络拓扑模型为例，探究期间发生了什么</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-22%20201804.png" alt=""></p>
+<h2 id="http">HTTP</h2>
+<blockquote>
+<p><strong>浏览器第一步工作是解析URL</strong></p>
+</blockquote>
+<p>浏览器第一就要对URL进行解析，从而生成发送给web服务器的请求信息。</p>
+<p>示例：http://www.server.com/dir/file.html</p>
+<p>http表示访问数据的协议</p>
+<p><a href="https://www.server.com">www.server.com</a>表示服务器的名称，后面是服务器下面的资源</p>
+<p>如果只输入网址，就会显示服务器默认的文件，一般为index.html</p>
+<blockquote>
+<p><strong>生成HTTP请求信息</strong></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-24%20103928.png" alt=""></p>
+<p>生成了http请求报文，向谁发送是一个问题，如何解决呢？</p>
+<h2 id="dns">DNS</h2>
+<p>在浏览器中我们能看到的是一个<strong>域名</strong>，需要将其转换为<strong>真实的ip地址</strong>，这个地址对应的就是请求报文要发送的对象。</p>
+<p><a href="https://www.server.com">www.server.com</a></p>
+<p>用来表示不同 层次界限，<strong>从右往左</strong>表示级别变低</p>
+<p>最高级的为根域<strong>服务器，.com表示</strong>顶级域**DNS服务器，server.com表示权威DNS服务器</p>
+<p>类似一个树状结构，最顶层是根，最下面就是具体的域名对应的服务器</p>
+<p>根域的DNS服务器信息保存在互联网中的所有DNS服务器中，这样任何DNS服务器都能找到并访问根域DNS服务器了。</p>
+<p>因此，客户端只要能够找到<strong>任意一台 DNS 服务器</strong>，就可以通过它找到<strong>根域 DNS 服务器</strong>，然后再一路顺藤摸瓜找到位于下层的某台目标 DNS 服务器。</p>
+<p><strong>域名解析</strong>：</p>
+<ul>
+<li>1 客户端首先会发出一个DNS请求，问www.server.com的ip是什么，并发给本地DNS服务器(也就是客户端的TCP/IP设置中填写的DNS服务器)</li>
+<li>2 本地域名服务器收到客户端的请求后，如果缓存列表里能找到www.server.com，那么直接返回对应IP。。如果没有，本地服务器会向上找到根域名服务器。</li>
+<li>3 根DNS服务器收到本地DNS的请求后，会检索域名后置，发现是.com，那就会返回.com顶级域名服务器的地址</li>
+<li>4 本地DNS收到顶级域名服务器的地址后，向顶级域名服务器发起请求</li>
+<li>5 顶级域名服务器返回权威DNS服务器server.com的IP地址到本地DNS</li>
+<li>6 本地DNS向权威DNS服务器发起请求，域名解析的出处就是这个服务器，server.com的权威服务器。</li>
+<li>7 权威服务器查询后将对应的IP地址返回给本地DNS</li>
+<li>8 本地DNS将IP地址返回客户端，客户端与目标建立连接</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/6.png" alt=""></p>
+<p>域名解析的过程就是依次从根域名服务器到权威DNS服务器交互的过程。</p>
+<p><strong>缓存机制</strong></p>
+<p>浏览器先看自身有没有这个域名的缓存，如果有直接返回，如果没有再去找操作系统中的缓存，再没有会去hosts文化查看，再没有才回去看本地DNS服务器</p>
+<p>发送目的地找到了，后续如何？</p>
+<h2 id="协议栈">协议栈</h2>
+<blockquote>
+<p>数据收发过程用到</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-25%20101505.png" alt=""></p>
+<p>最上层的应用程序通过调用Socket库，来委托协议栈工作。协议栈上半部分有两块，分别是负责收发数据的TCP和UDP协议，这两个传输协议会接收应用层的委托执行收发数据。</p>
+<p>协议栈的下一半是用IP协议控制网络包收发数据操作，上传数据时，数据会被切分为一块块的网络包，将网络包发送给对方的操作就是IP负责的。</p>
+<p>ICMP &ndash; 用于告知网络包传送过程中产生的错误以及各种控制信息</p>
+<p>ARP &ndash; 用于根据IP地址查询相应的以太网地址。</p>
+<p>IP下面的网络驱动程序负责控制网卡硬件，而最下面的网卡负责完成实际的收发操作，也就是信号执行收发操作。</p>
+<h2 id="tcp-可靠传输">TCP 可靠传输</h2>
+<p>TCP协议</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-25%20104746.png" alt=""></p>
+<p>TCP报文格式：<strong>源端口号</strong>和<strong>目的端口</strong>号不可少，标识数据传输起始</p>
+<p>包的<strong>序号</strong>，解决包乱序的问题</p>
+<p><strong>确认号</strong>，目的是确认发出去对方是否收到，如果没有收到就重新发送，直到送达，为了解决丢包的问题</p>
+<p><strong>状态位</strong> ，ACK是回复，SYN是发起一个连接，RST是重新连接，FIN是结束连接。带状态位的包的发送，会引起双方状态变更</p>
+<p><strong>窗口大小</strong>。TCP要流量控制，通信双方各声明一个窗口（缓存大小），标识自己当前的处理能力。</p>
+<p>除了流量控制，TCP还会做<strong>拥塞控制</strong>，控制自己的发送速度。</p>
+<h3 id="tcp三次握手">TCP三次握手</h3>
+<p>在 HTTP 传输数据之前，首先需要 TCP 建立连接，称三次握手</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-25%20105738.png" alt=""></p>
+<p>维护一个状态机</p>
+<ul>
+<li>开始，客户端和服务端都处于<code>CLOSED</code>状态。服务的主动监听某个端口，处理 <code>LISTEN</code>状态。</li>
+<li>客户端发起主动连接<code>SYN</code>,之后处与<code>SYN-SENT</code>状态</li>
+<li>服务端收到客户端发起的连接，返回<code>SYN</code>,并且<code>ACK</code>客户端的<code>SYN</code>,之后处于<code>SYN_RCVD</code>状态</li>
+<li>客户端收到服务端发送的<code>ACK</code>和<code>SYN</code>之后，发送对<code>SYN</code>确认的<code>ACK</code>,之后便处于<code>ESTABLISHED</code>状态，因为一发一收成功了</li>
+<li>服务端收到<code>ACK</code>的<code>ACK</code>之后，处于<code>ESTABLISHED</code>状态。</li>
+</ul>
+<p>三次握手的目的是保证双方都有发送和接收的能力。</p>
+<h3 id="查看tcp的连接状态">查看TCP的连接状态</h3>
+<p>在Linux里可以通过<code>netstat -napt</code>查看</p>
+<h3 id="tcp数据分割">TCP数据分割</h3>
+<p>如果HTTP请求信息过长，超过了<code>MSS</code>的长度，这时TCP就需要把HTTP的数据拆分为多段</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-25%20200827.png" alt=""></p>
+<ul>
+<li><code>MTU</code> 一个网络包的最大长度，以太网中一般为1500字节。</li>
+<li><code>MSS</code> 除去TCP头和IP头后，一个网络包能够容纳的TCP数据最大长度</li>
+</ul>
+<p>数据会被以MSS的长度为单位进行拆分，拆分出来的每一块数据放进单独的网络包中，也就是在每个被拆分的数据加上TCP头信息，叫由IP模块处理。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-25%20201325.png" alt=""></p>
+<h3 id="tcp报文生成">TCP报文生成</h3>
+<p>TCP协议里由两个端口，一个是浏览器监听的端口（随机生成），一个是Web服务器监听的端口（HTTP默认给是80，HTTPS默认是443）</p>
+<p>双方建立连接后，TCP报文的数据部分就是存放HTTP头部+数据，组装好TCP报文后，需要交给网络层处理。</p>
+<p>这里网络层的报文就是</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-25%20201845.png" alt=""></p>
+<p>TCP头部保证可靠传输，TCP报文生成后需要向目的发送，需要使用IP模块进行发送，具体如何实现呢？</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoyume</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-29
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+          <a href="/tags/tcp/">TCP</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/8.%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">输入网址的网页显示期间的二三事(2)-IP.MAC</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/6.tcp-ip%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/">
+            <span class="next-text nav-default">TCP/IP网络模型</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://xiaoyume.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>xiaoyume</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

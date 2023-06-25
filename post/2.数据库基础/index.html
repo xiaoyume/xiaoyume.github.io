@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>数据库基础 - Even - A super concise theme for Hugo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoyume" /><meta name="description" content="数据库基础 目录 [[TOC]] [TOC] 1.数据设计基础 2.红黑树 维基百科-红黑树的应用 2.2.红黑树笔记 红黑树变色、自旋、自平衡原理 本节课的重点是，自旋和变色 注" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.111.3 with theme even" />
+
+
+<link rel="canonical" href="https://xiaoyume.github.io/post/2.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="数据库基础" />
+<meta property="og:description" content="数据库基础 目录 [[TOC]] [TOC] 1.数据设计基础 2.红黑树 维基百科-红黑树的应用 2.2.红黑树笔记 红黑树变色、自旋、自平衡原理 本节课的重点是，自旋和变色 注" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaoyume.github.io/post/2.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-13T15:11:21+08:00" />
+<meta property="article:modified_time" content="2023-05-13T15:11:21+08:00" />
+<meta itemprop="name" content="数据库基础">
+<meta itemprop="description" content="数据库基础 目录 [[TOC]] [TOC] 1.数据设计基础 2.红黑树 维基百科-红黑树的应用 2.2.红黑树笔记 红黑树变色、自旋、自平衡原理 本节课的重点是，自旋和变色 注"><meta itemprop="datePublished" content="2023-05-13T15:11:21+08:00" />
+<meta itemprop="dateModified" content="2023-05-13T15:11:21+08:00" />
+<meta itemprop="wordCount" content="909">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据库基础"/>
+<meta name="twitter:description" content="数据库基础 目录 [[TOC]] [TOC] 1.数据设计基础 2.红黑树 维基百科-红黑树的应用 2.2.红黑树笔记 红黑树变色、自旋、自平衡原理 本节课的重点是，自旋和变色 注"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">xiaoyume&lt;</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">xiaoyume&lt;</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">数据库基础</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-13 </span>
+        
+          <span class="more-meta"> 约 909 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#数据库基础">数据库基础</a>
+      <ul>
+        <li><a href="#目录">目录</a></li>
+        <li><a href="#1数据设计基础">1.数据设计基础</a></li>
+        <li><a href="#2红黑树">2.红黑树</a>
+          <ul>
+            <li><a href="#22红黑树笔记">2.2.红黑树笔记</a></li>
+          </ul>
+        </li>
+        <li><a href="#3数据库的三大范式">3.数据库的三大范式</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="数据库基础">数据库基础</h1>
+<h2 id="目录">目录</h2>
+<p>[[TOC]]</p>
+<p>[TOC]</p>
+<h2 id="1数据设计基础">1.数据设计基础</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E6%AD%A5%E9%AA%A4.png" alt="数据库设计步骤"></p>
+<h2 id="2红黑树">2.红黑树</h2>
+<ul>
+<li>维基百科-<a href="https://zh.wikipedia.org/wiki/%E7%BA%A2%E9%BB%91%E6%A0%91">红黑树的应用</a></li>
+</ul>
+<h3 id="22红黑树笔记">2.2.红黑树笔记</h3>
+<blockquote>
+<p>红黑树变色、自旋、自平衡原理</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/01.png" alt="01"></p>
+<ul>
+<li>本节课的重点是，自旋和变色</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rb002.png" alt="rb002"></p>
+<ul>
+<li>注意：红黑树新插入的节点『必须』是红色！</li>
+<li>每个叶子节点都是黑色的空节点（NIL）！</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbb03.png" alt="rbb03"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbb04.png" alt="rbb04"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbb05.png" alt="rbb05"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbb06.png" alt="rbb06"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbb07.png" alt="rbb07"></p>
+<ul>
+<li>
+<p>NIL的颜色必须是黑色的，在Java里面，他的值是NULL，因为这个叶子节点是虚拟出来的。</p>
+<p>（这个是为了用来满足性质4的）</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbb08.png" alt="rbb08"></p>
+<p>很显然有2个属性；
+1）不能有两个连续的红色</p>
+<p>2）红色节点，他必须有父节点，而且这个父节点一定是黑色的。</p>
+<p>3）红色节点不能为根节点（性质2），所以红色节点只能为<strong>子节点</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210702200325816.png" alt="image-20210702200325816"></p>
+<ul>
+<li>叶子节点就是上面的，黑色椭圆</li>
+<li>红色非平衡和黑色完美平衡（中庸），红黑树是不完美平衡的</li>
+<li>AVL却是完美平衡</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rb10.png" alt="rb10"></p>
+<ul>
+<li>因为左边这样的AVL，不稳定，他这个时候退化为链表了。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rb11.png" alt="rb11"></p>
+<p>新增一个节点，你就要看看这棵树是否违反了我们红黑树的性质，然后，让他自己来平衡。</p>
+<p>我们任何新增的红黑树的节点，默认都是新加<strong>红色</strong>的节点。（因为这个不会影响性质5）</p>
+<p>自平衡就是一个调整的过程。</p>
+<p>具体的：</p>
+<p>你新增的这个节点后，你去编代码的时候，你只需要考虑。从当前节点的三代！！</p>
+<p>超过第4代就不管了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210702200621045.png" alt="image-20210702200621045"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210702200632828.png" alt="image-20210702200632828"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rb.png" alt="rb"></p>
+<p>你祖父母都降级了，所以给他一个好处，就是把B节点给他了。</p>
+<p>（只要有旋转，就会有<strong>一条线</strong>互换的。）</p>
+<p><strong>旋转节点的圆心，一定是他的子节点！</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210702200729288.png" alt="image-20210702200729288"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbleft.png" alt="rbleft"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbleft2.png" alt="rbleft2"></p>
+<ul>
+<li>上面的旋转，根本可以不分左边还是右边旋转。</li>
+<li>下面是红黑树的操作：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210703091105553.png" alt="image-20210703091105553"></p>
+<p>CRUD</p>
+<p>c-<strong>新增</strong></p>
+<p>查找很简答&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+<p>r-读，<strong>查找</strong></p>
+<p>U-更新（查找到后改就）</p>
+<p>D-删除（复杂）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbcase.png" alt="rbcase"></p>
+<ul>
+<li>上面是我编程的时候的很多case的。</li>
+<li>上面是做红黑树的所有情况。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbcreate.png" alt="rbcreate"></p>
+<p>直系CPG在一条线上，/或者\</p>
+<p>三角关系是，不在一条直线上（也2种）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210703091322201.png" alt="image-20210703091322201"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210703091336549.png" alt="image-20210703091336549"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210703091344050.png" alt="image-20210703091344050"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210703091354784.png" alt="image-20210703091354784"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/rbtrac.png" alt="rbtrac"></p>
+<ul>
+<li>三角关系，其实就是先转换为三点一线关系。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/HACV/picture/img/image-20210703091444837.png" alt="image-20210703091444837"></p>
+<h2 id="3数据库的三大范式">3.数据库的三大范式</h2>
+<ul>
+<li>
+<p>第一范式：当关系模式R的所有属性都不能再分解为更基本的数据单位时，称R是满足第一范式，即属性不可分</p>
+</li>
+<li>
+<p>第二范式：如果关系模式R满足第一范式，并且R得所有非主属性都完全依赖于R的每一个候选关键属性，称R满足第二范式</p>
+</li>
+<li>
+<p>第三范式：设R是一个满足第一范式条件的关系模式，X是R的任意属性集，如果X非传递依赖于R的任意一个候选关键字，称R满足第三范式，即非主属性不传递依赖于键码</p>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoyume</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-13
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/3.fortran95%E7%AC%94%E8%AE%B0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">fortran95</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/1.first/">
+            <span class="next-text nav-default">第一篇博客，开山之作</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://xiaoyume.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>xiaoyume</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

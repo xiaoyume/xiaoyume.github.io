@@ -9,19 +9,19 @@
     <lastBuildDate>Mon, 05 Jun 2023 11:11:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HTTP面试题目</title>
-      <link>https://xiaoyume.github.io/post/http/</link>
+      <link>https://xiaoyume.github.io/post/11.http%E9%9D%A2%E8%AF%95/</link>
       <pubDate>Mon, 05 Jun 2023 11:11:21 +0800</pubDate>
       
-      <guid>https://xiaoyume.github.io/post/http/</guid>
+      <guid>https://xiaoyume.github.io/post/11.http%E9%9D%A2%E8%AF%95/</guid>
       <description>HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使</description>
     </item>
     
     <item>
       <title>TCP/IP网络模型</title>
-      <link>https://xiaoyume.github.io/post/tcp-ip%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/</link>
+      <link>https://xiaoyume.github.io/post/6.tcp-ip%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/</link>
       <pubDate>Thu, 18 May 2023 14:53:29 +0800</pubDate>
       
-      <guid>https://xiaoyume.github.io/post/tcp-ip%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/</guid>
+      <guid>https://xiaoyume.github.io/post/6.tcp-ip%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/</guid>
       <description>TCP/IP网络模型 两个系统中实体通信是一个很复杂的过程，为了降低协议设计和调试流程的复杂性，也为了便于对网络进行研究】实现和维护，促进标准</description>
     </item>
     

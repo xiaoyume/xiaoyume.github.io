@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>输入网址的网页显示期间的二三事(2)-IP.MAC - Even - A super concise theme for Hugo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoyume" /><meta name="description" content="从输入网址到网页显示，期间发现了什么？ IP- 远程定位 上一步成了带TCP头的TCP报文，其执行收发操作时，需要委托IP模块将数据封装成网络包发送给" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.111.3 with theme even" />
+
+
+<link rel="canonical" href="https://xiaoyume.github.io/post/8.%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B2/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="输入网址的网页显示期间的二三事(2)-IP.MAC" />
+<meta property="og:description" content="从输入网址到网页显示，期间发现了什么？ IP- 远程定位 上一步成了带TCP头的TCP报文，其执行收发操作时，需要委托IP模块将数据封装成网络包发送给" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaoyume.github.io/post/8.%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B2/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-29T20:15:10+08:00" />
+<meta property="article:modified_time" content="2023-05-29T00:00:00+00:00" />
+<meta itemprop="name" content="输入网址的网页显示期间的二三事(2)-IP.MAC">
+<meta itemprop="description" content="从输入网址到网页显示，期间发现了什么？ IP- 远程定位 上一步成了带TCP头的TCP报文，其执行收发操作时，需要委托IP模块将数据封装成网络包发送给"><meta itemprop="datePublished" content="2023-05-29T20:15:10+08:00" />
+<meta itemprop="dateModified" content="2023-05-29T00:00:00+00:00" />
+<meta itemprop="wordCount" content="4266">
+<meta itemprop="keywords" content="计算机网络,IP," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="输入网址的网页显示期间的二三事(2)-IP.MAC"/>
+<meta name="twitter:description" content="从输入网址到网页显示，期间发现了什么？ IP- 远程定位 上一步成了带TCP头的TCP报文，其执行收发操作时，需要委托IP模块将数据封装成网络包发送给"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">xiaoyume&lt;</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">xiaoyume&lt;</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">输入网址的网页显示期间的二三事(2)-IP.MAC</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-29 </span>
+        
+          <span class="more-meta"> 约 4266 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#从输入网址到网页显示期间发现了什么">从输入网址到网页显示，期间发现了什么？</a>
+      <ul>
+        <li><a href="#ip--远程定位">IP- 远程定位</a></li>
+        <li><a href="#mac-两点传输">MAC-两点传输</a></li>
+        <li><a href="#网卡">网卡</a></li>
+        <li><a href="#交换机">交换机</a></li>
+        <li><a href="#路由器">路由器</a></li>
+        <li><a href="#服务器-与-客户端">服务器 与 客户端</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="从输入网址到网页显示期间发现了什么">从输入网址到网页显示，期间发现了什么？</h1>
+<h2 id="ip--远程定位">IP- 远程定位</h2>
+<p>上一步成了带TCP头的TCP报文，其执行收发操作时，需要委托IP模块将数据封装成<strong>网络包</strong>发送给通信对象。</p>
+<blockquote>
+<p>IP头部</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-29%20101358.png" alt=""></p>
+<p>在IP协议里有<strong>源地址IP</strong>和<strong>目标地址IP</strong></p>
+<ul>
+<li>源地址，是客户端输出的IP地址</li>
+<li>目标地址，通过DNS域名解析得到的Web服务器IP</li>
+</ul>
+<p>因为HTTP是经过TCP传输的，所以在IP包头的<strong>协议号</strong>,要填写<code>06</code>，表示协议是TCP</p>
+<blockquote>
+<p>如果客户端有多个网卡，就有多个IP地址，IP头部会选择哪个IP呢？</p>
+</blockquote>
+<p>存在多个网卡，源地址IP需要判断应该填写哪个地址。实际上相当于是<strong>选择哪一块网卡发送包</strong>。</p>
+<p>根据<strong>路由表规则</strong></p>
+<p>在Linux里，可以使用<code>route -n</code>命令查看当前系统的路由表</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-29%20102535.png" alt=""></p>
+<p>根据上面的路由表，假设Web服务器的目标地址是<code>192.168.10.200</code></p>
+<p><strong>IP号</strong>与<strong>子网掩码</strong>做<strong>与运算</strong>，得到目标地址网络号，例如<code>192.168.10.200</code>与<code>255.255.255.0</code>运算得到<code>192.168.10.0</code>，与路由表里第二条一致，所以将使用<code>eth1</code>网络的IP地址作为IP包头的源地址。</p>
+<p>图中第3条比较特殊，其目标地址和子网掩码都是<code>0.0.0.0</code>，表示默认网关，如果其他条目无法匹配，就后匹配这一条，并把包发送路由器，<code>Gateway</code>表示路由器的IP地址。</p>
+<p><code>IP报文生成</code></p>
+<p><strong>在TCP报文的前面加上IP头部</strong></p>
+<h2 id="mac-两点传输">MAC-两点传输</h2>
+<p>生成IP头部之后，网络包还需要在IP头部前面加上MAC头部</p>
+<blockquote>
+<p>为什么要添加 MAC 头部。</p>
+<p>IP 头部中的接收方 IP 地址表示网络包的目的地，通过这个地址我们就可以判断要将包发到哪里。但在以太网的世界中，TCP/IP 的这个思路是行不通的。以太网在判断网络包目的地时和 TCP/IP 的方式不同，因此必须采用相匹配的方式才能在以太网中将包发往目的地，而 MAC 头部就是干这个用的。</p>
+<p>IP 模块在生成 IP 头部之后，会在它前面再加上 MAC 头部。MAC 头部是以太网使用的头部，它包含了接收方和发送方的 MAC 地址等信息。</p>
+</blockquote>
+<p><strong>MAC包头格式</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>长度bit</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接受方MAC地址</td>
+<td>48</td>
+<td>局域网中使用这一地址传输网络包</td>
+</tr>
+<tr>
+<td>发送方MAC地址</td>
+<td>48</td>
+<td>接受方判断谁发送包</td>
+</tr>
+<tr>
+<td>协议类型</td>
+<td>16</td>
+<td>使用的协议类型</td>
+</tr>
+</tbody>
+</table>
+<p>MAC地址用于两点之间传输</p>
+<p>一般在TCP/IP通信里，MAC包头的协议类型只有：</p>
+<ul>
+<li><code>0800</code>： IP协议</li>
+<li><code>0806</code> ：ARP协议</li>
+</ul>
+<p>发送方MAC地址获取就是网卡里的MAC地址，出厂固定</p>
+<p>接收方MAC地址，先要直到把包发给谁，查一下<strong>路由表</strong>。在路由表找到匹配的条目，把包发给<code>Gateway</code>列中的IP地址就可以。</p>
+<p><strong>知道了要发给谁，如何获取对方的MAC地址呢？</strong></p>
+<p>需要ARP协议帮助找到MAC地址</p>
+<p>ARP 协议会在以太网中以<strong>广播</strong>的形式，对以太网所有的设备喊出：“这个 IP 地址是谁的？请把你的 MAC 地址告诉我”。</p>
+<p>然后就会有人回答：“这个 IP 地址是我的，我的 MAC 地址是 XXXX”。</p>
+<p>操作系统会把本次查询结果放到一块叫做 <strong>ARP 缓存</strong>的内存空间留着以后用，不过缓存的时间就几分钟。</p>
+<h2 id="网卡">网卡</h2>
+<p>网络包只是存放在内存中的二进制信息，需要把<strong>数字信号</strong>转换为<strong>电信号</strong>，才能在网线上传输。</p>
+<p>复杂这这一操作的是网卡，控制网卡需要靠<strong>网卡驱动程序</strong></p>
+<p>网卡驱动获取到网络包后，会将其复制到网卡内的缓存区里，接着会在开头加上<strong>报头和起始帧分界符</strong>，在末尾加上用于检测错误的<strong>帧校验序列</strong>FSC</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-30%20104919.png" alt=""></p>
+<ul>
+<li>起始帧分界符是一个用来表示包起始位置的标记</li>
+<li>末尾的 <code>FCS</code>（帧校验序列）用来检查包传输过程是否有损坏</li>
+</ul>
+<p>最后网卡会将包转为电信号，通过网线发送出去。</p>
+<h2 id="交换机">交换机</h2>
+<p>交换机的设计是将网络包<strong>原样</strong>转发到目的地。交换机工作在 MAC 层，也称为<strong>二层网络设备</strong>。</p>
+<blockquote>
+<p>交换机的包接收操作</p>
+</blockquote>
+<p>首先，电信号到达网线接口，交换机里的模块进行接收，接下来交换机里的模块将电信号转换为数字信号。</p>
+<p>然后通过包末尾的 <code>FCS</code> 校验错误，如果没问题则放到缓冲区。这部分操作基本和计算机的网卡相同，但交换机的工作方式和网卡不同。</p>
+<p>计算机的网卡本身具有 MAC 地址，并通过核对收到的包的接收方 MAC 地址判断是不是发给自己的，如果不是发给自己的则丢弃；相对地，交换机的端口不核对接收方 MAC 地址，而是直接接收所有的包并存放到缓冲区中。因此，和网卡不同，<strong>交换机的端口不具有 MAC 地址</strong>。</p>
+<p>将包存入缓冲区后，接下来需要查询一下这个包的接收方 MAC 地址是否已经在 MAC 地址表中有记录了。</p>
+<p>交换机的 MAC 地址表主要包含两个信息：</p>
+<ul>
+<li>一个是设备的 MAC 地址，</li>
+<li>另一个是该设备连接在交换机的哪个端口上。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-30%20105457.png" alt=""></p>
+<p>举个例子，如果收到的包的接收方 MAC 地址为 <code>00-02-B3-1C-9C-F9</code>，则与图中表中的第 3 行匹配，根据端口列的信息，可知这个地址位于 <code>3</code> 号端口上，然后就可以通过交换电路将包发送到相应的端口了。</p>
+<p><strong>交换机根据 MAC 地址表查找 MAC 地址，然后将信号发送到相应的端口</strong>。</p>
+<blockquote>
+<p>当 MAC 地址表找不到指定的 MAC 地址会怎么样？</p>
+</blockquote>
+<p>地址表中找不到指定的 MAC 地址。这可能是因为具有该地址的设备还没有向交换机发送过包，或者这个设备一段时间没有工作导致地址被从地址表中删除了。</p>
+<p>这种情况下，交换机无法判断应该把包转发到哪个端口，<strong>只能将包转发到除了源端口之外的所有端口上</strong>，无论该设备连接在哪个端口上都能收到这个包。</p>
+<p>这样做不会产生什么问题，因为以太网的设计本来就是将包发送到整个网络的，然后<strong>只有相应的接收者才接收包，而其他设备则会忽略这个包</strong>。</p>
+<p>有人会说：“这样做会发送多余的包，会不会造成网络拥塞呢？”</p>
+<p>其实完全不用过于担心，因为发送了包之后<strong>目标设备会作出响应，只要返回了响应包</strong>，交换机就可以将它的地址写入 MAC 地址表，下次也就不需要把包发到所有端口了。</p>
+<p>局域网中每秒可以传输上千个包，多出一两个包并无大碍。</p>
+<p>此外，如果接收方 MAC 地址是一个<strong>广播地址</strong>，那么交换机会将包发送到除源端口之外的所有端口。</p>
+<p>以下两个属于广播地址：</p>
+<ul>
+<li>MAC 地址中的 <code>FF:FF:FF:FF:FF:FF</code></li>
+<li>IP 地址中的 <code>255.255.255.255</code></li>
+</ul>
+<h2 id="路由器">路由器</h2>
+<blockquote>
+<p>路由器与交换机的区别</p>
+</blockquote>
+<p>网络包经过交换机之后，现在到达了<strong>路由器</strong>，并在此被转发到下一个路由器或目标设备。</p>
+<p>这一步转发的工作原理和交换机类似，也是通过查表判断包转发的目标。</p>
+<p>不过在具体的操作过程上，路由器和交换机是有区别的。</p>
+<ul>
+<li>因为<strong>路由器</strong>是基于 <strong>IP</strong> 设计的，俗称<strong>三层</strong>网络设备，路由器的各个端口都具有 MAC 地址和 IP 地址；</li>
+<li>而<strong>交换机</strong>是基于<strong>以太网</strong>设计的，俗称<strong>二层</strong>网络设备，交换机的端口不具有 MAC 地址。</li>
+</ul>
+<blockquote>
+<p>路由器基本原理</p>
+</blockquote>
+<p>路由器的端口具有 MAC 地址，因此它就能够成为<strong>以太网的发送方和接收方</strong>；同时还具有 IP 地址，从这个意义上来说，它和<strong>计算机的网卡是一样的</strong>。</p>
+<p>当转发包时，首先路由器端口会接收发给自己的以太网包，然后<strong>路由表</strong>查询转发目标，再由相应的端口作为发送方将以太网包发送出去。</p>
+<blockquote>
+<p>路由器的包接收操作</p>
+</blockquote>
+<p>首先，电信号到达网线接口部分，路由器中的模块会将电信号转成数字信号，然后通过包末尾的 <code>FCS</code> 进行错误校验。</p>
+<p>如果没问题则检查 MAC 头部中的<strong>接收方 MAC 地址</strong>，看看是不是发给自己的包，如果是就放到接收缓冲区中，否则就丢弃这个包。</p>
+<p>总的来说，路由器的端口都具有 MAC 地址，<strong>只接收与自身地址匹配的包</strong>，遇到不匹配的包则直接丢弃。</p>
+<blockquote>
+<p>查询路由表确定输出端口</p>
+</blockquote>
+<p>完成包接收操作之后，路由器就会<strong>去掉</strong>包开头的 MAC 头部。</p>
+<p><strong>MAC 头部的作用就是将包送达路由器</strong>，其中的接收方 MAC 地址就是路由器端口的 MAC 地址。因此，当包到达路由器之后，MAC 头部的任务就完成了，于是 MAC 头部就会<strong>被丢弃</strong>。</p>
+<p>接下来，路由器会根据 MAC 头部后方的 <code>IP</code> 头部中的内容进行包的转发操作。</p>
+<p>转发操作分为几个阶段，首先是查询<strong>路由表</strong>判断转发目标。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-30%20105925.png" alt=""></p>
+<p>具体的工作流程根据上图，举个例子。</p>
+<p>假设地址为 <code>10.10.1.101</code> 的计算机要向地址为 <code>192.168.1.100</code> 的服务器发送一个包，这个包先到达图中的路由器。</p>
+<p>判断转发目标的第一步，就是根据包的接收方 IP 地址查询路由表中的目标地址栏，以找到相匹配的记录。</p>
+<p>路由匹配和前面讲的一样，每个条目的子网掩码和 <code>192.168.1.100</code> IP 做 <strong>&amp; 与运算</strong>后，得到的结果与对应条目的目标地址进行匹配，如果匹配就会作为候选转发目标，如果不匹配就继续与下个条目进行路由匹配。</p>
+<p>如第二条目的子网掩码 <code>255.255.255.0</code> 与 <code>192.168.1.100</code> IP 做 <strong>&amp; 与运算</strong>后，得到结果是 <code>192.168.1.0</code> ，这与第二条目的目标地址 <code>192.168.1.0</code> 匹配，该第二条目记录就会被作为转发目标。</p>
+<p>实在找不到匹配路由时，就会选择<strong>默认路由</strong>，路由表中子网掩码为 <code>0.0.0.0</code> 的记录表示「默认路由」。</p>
+<blockquote>
+<p>路由器的发送操作</p>
+</blockquote>
+<p>接下来就会进入包的<strong>发送操作</strong>。</p>
+<p>首先，我们需要根据<strong>路由表的网关列表</strong>判断对方的地址。</p>
+<ul>
+<li>如果网关是一个 IP 地址，则这个IP 地址就是我们要转发到的目标地址，<strong>还未抵达终点</strong>，还需继续需要路由器转发。</li>
+<li>如果网关为空，则 IP 头部中的接收方 IP 地址就是要转发到的目标地址，也是就终于找到 IP 包头里的目标地址了，说明<strong>已抵达终点</strong>。</li>
+</ul>
+<p>知道对方的 IP 地址之后，接下来需要通过 <code>ARP</code> 协议根据 IP 地址查询 MAC 地址，并将查询的结果作为接收方 MAC 地址。</p>
+<p>路由器也有 ARP 缓存，因此首先会在 ARP 缓存中查询，如果找不到则发送 ARP 查询请求。</p>
+<p>接下来是发送方 MAC 地址字段，这里填写输出端口的 MAC 地址。还有一个以太类型字段，填写 <code>0800</code> （十六进制）表示 IP 协议。</p>
+<p>网络包完成后，接下来会将其转换成电信号并通过端口发送出去。这一步的工作过程和计算机也是相同的。</p>
+<p>发送出去的网络包会通过<strong>交换机</strong>到达下一个路由器。由于接收方 MAC 地址就是下一个路由器的地址，所以交换机会根据这一地址将包传输到下一个路由器。</p>
+<p>接下来，下一个路由器会将包转发给再下一个路由器，经过层层转发之后，网络包就到达了最终的目的地。</p>
+<p>不知你发现了没有，在网络包传输的过程中，<strong>源 IP 和目标 IP 始终是不会变的，一直变化的是 MAC 地址</strong>，因为需要 MAC 地址在以太网内进行<strong>两个设备</strong>之间的包传输。</p>
+<h2 id="服务器-与-客户端">服务器 与 客户端</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-05-30%20114041.png" alt=""></p>
+<p>数据包抵达服务器后，服务器会先扒开数据包的 <strong>MAC 头部</strong>，查看是否和服务器自己的 MAC 地址符合，符合就将包收起来。</p>
+<p>接着继续扒开数据包的 IP 头，发现 IP 地址符合，根据 IP 头中协议项，知道自己上层是 TCP 协议。</p>
+<p>于是，扒开 TCP 的头，里面有序列号，需要看一看这个序列包是不是我想要的，如果是就放入缓存中然后返回一个 <strong>ACK</strong>，如果不是就丢弃。TCP 头部里面还有端口号， HTTP 的服务器正在监听这个端口号。</p>
+<p>于是，服务器自然就知道是 HTTP 进程想要这个包，于是就将包发给 HTTP 进程。</p>
+<p>服务器的 HTTP 进程看到，原来这个请求是要访问一个页面，于是就把这个<strong>网页封装在 HTTP 响应报文里</strong>。</p>
+<p>HTTP 响应报文也需要穿上 TCP、IP、MAC 头部，不过这次是源地址是服务器 IP 地址，目的地址是客户端 IP 地址。</p>
+<p>穿好头部衣服后，从网卡出去，交由交换机转发到出城的路由器，路由器就把响应数据包发到了下一个路由器，就这样跳啊跳。</p>
+<p>最后跳到了客户端的城门把守的路由器，路由器扒开 IP 头部发现是要找城内的人，于是又把包发给了城内的交换机，再由交换机转发到客户端。</p>
+<p>客户端收到了服务器的响应数据包后，同样也非常的高兴，客户能拆快递了！</p>
+<p>于是，客户端开始扒皮，把收到的数据包的皮扒剩 HTTP 响应报文后，交给浏览器去渲染页面，一份特别的数据包快递，就这样显示出来了！</p>
+<p>最后，客户端要离开了，向服务器发起了 TCP 四次挥手，至此双方的连接就断开了。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoyume</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-29
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+          <a href="/tags/ip/">IP</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/9.%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E6%94%BB%E5%85%8B1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">自记录拿下算法之dps与bfs</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/7.%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E7%9A%84%E7%BD%91%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B1/">
+            <span class="next-text nav-default">输入网址的网页显示期间的二三事(1)-HTTP.TCP</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://xiaoyume.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>xiaoyume</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
