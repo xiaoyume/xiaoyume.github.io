@@ -6,7 +6,16 @@
     <description>Recent content on Even - A super concise theme for Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 05 Jun 2023 11:11:21 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Jun 2023 10:28:50 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>安装xmgrace</title>
+      <link>https://xiaoyume.github.io/post/12.installgrace/</link>
+      <pubDate>Sun, 25 Jun 2023 10:28:50 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/12.installgrace/</guid>
+      <description>安装xmgrace wget https://plasma-gate.weizmann.ac.il/pub/grace/src/grace-latest.tar.gz cd grace-5.1.25 ./configure make make install</description>
+    </item>
+    
     <item>
       <title>HTTP面试题目</title>
       <link>https://xiaoyume.github.io/post/11.http%E9%9D%A2%E8%AF%95/</link>
