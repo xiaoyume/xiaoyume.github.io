@@ -48,7 +48,7 @@
 <meta itemprop="name" content="HTTP面试题目">
 <meta itemprop="description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使"><meta itemprop="datePublished" content="2023-06-05T11:11:21+08:00" />
 <meta itemprop="dateModified" content="2023-06-05T11:11:21+08:00" />
-<meta itemprop="wordCount" content="3796">
+<meta itemprop="wordCount" content="7181">
 <meta itemprop="keywords" content="HTTP," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="HTTP面试题目"/>
 <meta name="twitter:description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使"/>
@@ -131,8 +131,8 @@
         <div class="post-category">
             <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"> 计算机基础 </a>
             </div>
-          <span class="more-meta"> 约 3796 字 </span>
-          <span class="more-meta"> 预计阅读 8 分钟 </span>
+          <span class="more-meta"> 约 7181 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -165,7 +165,18 @@
             <li><a href="#协商缓存">协商缓存</a></li>
           </ul>
         </li>
-        <li><a href="#http特性">HTTP特性</a></li>
+        <li><a href="#http特性">HTTP特性</a>
+          <ul>
+            <li><a href="#http11优点">HTTP/1.1优点</a></li>
+            <li><a href="#http11缺点">HTTP/1.1缺点</a></li>
+          </ul>
+        </li>
+        <li><a href="#http与https">HTTP与HTTPS</a>
+          <ul>
+            <li><a href="#http与https的区别">HTTP与HTTPS的区别</a></li>
+            <li><a href="#https-解决了-http-的哪些问题">HTTPS 解决了 HTTP 的哪些问题？</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -350,6 +361,121 @@
 <p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-06-06%20105951.png" alt=""></p>
 <p>上图是强制缓存和协商缓存的工作流程</p>
 <h2 id="http特性">HTTP特性</h2>
+<h3 id="http11优点">HTTP/1.1优点</h3>
+<ul>
+<li>简单</li>
+<li>灵活易于拓展</li>
+<li>应用广泛，跨平台</li>
+</ul>
+<h3 id="http11缺点">HTTP/1.1缺点</h3>
+<ul>
+<li>无状态双刃剑</li>
+</ul>
+<p>无状态的<strong>好处</strong>，因为服务器不会去记忆 HTTP 的状态，所以不需要额外的资源来记录状态信息，这能减轻服务器的负担，能够把更多的 CPU 和内存用来对外提供服务。</p>
+<p>无状态的<strong>坏处</strong>，既然服务器没有记忆能力，它在完成有关联性的操作时会非常麻烦。</p>
+<p>例如登录-&gt;添加购物车-&gt;下单-&gt;结算-&gt;支付，这系列操作都要知道用户的身份才行。但服务器不知道这些请求是有关联的，每次都要问一遍身份信息。</p>
+<p>这样每操作一次，都要验证信息，这样的购物体验还能愉快吗？别问，问就是<strong>酸爽</strong>！</p>
+<p>对于无状态的问题，解法方案有很多种，其中比较简单的方式用 <strong>Cookie</strong> 技术。</p>
+<p><code>Cookie</code> 通过在请求和响应报文中写入 Cookie 信息来控制客户端的状态。</p>
+<ul>
+<li>明文传输</li>
+<li>不安全</li>
+</ul>
+<p>通信使用明文（不加密），内容可能会被窃听。比如，<strong>账号信息容易泄漏，那你号没了。</strong></p>
+<p>不验证通信方的身份，因此有可能遭遇伪装。比如，<strong>访问假的淘宝、拼多多，那你钱没了。</strong></p>
+<p>无法证明报文的完整性，所以有可能已遭篡改。比如，<strong>网页上植入垃圾广告，视觉污染，眼没了。</strong></p>
+<p>HTTP 的安全问题，可以用 HTTPS 的方式解决，也就是通过引入 SSL/TLS 层，使得在安全上达到了极致</p>
+<h2 id="http与https">HTTP与HTTPS</h2>
+<h3 id="http与https的区别">HTTP与HTTPS的区别</h3>
+<ul>
+<li>HTTP是超文本传输协议，信息是明文传输，存在安全风险。HTTPS则解决了HTTP不安全的缺陷，在TCP和HTTP网络层之间加入了SSL/TLS协议，使得报文能够加密传输。</li>
+<li>HTTP 连接建立相对简单， TCP 三次握手之后便可进行 HTTP 的报文传输。而 HTTPS 在 TCP 三次握手之后，还需进行 SSL/TLS 的握手过程，才可进入加密报文传输。</li>
+<li>两者的默认端口不一样，HTTP 默认端口号是 80，HTTPS 默认端口号是 443。</li>
+<li>HTTPS 协议需要向 CA（证书权威机构）申请数字证书，来保证服务器的身份是可信的</li>
+</ul>
+<h3 id="https-解决了-http-的哪些问题">HTTPS 解决了 HTTP 的哪些问题？</h3>
+<p>HTTP 由于是明文传输，所以安全上存在以下三个风险：</p>
+<ul>
+<li><strong>窃听风险</strong>，比如通信链路上可以获取通信内容，用户号容易没。</li>
+<li><strong>篡改风险</strong>，比如强制植入垃圾广告，视觉污染，用户眼容易瞎。</li>
+<li><strong>冒充风险</strong>，比如冒充淘宝网站，用户钱容易没。</li>
+</ul>
+<p>HTTP<strong>S</strong> 在 HTTP 与 TCP 层之间加入了 <code>SSL/TLS</code> 协议，可以很好的解决了上述的风险：</p>
+<ul>
+<li><strong>信息加密</strong>：交互信息无法被窃取，但你的号会因为「自身忘记」账号而没。</li>
+<li><strong>校验机制</strong>：无法篡改通信内容，篡改了就不能正常显示，但百度「竞价排名」依然可以搜索垃圾广告。</li>
+<li><strong>身份证书</strong>：证明淘宝是真的淘宝网，但你的钱还是会因为「剁手」而没。</li>
+</ul>
+<blockquote>
+<p>HTTPS 是如何解决上面的三个风险的？</p>
+</blockquote>
+<ul>
+<li><strong>混合加密</strong>的方式实现信息的<strong>机密性</strong>，解决了窃听的风险。</li>
+<li><strong>摘要算法</strong>的方式来实现<strong>完整性</strong>，它能够为数据生成独一无二的「指纹」，指纹用于校验数据的完整性，解决了篡改的风险。</li>
+<li>将服务器公钥放入到<strong>数字证书</strong>中，解决了冒充的风险。</li>
+</ul>
+<p><em>1. 混合加密</em></p>
+<p>通过<strong>混合加密</strong>的方式可以保证信息的<strong>机密性</strong>，解决了窃听的风险。</p>
+<p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/20-%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86.png" alt="混合加密"></p>
+<p>HTTPS 采用的是<strong>对称加密</strong>和<strong>非对称加密</strong>结合的「混合加密」方式：</p>
+<ul>
+<li>在通信建立前采用<strong>非对称加密</strong>的方式交换「会话秘钥」，后续就不再使用非对称加密。</li>
+<li>在通信过程中全部使用<strong>对称加密</strong>的「会话秘钥」的方式加密明文数据。</li>
+</ul>
+<p>采用「混合加密」的方式的原因：</p>
+<ul>
+<li><strong>对称加密</strong>只使用一个密钥，运算速度快，密钥必须保密，无法做到安全的密钥交换。</li>
+<li><strong>非对称加密</strong>使用两个密钥：公钥和私钥，公钥可以任意分发而私钥保密，解决了密钥交换问题但速度慢。</li>
+</ul>
+<p><em>2. 摘要算法 + 数字签名</em></p>
+<p>为了保证传输的内容不被篡改，我们需要对内容计算出一个「指纹」，然后同内容一起传输给对方。</p>
+<p>对方收到后，先是对内容也计算出一个「指纹」，然后跟发送方发送的「指纹」做一个比较，如果「指纹」相同，说明内容没有被篡改，否则就可以判断出内容被篡改了。</p>
+<p>那么，在计算机里会<strong>用摘要算法（哈希函数）来计算出内容的哈希值</strong>，也就是内容的「指纹」，这个<strong>哈希值是唯一的，且无法通过哈希值推导出内容</strong>。</p>
+<p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95.png" alt="img"></p>
+<p>通过哈希算法可以确保内容不会被篡改，<strong>但是并不能保证「内容 + 哈希值」不会被中间人替换，因为这里缺少对客户端收到的消息是否来源于服务端的证明</strong>。</p>
+<p>举个例子，你想向老师请假，一般来说是要求由家长写一份请假理由并签名，老师才能允许你请假。</p>
+<p>但是你有模仿你爸爸字迹的能力，你用你爸爸的字迹写了一份请假理由然后签上你爸爸的名字，老师一看到这个请假条，查看字迹和签名，就误以为是你爸爸写的，就会允许你请假。</p>
+<p>那作为老师，要如何避免这种情况发生呢？现实生活中的，可以通过电话或视频来确认是否是由父母发出的请假，但是计算机里可没有这种操作。</p>
+<p>那为了避免这种情况，计算机里会用<strong>非对称加密算法</strong>来解决，共有两个密钥：</p>
+<ul>
+<li>一个是公钥，这个是可以公开给所有人的；</li>
+<li>一个是私钥，这个必须由本人管理，不可泄露。</li>
+</ul>
+<p>这两个密钥可以<strong>双向加解密</strong>的，比如可以用公钥加密内容，然后用私钥解密，也可以用私钥加密内容，公钥解密内容。</p>
+<p>流程的不同，意味着目的也不相同：</p>
+<ul>
+<li><strong>公钥加密，私钥解密</strong>。这个目的是为了<strong>保证内容传输的安全</strong>，因为被公钥加密的内容，其他人是无法解密的，只有持有私钥的人，才能解密出实际的内容；</li>
+<li><strong>私钥加密，公钥解密</strong>。这个目的是为了<strong>保证消息不会被冒充</strong>，因为私钥是不可泄露的，如果公钥能正常解密出私钥加密的内容，就能证明这个消息是来源于持有私钥身份的人发送的。</li>
+</ul>
+<p>一般我们不会用非对称加密来加密实际的传输内容，因为非对称加密的计算比较耗费性能的。</p>
+<p>所以非对称加密的用途主要在于<strong>通过「私钥加密，公钥解密」的方式，来确认消息的身份</strong>，我们常说的<strong>数字签名算法</strong>，就是用的是这种方式，不过私钥加密内容不是内容本身，而是<strong>对内容的哈希值加密</strong>。</p>
+<p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.png" alt="img"></p>
+<p>私钥是由服务端保管，然后服务端会向客户端颁发对应的公钥。如果客户端收到的信息，能被公钥解密，就说明该消息是由服务器发送的。</p>
+<p>引入了数字签名算法后，你就无法模仿你爸爸的字迹来请假了，你爸爸手上持有着私钥，你老师持有着公钥。</p>
+<p>这样只有用你爸爸手上的私钥才对请假条进行「签名」，老师通过公钥看能不能解出这个「签名」，如果能解出并且确认内容的完整性，就能证明是由你爸爸发起的请假条，这样老师才允许你请假，否则老师就不认。</p>
+<p><em>3. 数字证书</em></p>
+<p>前面我们知道：</p>
+<ul>
+<li>可以通过哈希算法来保证消息的完整性；</li>
+<li>可以通过数字签名来保证消息的来源可靠性（能确认消息是由持有私钥的一方发送的）；</li>
+</ul>
+<p>但是这还远远不够，<strong>还缺少身份验证的环节</strong>，万一公钥是被伪造的呢？</p>
+<p>还是拿请假的例子，虽然你爸爸持有私钥，老师通过是否能用公钥解密来确认这个请假条是不是来源你父亲的。</p>
+<p>但是我们还可以自己伪造出一对公私钥啊！</p>
+<p>你找了个夜晚，偷偷把老师桌面上和你爸爸配对的公钥，换成了你的公钥，那么下次你在请假的时候，你继续模仿你爸爸的字迹写了个请假条，然后用你的私钥做个了「数字签名」。</p>
+<p>但是老师并不知道自己的公钥被你替换过了，所以他还是按照往常一样用公钥解密，由于这个公钥和你的私钥是配对的，老师当然能用这个被替换的公钥解密出来，并且确认了内容的完整性，于是老师就会以为是你父亲写的请假条，又允许你请假了。</p>
+<p>好家伙，为了一个请假，真的是斗智斗勇。</p>
+<p>后面你的老师和父亲发现了你伪造公私钥的事情后，决定重新商量一个对策来应对你这个臭家伙。</p>
+<p>正所谓魔高一丈，道高一尺。</p>
+<p>既然伪造公私钥那么随意，所以你爸把他的公钥注册到<strong>警察局</strong>，警察局用他们自己的私钥对你父亲的公钥做了个数字签名，然后把你爸爸的「个人信息 + 公钥 + 数字签名」打包成一个<strong>数字证书，也就是说这个数字证书包含你爸爸的公钥。</strong></p>
+<p>这样，你爸爸如果因为家里确实有事要向老师帮你请假的时候，不仅会用自己的私钥对内容进行签名，还会把数字证书给到老师。</p>
+<p>老师拿到了数字证书后，<strong>首先会去警察局验证这个数字证书是否合法</strong>，因为数字证书里有警察局的数字签名，警察局要验证证书合法性的时候，用自己的公钥解密，如果能解密成功，就说明这个数字证书是在警察局注册过的，就认为该数字证书是合法的，然后就会把数字证书里头的公钥（你爸爸的）给到老师。</p>
+<p><strong>由于通过警察局验证了数字证书是合法的，那么就能证明这个公钥就是你父亲的</strong>，于是老师就可以安心的用这个公钥解密出请假条，如果能解密出，就证明是你爸爸写的请假条。</p>
+<p>正是通过了一个权威的机构来证明你爸爸的身份，所以你的伪造公私钥这个小伎俩就没用了。</p>
+<p>在计算机里，这个权威的机构就是 CA （数字证书认证机构），将服务器公钥放在数字证书（由数字证书认证机构颁发）中，只要证书是可信的，公钥就是可信的。</p>
+<p>数字证书的工作流程，我也画了一张图，方便大家理解：</p>
+<p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/22-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="数子证书工作流程"></p>
+<p>通过数字证书的方式保证服务器公钥的身份，解决冒充的风险。</p>
 
     </div>
 
