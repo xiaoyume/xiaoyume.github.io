@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>HTTP面试题目 - Even - A super concise theme for Hugo</title>
+  <title>HTTP面试题目 - xiaoyume&#39;s local blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -48,7 +48,7 @@
 <meta itemprop="name" content="HTTP面试题目">
 <meta itemprop="description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使"><meta itemprop="datePublished" content="2023-06-05T11:11:21+08:00" />
 <meta itemprop="dateModified" content="2023-06-05T11:11:21+08:00" />
-<meta itemprop="wordCount" content="7181">
+<meta itemprop="wordCount" content="7343">
 <meta itemprop="keywords" content="HTTP," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="HTTP面试题目"/>
 <meta name="twitter:description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使"/>
@@ -131,7 +131,7 @@
         <div class="post-category">
             <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"> 计算机基础 </a>
             </div>
-          <span class="more-meta"> 约 7181 字 </span>
+          <span class="more-meta"> 约 7343 字 </span>
           <span class="more-meta"> 预计阅读 15 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -174,6 +174,7 @@
           <ul>
             <li><a href="#http与https的区别">HTTP与HTTPS的区别</a></li>
             <li><a href="#https-解决了-http-的哪些问题">HTTPS 解决了 HTTP 的哪些问题？</a></li>
+            <li><a href="#https是如何连接的交互了什么">HTTPS是如何连接的？交互了什么？</a></li>
           </ul>
         </li>
       </ul>
@@ -474,6 +475,15 @@
 <p>数字证书的工作流程，我也画了一张图，方便大家理解：</p>
 <p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/22-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="数子证书工作流程"></p>
 <p>通过数字证书的方式保证服务器公钥的身份，解决冒充的风险。</p>
+<h3 id="https是如何连接的交互了什么">HTTPS是如何连接的？交互了什么？</h3>
+<p>SSL/TLS 协议基本流程：</p>
+<ul>
+<li>客户端向服务器索要并验证服务器的公钥。</li>
+<li>双方协商生产「会话秘钥」。</li>
+<li>双方采用「会话秘钥」进行加密通信。</li>
+</ul>
+<p>前两步也就是 SSL/TLS 的建立过程，也就是 TLS 握手阶段。</p>
+<p>TLS 的「握手阶段」涉及<strong>四次</strong>通信，使用不同的密钥交换算法，TLS 握手流程也会不一样的，现在常用的密钥交换算法有两种：RSA 算法和 ECDHE 算法</p>
 
     </div>
 
