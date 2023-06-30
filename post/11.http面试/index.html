@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="xiaoyume" /><meta name="description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="xiaoyume" /><meta name="description" content="HTTP常见面试题 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -40,18 +40,18 @@
 
 
 <meta property="og:title" content="HTTP面试题目" />
-<meta property="og:description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使" />
+<meta property="og:description" content="HTTP常见面试题 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xiaoyume.github.io/post/11.http%E9%9D%A2%E8%AF%95/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2023-06-05T11:11:21+08:00" />
 <meta property="article:modified_time" content="2023-06-05T11:11:21+08:00" />
 <meta itemprop="name" content="HTTP面试题目">
-<meta itemprop="description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使"><meta itemprop="datePublished" content="2023-06-05T11:11:21+08:00" />
+<meta itemprop="description" content="HTTP常见面试题 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机"><meta itemprop="datePublished" content="2023-06-05T11:11:21+08:00" />
 <meta itemprop="dateModified" content="2023-06-05T11:11:21+08:00" />
-<meta itemprop="wordCount" content="7343">
+<meta itemprop="wordCount" content="8831">
 <meta itemprop="keywords" content="HTTP," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="HTTP面试题目"/>
-<meta name="twitter:description" content="HTTP 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机世界里的协议，使"/>
+<meta name="twitter:description" content="HTTP常见面试题 基本概念 HTTP什么？ http是超文本传输协议，HyperText Transfer Protocol 可以拆分为3个部分 超文本 传输 协议 HTTP是一个计算机"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -131,8 +131,8 @@
         <div class="post-category">
             <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"> 计算机基础 </a>
             </div>
-          <span class="more-meta"> 约 7343 字 </span>
-          <span class="more-meta"> 预计阅读 15 分钟 </span>
+          <span class="more-meta"> 约 8831 字 </span>
+          <span class="more-meta"> 预计阅读 18 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -142,7 +142,7 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#http">HTTP</a>
+    <li><a href="#http常见面试题">HTTP常见面试题</a>
       <ul>
         <li><a href="#基本概念">基本概念</a>
           <ul>
@@ -175,6 +175,8 @@
             <li><a href="#http与https的区别">HTTP与HTTPS的区别</a></li>
             <li><a href="#https-解决了-http-的哪些问题">HTTPS 解决了 HTTP 的哪些问题？</a></li>
             <li><a href="#https是如何连接的交互了什么">HTTPS是如何连接的？交互了什么？</a></li>
+            <li><a href="#https的应用数据如何保证完整性的">HTTPS的应用数据如何保证完整性的</a></li>
+            <li><a href="#https一定可靠吗">HTTPS一定可靠吗</a></li>
           </ul>
         </li>
       </ul>
@@ -184,7 +186,7 @@
   </div>
 </div>
     <div class="post-content">
-      <h1 id="http">HTTP</h1>
+      <h1 id="http常见面试题">HTTP常见面试题</h1>
 <h2 id="基本概念">基本概念</h2>
 <h3 id="http什么">HTTP什么？</h3>
 <p>http是<strong>超文本传输协议</strong>，<strong>HyperText Transfer Protocol</strong></p>
@@ -432,9 +434,6 @@
 <p>那么，在计算机里会<strong>用摘要算法（哈希函数）来计算出内容的哈希值</strong>，也就是内容的「指纹」，这个<strong>哈希值是唯一的，且无法通过哈希值推导出内容</strong>。</p>
 <p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95.png" alt="img"></p>
 <p>通过哈希算法可以确保内容不会被篡改，<strong>但是并不能保证「内容 + 哈希值」不会被中间人替换，因为这里缺少对客户端收到的消息是否来源于服务端的证明</strong>。</p>
-<p>举个例子，你想向老师请假，一般来说是要求由家长写一份请假理由并签名，老师才能允许你请假。</p>
-<p>但是你有模仿你爸爸字迹的能力，你用你爸爸的字迹写了一份请假理由然后签上你爸爸的名字，老师一看到这个请假条，查看字迹和签名，就误以为是你爸爸写的，就会允许你请假。</p>
-<p>那作为老师，要如何避免这种情况发生呢？现实生活中的，可以通过电话或视频来确认是否是由父母发出的请假，但是计算机里可没有这种操作。</p>
 <p>那为了避免这种情况，计算机里会用<strong>非对称加密算法</strong>来解决，共有两个密钥：</p>
 <ul>
 <li>一个是公钥，这个是可以公开给所有人的；</li>
@@ -450,8 +449,6 @@
 <p>所以非对称加密的用途主要在于<strong>通过「私钥加密，公钥解密」的方式，来确认消息的身份</strong>，我们常说的<strong>数字签名算法</strong>，就是用的是这种方式，不过私钥加密内容不是内容本身，而是<strong>对内容的哈希值加密</strong>。</p>
 <p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.png" alt="img"></p>
 <p>私钥是由服务端保管，然后服务端会向客户端颁发对应的公钥。如果客户端收到的信息，能被公钥解密，就说明该消息是由服务器发送的。</p>
-<p>引入了数字签名算法后，你就无法模仿你爸爸的字迹来请假了，你爸爸手上持有着私钥，你老师持有着公钥。</p>
-<p>这样只有用你爸爸手上的私钥才对请假条进行「签名」，老师通过公钥看能不能解出这个「签名」，如果能解出并且确认内容的完整性，就能证明是由你爸爸发起的请假条，这样老师才允许你请假，否则老师就不认。</p>
 <p><em>3. 数字证书</em></p>
 <p>前面我们知道：</p>
 <ul>
@@ -459,19 +456,7 @@
 <li>可以通过数字签名来保证消息的来源可靠性（能确认消息是由持有私钥的一方发送的）；</li>
 </ul>
 <p>但是这还远远不够，<strong>还缺少身份验证的环节</strong>，万一公钥是被伪造的呢？</p>
-<p>还是拿请假的例子，虽然你爸爸持有私钥，老师通过是否能用公钥解密来确认这个请假条是不是来源你父亲的。</p>
-<p>但是我们还可以自己伪造出一对公私钥啊！</p>
-<p>你找了个夜晚，偷偷把老师桌面上和你爸爸配对的公钥，换成了你的公钥，那么下次你在请假的时候，你继续模仿你爸爸的字迹写了个请假条，然后用你的私钥做个了「数字签名」。</p>
-<p>但是老师并不知道自己的公钥被你替换过了，所以他还是按照往常一样用公钥解密，由于这个公钥和你的私钥是配对的，老师当然能用这个被替换的公钥解密出来，并且确认了内容的完整性，于是老师就会以为是你父亲写的请假条，又允许你请假了。</p>
-<p>好家伙，为了一个请假，真的是斗智斗勇。</p>
-<p>后面你的老师和父亲发现了你伪造公私钥的事情后，决定重新商量一个对策来应对你这个臭家伙。</p>
-<p>正所谓魔高一丈，道高一尺。</p>
-<p>既然伪造公私钥那么随意，所以你爸把他的公钥注册到<strong>警察局</strong>，警察局用他们自己的私钥对你父亲的公钥做了个数字签名，然后把你爸爸的「个人信息 + 公钥 + 数字签名」打包成一个<strong>数字证书，也就是说这个数字证书包含你爸爸的公钥。</strong></p>
-<p>这样，你爸爸如果因为家里确实有事要向老师帮你请假的时候，不仅会用自己的私钥对内容进行签名，还会把数字证书给到老师。</p>
-<p>老师拿到了数字证书后，<strong>首先会去警察局验证这个数字证书是否合法</strong>，因为数字证书里有警察局的数字签名，警察局要验证证书合法性的时候，用自己的公钥解密，如果能解密成功，就说明这个数字证书是在警察局注册过的，就认为该数字证书是合法的，然后就会把数字证书里头的公钥（你爸爸的）给到老师。</p>
-<p><strong>由于通过警察局验证了数字证书是合法的，那么就能证明这个公钥就是你父亲的</strong>，于是老师就可以安心的用这个公钥解密出请假条，如果能解密出，就证明是你爸爸写的请假条。</p>
-<p>正是通过了一个权威的机构来证明你爸爸的身份，所以你的伪造公私钥这个小伎俩就没用了。</p>
-<p>在计算机里，这个权威的机构就是 CA （数字证书认证机构），将服务器公钥放在数字证书（由数字证书认证机构颁发）中，只要证书是可信的，公钥就是可信的。</p>
+<p>这个权威的机构就是 CA （数字证书认证机构），将<strong>服务器公钥放在数字证书</strong>（由数字证书认证机构颁发）中，只要证书是可信的，公钥就是可信的。</p>
 <p>数字证书的工作流程，我也画了一张图，方便大家理解：</p>
 <p><img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/22-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="数子证书工作流程"></p>
 <p>通过数字证书的方式保证服务器公钥的身份，解决冒充的风险。</p>
@@ -484,6 +469,71 @@
 </ul>
 <p>前两步也就是 SSL/TLS 的建立过程，也就是 TLS 握手阶段。</p>
 <p>TLS 的「握手阶段」涉及<strong>四次</strong>通信，使用不同的密钥交换算法，TLS 握手流程也会不一样的，现在常用的密钥交换算法有两种：RSA 算法和 ECDHE 算法</p>
+<p>基于 RSA 算法的 TLS 握手过程比较容易理解，所以这里先用这个给大家展示 TLS 握手过程，如下图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/23-HTTPS%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.jpg" alt=""></p>
+<p>TLS 协议建立的详细流程：</p>
+<p><em>1. ClientHello</em></p>
+<p>首先，由客户端向服务器发起加密通信请求，也就是 <code>ClientHello</code> 请求。</p>
+<p>在这一步，客户端主要向服务器发送以下信息：</p>
+<p>（1）客户端支持的 TLS 协议版本，如 TLS 1.2 版本。</p>
+<p>（2）客户端生产的随机数（<code>Client Random</code>），后面用于生成「会话秘钥」条件之一。</p>
+<p>（3）客户端支持的密码套件列表，如 RSA 加密算法。</p>
+<p><em>2. SeverHello</em></p>
+<p>服务器收到客户端请求后，向客户端发出响应，也就是 <code>SeverHello</code>。服务器回应的内容有如下内容：</p>
+<p>（1）确认 TLS 协议版本，如果浏览器不支持，则关闭加密通信。</p>
+<p>（2）服务器生产的随机数（<code>Server Random</code>），也是后面用于生产「会话秘钥」条件之一。</p>
+<p>（3）确认的密码套件列表，如 RSA 加密算法。</p>
+<p>（4）服务器的数字证书。</p>
+<p><em>3.客户端回应</em></p>
+<p>客户端收到服务器的回应之后，首先通过浏览器或者操作系统中的 CA 公钥，确认服务器的数字证书的真实性。</p>
+<p>如果证书没有问题，客户端会<strong>从数字证书中取出服务器的公钥</strong>，然后使用它加密报文，向服务器发送如下信息：</p>
+<p>（1）一个随机数（<code>pre-master key</code>）。该随机数会被服务器公钥加密。</p>
+<p>（2）加密通信算法改变通知，表示随后的信息都将用「会话秘钥」加密通信。</p>
+<p>（3）客户端握手结束通知，表示客户端的握手阶段已经结束。这一项同时把之前所有内容的发生的数据做个摘要，用来供服务端校验。</p>
+<p>上面第一项的随机数是整个握手阶段的第三个随机数，会发给服务端，所以这个随机数客户端和服务端都是一样的。</p>
+<p><strong>服务器和客户端有了这三个随机数（Client Random、Server Random、pre-master key），接着就用双方协商的加密算法，各自生成本次通信的「会话秘钥」</strong>。</p>
+<p><em>4. 服务器的最后回应</em></p>
+<p>服务器收到客户端的第三个随机数（<code>pre-master key</code>）之后，通过协商的加密算法，计算出本次通信的「会话秘钥」。</p>
+<p>然后，向客户端发送最后的信息：</p>
+<p>（1）加密通信算法改变通知，表示随后的信息都将用「会话秘钥」加密通信。</p>
+<p>（2）服务器握手结束通知，表示服务器的握手阶段已经结束。这一项同时把之前所有内容的发生的数据做个摘要，用来供客户端校验。</p>
+<p>至此，整个 TLS 的握手阶段全部结束。接下来，客户端与服务器进入加密通信，就完全是使用普通的 HTTP 协议，只不过用「会话秘钥」加密内容。</p>
+<h3 id="https的应用数据如何保证完整性的">HTTPS的应用数据如何保证完整性的</h3>
+<p>TLS 在实现上分为<strong>握手协议</strong>和<strong>记录协议</strong>两层：</p>
+<ul>
+<li>TLS 握手协议就是我们前面说的 TLS 四次握手的过程，负责协商加密算法和生成对称密钥，后续用此密钥来保护应用程序数据（即 HTTP 数据）；</li>
+<li>TLS 记录协议负责保护应用程序数据并验证其完整性和来源，所以对 HTTP 数据加密是使用记录协议；</li>
+</ul>
+<p>TLS 记录协议主要负责消息（HTTP 数据）的压缩，加密及数据的认证，过程如下图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-06-26%20102413.png" alt=""></p>
+<p>具体过程如下：</p>
+<ul>
+<li>首先，消息被分割成多个较短的片段,然后分别对每个片段进行压缩。</li>
+<li>接下来，经过压缩的片段会被<strong>加上消息认证码（MAC 值，这个是通过哈希算法生成的），这是为了保证完整性，并进行数据的认证</strong>。通过附加消息认证码的 MAC 值，可以识别出篡改。与此同时，为了防止重放攻击，在计算消息认证码时，还加上了片段的编码。</li>
+<li>再接下来，经过压缩的片段再加上消息认证码会一起通过对称密码进行加密。</li>
+<li>最后，上述经过加密的数据再加上由数据类型、版本号、压缩后的长度组成的报头就是最终的报文数据。</li>
+</ul>
+<p>记录协议完成后，最终的报文数据将传递到传输控制协议 (TCP) 层进行传输。</p>
+<h3 id="https一定可靠吗">HTTPS一定可靠吗</h3>
+<blockquote>
+<p>客户端通过浏览器向服务端发起 HTTPS 请求时，被「假基站」转发到了一个「中间人服务器」，于是客户端是和「中间人服务器」完成了 TLS 握手，然后这个「中间人服务器」再与真正的服务端完成 TLS 握手。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-06-27%20105703.png" alt=""></p>
+<p>具体过程如下：</p>
+<ul>
+<li>客户端向服务端发起 HTTPS 建立连接请求时，然后被「假基站」转发到了一个「中间人服务器」，接着中间人向服务端发起 HTTPS 建立连接请求，此时客户端与中间人进行 TLS 握手，中间人与服务端进行 TLS 握手；</li>
+<li>在客户端与中间人进行 TLS 握手过程中，中间人会发送自己的公钥证书给客户端，<strong>客户端验证证书的真伪</strong>，然后从证书拿到公钥，并生成一个随机数，用公钥加密随机数发送给中间人，中间人使用私钥解密，得到随机数，此时双方都有随机数，然后通过算法生成对称加密密钥（A），后续客户端与中间人通信就用这个对称加密密钥来加密数据了。</li>
+<li>在中间人与服务端进行 TLS 握手过程中，服务端会发送从 CA 机构签发的公钥证书给中间人，从证书拿到公钥，并生成一个随机数，用公钥加密随机数发送给服务端，服务端使用私钥解密，得到随机数，此时双方都有随机数，然后通过算法生成对称加密密钥（B），后续中间人与服务端通信就用这个对称加密密钥来加密数据了。</li>
+<li>后续的通信过程中，中间人用对称加密密钥（A）解密客户端的 HTTPS 请求的数据，然后用对称加密密钥（B）加密 HTTPS 请求后，转发给服务端，接着服务端发送 HTTPS 响应数据给中间人，中间人用对称加密密钥（B）解密 HTTPS 响应数据，然后再用对称加密密钥（A）加密后，转发给客户端。</li>
+</ul>
+<p>从客户端的角度看，其实并不知道网络中存在中间人服务器这个角色。那么中间人就可以解开浏览器发起的 HTTPS 请求里的数据，也可以解开服务端响应给浏览器的 HTTPS 响应数据。相当于，中间人能够 “偷看” 浏览器与服务端之间的 HTTPS 请求和响应的数据。</p>
+<p>但是要发生这种场景是有前提的，前提是用户点击接受了中间人服务器的证书。</p>
+<p>中间人服务器与客户端在 TLS 握手过程中，实际上发送了自己伪造的证书给浏览器，而这个伪造的证书是能被浏览器（客户端）识别出是非法的，于是就会提醒用户该证书存在问题。</p>
+<p>如果用户执意点击「继续浏览此网站」，相当于用户接受了中间人伪造的证书，那么后续整个 HTTPS 通信都能被中间人监听了。</p>
+<p>所以，这其实并不能说 HTTPS 不够安全，毕竟浏览器都已经提示证书有问题了，如果用户坚决要访问，那不能怪 HTTPS ，得怪自己手贱。</p>
+<p>另外，如果你的电脑中毒了，被恶意导入了中间人的根证书，那么在验证中间人的证书的时候，由于你操作系统信任了中间人的根证书，那么等同于中间人的证书是合法的，这种情况下，浏览器是不会弹出证书存在问题的风险提醒的。</p>
+<p>这其实也不关 HTTPS 的事情，是你电脑中毒了才导致 HTTPS 数据被中间人劫持的。</p>
+<p>所以，<strong>HTTPS 协议本身到目前为止还是没有任何漏洞的，即使你成功进行中间人攻击，本质上是利用了客户端的漏洞（用户点击继续访问或者被恶意导入伪造的根证书），并不是 HTTPS 不够安全</strong>。</p>
 
     </div>
 
