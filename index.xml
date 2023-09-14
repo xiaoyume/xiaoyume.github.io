@@ -6,7 +6,16 @@
     <description>Recent content on xiaoyume&#39;s local blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 20 Jul 2023 16:53:29 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 16 Aug 2023 13:12:43 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>程序执行时间的一种测量方法Linux</title>
+      <link>https://xiaoyume.github.io/post/18.%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4%E7%9A%84%E4%B8%80%E7%A7%8D%E6%B5%8B%E9%87%8F%E6%96%B9%E6%B3%95linux/</link>
+      <pubDate>Wed, 16 Aug 2023 13:12:43 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/18.%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4%E7%9A%84%E4%B8%80%E7%A7%8D%E6%B5%8B%E9%87%8F%E6%96%B9%E6%B3%95linux/</guid>
+      <description>C语言程序执行时间的一种测量方式 gettimeoftoday()函数 函数原型：int gettimeofday(struct timeval *tv, struct timezone *tz) 该函数是 Linux 系统专属函数，可以精确到微秒 (us</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43;智能指针学习</title>
       <link>https://xiaoyume.github.io/post/14.c&#43;&#43;%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/</link>
