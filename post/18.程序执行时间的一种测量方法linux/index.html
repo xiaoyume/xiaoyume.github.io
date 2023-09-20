@@ -173,7 +173,7 @@
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="nf">gettimeofday</span><span class="p">(</span><span class="o">&amp;</span><span class="n">end</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">timeuse</span> <span class="o">=</span> <span class="mi">1000000</span><span class="o">*</span><span class="p">(</span><span class="n">end</span><span class="p">.</span><span class="n">tv_sec</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">tv_sec</span><span class="p">)</span> <span class="o">+</span> <span class="n">end</span><span class="p">.</span><span class="n">tv_usec</span><span class="o">-</span><span class="n">start</span><span class="p">.</span><span class="n">tv_usec</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;time =%f 秒</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">timeuse</span><span class="o">/</span><span class="mi">1000000</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;time =%f 秒</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">timeuse</span><span class="o">/</span><span class="mi">1000000</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
