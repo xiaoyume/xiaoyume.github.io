@@ -13,7 +13,7 @@
       <pubDate>Sun, 08 Oct 2023 19:45:38 +0800</pubDate>
       
       <guid>https://xiaoyume.github.io/post/20.%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86mysql/</guid>
-      <description>123131312312313</description>
+      <description>1 InnoDB页介绍 读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），将数据划分为若干个页，以页作为磁盘与内存</description>
     </item>
     
     <item>

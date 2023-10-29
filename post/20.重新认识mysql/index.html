@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="xiaoyume" /><meta name="description" content="123131312312313" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="xiaoyume" /><meta name="description" content="1 InnoDB页介绍 读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），将数据划分为若干个页，以页作为磁盘与内存" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -40,18 +40,18 @@
 
 
 <meta property="og:title" content="重新认识MySql" />
-<meta property="og:description" content="123131312312313" />
+<meta property="og:description" content="1 InnoDB页介绍 读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），将数据划分为若干个页，以页作为磁盘与内存" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xiaoyume.github.io/post/20.%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86mysql/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2023-10-08T19:45:38+08:00" />
 <meta property="article:modified_time" content="2023-10-08T19:45:38+08:00" />
 <meta itemprop="name" content="重新认识MySql">
-<meta itemprop="description" content="123131312312313"><meta itemprop="datePublished" content="2023-10-08T19:45:38+08:00" />
+<meta itemprop="description" content="1 InnoDB页介绍 读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），将数据划分为若干个页，以页作为磁盘与内存"><meta itemprop="datePublished" content="2023-10-08T19:45:38+08:00" />
 <meta itemprop="dateModified" content="2023-10-08T19:45:38+08:00" />
-<meta itemprop="wordCount" content="1">
+<meta itemprop="wordCount" content="2127">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="重新认识MySql"/>
-<meta name="twitter:description" content="123131312312313"/>
+<meta name="twitter:description" content="1 InnoDB页介绍 读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），将数据划分为若干个页，以页作为磁盘与内存"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -129,8 +129,8 @@
       <div class="post-meta">
         <span class="post-time"> 2023-10-08 </span>
         
-          <span class="more-meta"> 约 1 字 </span>
-          <span class="more-meta"> 预计阅读 1 分钟 </span>
+          <span class="more-meta"> 约 2127 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -140,14 +140,247 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#heading"></a></li>
+    <li><a href="#1-innodb页介绍">1 InnoDB页介绍</a>
+      <ul>
+        <li><a href="#行格式">行格式</a>
+          <ul>
+            <li><a href="#compact行格式">Compact行格式</a></li>
+          </ul>
+        </li>
+        <li><a href="#redundant">Redundant</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-innodb数据页结构">2 InnoDB数据页结构</a></li>
+    <li><a href="#3-b树索引-快速查询">3 B+树索引 快速查询</a>
+      <ul>
+        <li><a href="#没有索引的查找">没有索引的查找</a>
+          <ul>
+            <li><a href="#在一个页中查找">在一个页中查找</a></li>
+            <li><a href="#在很多页中查找">在很多页中查找</a></li>
+          </ul>
+        </li>
+        <li><a href="#索引">索引</a>
+          <ul>
+            <li><a href="#下面是一种简单的索引方案">下面是一种简单的索引方案</a></li>
+            <li><a href="#innodb中的索引方案">InnoDB中的索引方案</a></li>
+            <li><a href="#二级索引">二级索引</a></li>
+            <li><a href="#联合索引">联合索引</a></li>
+            <li><a href="#myisam中的索引方案">MyISAM中的索引方案</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#undo日志">undo日志</a>
+      <ul>
+        <li><a href="#事务回滚的需求">事务回滚的需求</a></li>
+        <li><a href="#事务id">事务id</a>
+          <ul>
+            <li><a href="#事务id是如何生成的">事务id是如何生成的</a></li>
+          </ul>
+        </li>
+        <li><a href="#trx_id列">trx_id列</a></li>
+        <li><a href="#undo-日志格式">undo 日志格式</a></li>
+        <li><a href="#示例表结构">示例表结构</a>
+          <ul>
+            <li><a href="#insert操作对应的日志">insert操作对应的日志</a></li>
+            <li><a href="#delete操作对应的undo日志">delete操作对应的undo日志</a></li>
+            <li><a href="#update操作对应的undo日志">update操作对应的undo日志</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h1 id="heading"></h1>
-<p>123131312312313</p>
+      <h1 id="1-innodb页介绍">1 InnoDB页介绍</h1>
+<p>读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），<strong>将数据划分为若干个页，以页作为磁盘与内存之间交互的基本单位</strong>，I<strong>nnoDB中页的大小为16KB。</strong></p>
+<h2 id="行格式">行格式</h2>
+<p>我们平时存储数据的时候都是以记录的形式插入表中的。在数据库存储的格式称之为行格式。InnoDB中有4中<strong>行格式</strong>。分别为<code>Compact,Redundant,Dynamic,Compressed</code>。</p>
+<h3 id="compact行格式">Compact行格式</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-10-11%20102538.png" alt=""></p>
+<p>可以想象得到，一行记录必须有记录的数据和另外的信息保证可以解析这个数据。</p>
+<p><strong>变长字段列表</strong>是和后面记录的真实数据一一对应的，因为数据中会有varchar这种长度不定的数据，所以会有这个字段。数据是顺序放的，变长字段列表是逆序放置的。注意，非变长字段不在里面（char(10)）。</p>
+<p><strong>null值列表</strong>是表示字段是否为空的，会空出不为空的字段。顺序也是逆序和变长字段长度列表一致。</p>
+<p><strong>记录头信息</strong>是<code>固定5个字节</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-10-11%20124103.png" alt=""></p>
+<h2 id="redundant">Redundant</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-10-11%20142211.png" alt=""></p>
+<h1 id="2-innodb数据页结构">2 InnoDB数据页结构</h1>
+<p>一个页的大小一般是16KB</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-10-12%20151253.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-10-12%20151327.png" alt=""></p>
+<h1 id="3-b树索引-快速查询">3 B+树索引 快速查询</h1>
+<h2 id="没有索引的查找">没有索引的查找</h2>
+<h3 id="在一个页中查找">在一个页中查找</h3>
+<ul>
+<li>以主键为搜索条件</li>
+</ul>
+<p>在<code>页目录</code>中，二分法定位到对应的槽，遍历槽中的记录即可。</p>
+<ul>
+<li>非主键为搜索条件</li>
+</ul>
+<p>只能从<code>最小记录</code>开始一次遍历单链表中的每条记录。显然效率非常低下。</p>
+<h3 id="在很多页中查找">在很多页中查找</h3>
+<p>1 定位到记录所在的页</p>
+<p>2 所在页中查找对应的记录</p>
+<p>只能从第一个页开始遍历，效率极其低下</p>
+<h2 id="索引">索引</h2>
+<h3 id="下面是一种简单的索引方案">下面是一种简单的索引方案</h3>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-10-13%20145759.png" style="zoom:33%;" />
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231013145838.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231013145856.png" alt=""></p>
+<p><strong>页分裂</strong>。</p>
+<p>假设一个页只有3条记录，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231013145944.png" alt=""></p>
+<p>因为<code>16KB</code>的页在物理存储上可能并不连续。所以需要一个目录还快速定位某些记录所在的页。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231013150750.png" alt=""></p>
+<p>同样可以根据二分法查找。</p>
+<h3 id="innodb中的索引方案">InnoDB中的索引方案</h3>
+<p><code>目录项</code>和<code>用户记录</code>起始差不多。只不过<code>目录项</code>中的两个列是<code>主键</code>和<code>页号</code>。所以可以复用存储用户记录的数据页来存储目录项，把这些用来表示目录项的记录称为<code>目录项记录</code>。</p>
+<p>在</p>
+<p>记录头信息的<code>record_type</code></p>
+<p>0表示普通用户记录</p>
+<p>1表示目录项记录</p>
+<p>2表示最小记录</p>
+<p>3表示最大记录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231013152801.png" alt=""></p>
+<p>如果数据太多，一个数据也不足以存放所有<code>目录项记录</code>，再整一个存储<code>目录项记录</code>的页</p>
+<p>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231013153254.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231013153946.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231013154339.png" alt=""></p>
+<p><strong>B+树</strong></p>
+<h3 id="二级索引">二级索引</h3>
+<p>叶子节点存储的是主键和二级索引的映射，不是完整的记录。所以需要根据主键值去主键的B+树查找。这个操作称为<code>回表</code>。</p>
+<h3 id="联合索引">联合索引</h3>
+<h3 id="myisam中的索引方案">MyISAM中的索引方案</h3>
+<p>使用树形结构，但是却将索引和数据分开存储</p>
+<h1 id="undo日志">undo日志</h1>
+<h2 id="事务回滚的需求">事务回滚的需求</h2>
+<h2 id="事务id">事务id</h2>
+<p><code>START TRANSACTION READ ONLY</code></p>
+<p><code>START TRANSACTION READ WRITE</code></p>
+<p>如果对表进行了 增、删、改操作，那么InnoDB存储引擎就会给它分配一个独一无二的事务id。</p>
+<p><strong>如果事务里只有查询操作是不会分配事务id的</strong>，事务id是唯一的</p>
+<h3 id="事务id是如何生成的">事务id是如何生成的</h3>
+<ul>
+<li>服务器里维护一个全局变量，每当需要分配事务id时，酒后把这个变量作为事务id分配给该事务，并且把变量自增1。</li>
+<li>每当这个变量的值是256的倍数时，就会把变量的值刷新到系统表空间的页号为5的页面称之为<code>Max Trx ID</code>的属性处，这个属性占用8个字节的空间。（为什么设计256，就是记录这个值的考虑，因为系统启动时才有这个变量，如何不存起来或者值设置的过大，会丢失这个记录）</li>
+<li>系统启动时这个<code>Max Trx ID</code>值会<strong>加上256</strong>才赋值给全局变量。</li>
+</ul>
+<h2 id="trx_id列">trx_id列</h2>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029132905.png" style="zoom:30%;" />
+<p>行记录中都会记录这个trx_id信息</p>
+<h2 id="undo-日志格式">undo 日志格式</h2>
+<p>一个事务可能会有多条undo日志，从0号开始，也就是对应undo no记录项。</p>
+<h2 id="示例表结构">示例表结构</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CREATE TABLE undo_demo (
+</span></span><span class="line"><span class="cl">    id INT NOT NULL,
+</span></span><span class="line"><span class="cl">    key1 VARCHAR(100),
+</span></span><span class="line"><span class="cl">    col VARCHAR(100),
+</span></span><span class="line"><span class="cl">    PRIMARY KEY (id),
+</span></span><span class="line"><span class="cl">    KEY idx_key1 (key1)
+</span></span><span class="line"><span class="cl">)Engine=InnoDB CHARSET=utf8;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="insert操作对应的日志">insert操作对应的日志</h3>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029133739.png" style="zoom:30%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">BEGIN;  # 显式开启一个事务，假设该事务的id为100
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 插入两条记录
+</span></span><span class="line"><span class="cl">INSERT INTO undo_demo(id, key1, col) 
+</span></span><span class="line"><span class="cl">    VALUES (1, &#39;AWM&#39;, &#39;狙击枪&#39;), (2, &#39;M416&#39;, &#39;步枪&#39;);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>插入了两条记录，对应两天insert undo日志</p>
+<img src="C:\Users\xiaoy\AppData\Roaming\Typora\typora-user-images\image-20231029133959626.png" alt="image-20231029133959626" style="zoom:30%;" />
+<p><code>table id</code>表id，独一无二，系统表空间里有
+主键列信息，&lt;主键长度，值&gt;，insert对应的undo操作是delete，因此只用记录主键信息，从聚簇b+数里移除这个节点就可以删除</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029134400.png" style="zoom:30%;" />
+<p>第二条记录了对应的undo no为1</p>
+<h4 id="roll_pointer列的意思">roll_pointer列的意思</h4>
+<p>本质上是指向记录对应的<strong>undo日志</strong>的一个指针</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029134557.png" style="zoom:33%;" />
+<h3 id="delete操作对应的undo日志">delete操作对应的undo日志</h3>
+<p>插入到页面的记录会根据记录头的next_record属性组成一个单向链表，这个链表称为<code>正常记录链表</code>。</p>
+<p>被删除的链表也会根据记录头信息中的<code>next_record</code>属性组成一个链表</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029140727.png" style="zoom:30%;" />
+<p>假设使用delete语句把正常记录的一条记录删除，这个删除过程需要经历两个阶段</p>
+<ul>
+<li>**delete mark **仅仅把标识位改为1</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029141217.png" style="zoom:30%;" />
+<ul>
+<li>purge阶段</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029141316.png" style="zoom:30%;" />
+<p>可以看出，删除语句所在的事务提交前，只会经历delete mask阶段（因为提交就不用回滚了，只需要对阶段1做的影响进行回滚）</p>
+<p><code>TRX_UNDO_DEL_MARK_REC</code></p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029141801.png" style="zoom:30%;" />
+<ul>
+<li></li>
+</ul>
+<p>对一条记录进行delete mark操作之前，需要把旧的trx_id和roll_pointer记录到undo日志里。这样可以通过undo日志的old rollpointer找到修改之前的undo日志。</p>
+<p>比如，插入一条记录，又进行了删除</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029142128.png" style="zoom: 33%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">BEGIN;  # 显式开启一个事务，假设该事务的id为100
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 插入两条记录
+</span></span><span class="line"><span class="cl">INSERT INTO undo_demo(id, key1, col) 
+</span></span><span class="line"><span class="cl">    VALUES (1, &#39;AWM&#39;, &#39;狙击枪&#39;), (2, &#39;M416&#39;, &#39;步枪&#39;);
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"># 删除一条记录    
+</span></span><span class="line"><span class="cl">DELETE FROM undo_demo WHERE id = 1; 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029142235.png" style="zoom:33%;" />
+<h3 id="update操作对应的undo日志">update操作对应的undo日志</h3>
+<h4 id="不更新主键">不更新主键</h4>
+<ul>
+<li>就地更新 更新后每列的值占用的空间和原来一样大</li>
+<li>删除旧纪录后插入新记录（真删除）</li>
+</ul>
+<p><code>TRX_UNDO_UPD_EXIST_REC</code></p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029142609.png" style="zoom: 33%;" />
+<h4 id="更新主键">更新主键</h4>
+<ul>
+<li>旧记录delete mark</li>
+<li>创建新记录，插入到聚簇索引里</li>
+</ul>
 
     </div>
 
