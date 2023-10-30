@@ -48,7 +48,7 @@
 <meta itemprop="name" content="重新认识MySql">
 <meta itemprop="description" content="1 InnoDB页介绍 读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），将数据划分为若干个页，以页作为磁盘与内存"><meta itemprop="datePublished" content="2023-10-08T19:45:38+08:00" />
 <meta itemprop="dateModified" content="2023-10-08T19:45:38+08:00" />
-<meta itemprop="wordCount" content="2127">
+<meta itemprop="wordCount" content="4509">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="重新认识MySql"/>
 <meta name="twitter:description" content="1 InnoDB页介绍 读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），将数据划分为若干个页，以页作为磁盘与内存"/>
@@ -129,8 +129,8 @@
       <div class="post-meta">
         <span class="post-time"> 2023-10-08 </span>
         
-          <span class="more-meta"> 约 2127 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+          <span class="more-meta"> 约 4509 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -170,7 +170,7 @@
         </li>
       </ul>
     </li>
-    <li><a href="#undo日志">undo日志</a>
+    <li><a href="#22-undo日志">22 UNDO日志</a>
       <ul>
         <li><a href="#事务回滚的需求">事务回滚的需求</a></li>
         <li><a href="#事务id">事务id</a>
@@ -187,6 +187,30 @@
             <li><a href="#update操作对应的undo日志">update操作对应的undo日志</a></li>
           </ul>
         </li>
+        <li><a href="#通用链表结构">通用链表结构</a></li>
+        <li><a href="#fil_page_undo_log页面">FIL_PAGE_UNDO_LOG页面</a></li>
+        <li><a href="#undo页面链表">UNDO页面链表</a>
+          <ul>
+            <li><a href="#单个事务链表">单个事务链表</a></li>
+            <li><a href="#多个事务undo页面链表">多个事务Undo页面链表</a></li>
+          </ul>
+        </li>
+        <li><a href="#undo-日志的写入过程">undo 日志的写入过程</a>
+          <ul>
+            <li><a href="#segment段">segment段</a></li>
+            <li><a href="#undo-log-segment-header">undo log segment header</a></li>
+            <li><a href="#undo-log-header">undo log header</a></li>
+            <li><a href="#总结">总结</a></li>
+          </ul>
+        </li>
+        <li><a href="#重用undo页面">重用undo页面</a></li>
+        <li><a href="#回滚段">回滚段</a>
+          <ul>
+            <li><a href="#从回滚段申请undo页面链表">从回滚段申请undo页面链表</a></li>
+            <li><a href="#多个回滚段">多个回滚段</a></li>
+          </ul>
+        </li>
+        <li><a href="#事务分配undo页面链表的详细过程">事务分配undo页面链表的详细过程</a></li>
       </ul>
     </li>
   </ul>
@@ -257,7 +281,7 @@
 <h3 id="联合索引">联合索引</h3>
 <h3 id="myisam中的索引方案">MyISAM中的索引方案</h3>
 <p>使用树形结构，但是却将索引和数据分开存储</p>
-<h1 id="undo日志">undo日志</h1>
+<h1 id="22-undo日志">22 UNDO日志</h1>
 <h2 id="事务回滚的需求">事务回滚的需求</h2>
 <h2 id="事务id">事务id</h2>
 <p><code>START TRANSACTION READ ONLY</code></p>
@@ -381,6 +405,123 @@
 <li>旧记录delete mark</li>
 <li>创建新记录，插入到聚簇索引里</li>
 </ul>
+<h2 id="通用链表结构">通用链表结构</h2>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030092154.png" style="zoom: 25%;" />
+<p><strong>页号 + 业内偏移量</strong>可以定位一个节点的位置。</p>
+<p>为了方便管理链表，设计了基节点。<strong>List Base Node</strong></p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030092525.png" style="zoom:25%;" />
+<p>所以链表结构就是：</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030092712.png" style="zoom:33%;" />
+<h2 id="fil_page_undo_log页面">FIL_PAGE_UNDO_LOG页面</h2>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231029205718.png" style="zoom:33%;" />
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030092823.png" style="zoom:25%;" />
+<ul>
+<li><code>TRX_UNDO_PAGE_TYPE</code>:存储什么类型的undo日志</li>
+</ul>
+<p>可选两大类：</p>
+<pre><code>`TRX_UNDO_INSERT`:类型为	`TRX_UNDO_INSER_REC`,由insert语句产生。
+</code></pre>
+<p>​	<code>TRX_UNDO_UPDATE</code>:	其它类型都是这个，<code>TRX_UNDO_DEL_MARK_REC</code>,<code>TRX_UNDO_PUD_EXIST_REC</code>一般由delete,update语句产生的undo日志属于这个大类</p>
+<ul>
+<li><code>TRX_UNDO_PAGE_START</code>当前页面从什么位置开出存储，第一条偏移量</li>
+<li><code>TRX_UDNO_PAGE_FREE</code>页面存储最后一条undo日志结束时的偏移量</li>
+<li><code>TRX_UNDO_PAGE_NODE</code>一个链表</li>
+</ul>
+<h2 id="undo页面链表">UNDO页面链表</h2>
+<h3 id="单个事务链表">单个事务链表</h3>
+<p>一个事务有多条语句，一个语句对若干条记录进行改动，对每条记录改动前，都需要记录1条或2条（更新主键，删除插入）undo日志，产生的undo日志可能一个页面放不下，需要放到多个页面</p>
+<p>一个事务可能会有多种语句，产生不同类型的undo日志。所以会有两个undo页面的链表，一个称为insert undo链表，另一个称为update undo链表。</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030095404.png" style="zoom:33%;" />
+<p>另外，InnoDB规定普通表和临时表改动产生的undo日志要分开记录，所以一个事务最多有4个undo页面链表。</p>
+<p>当然不是一开始就会有4个undo链表，是按需分配。</p>
+<h3 id="多个事务undo页面链表">多个事务Undo页面链表</h3>
+<p><font color=red>不同事务执行过程中产生的undo日志需要被写到不同的undo页面链表中。</font></p>
+<h2 id="undo-日志的写入过程">undo 日志的写入过程</h2>
+<h3 id="segment段">segment段</h3>
+<p>段是逻辑上的一个概念，本质上是由若干零散页和若干完整的区组成。</p>
+<h3 id="undo-log-segment-header">undo log segment header</h3>
+<p>规定每个undo页面链表都对应一个段，称为<code>undo log segment</code>,链表中的页面都是在这个段里面申请的。</p>
+<p>所以在undo页面链表的第一页，first undo page设计了一个<code>Undo log segment header</code>的部分，包含了链表对应的段segment header信息以及其它的一些关于这个段的信息。</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030100909.png" style="zoom:33%;" />
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030101006.png" style="zoom: 25%;" />
+<ul>
+<li>
+<p><code>TRX_UNDO_STATE</code> 本Undo链表处于什么状态</p>
+<p>TRX_UNDO_ACTIVE</p>
+<p>TRX_UNDO_CACHED</p>
+<p>TRX_UNDO_TO_FREE</p>
+<p>TRX_UNDO_TO_PURGE</p>
+<p>TRX_UNDO_PREPARED</p>
+</li>
+<li>
+<p><code>TRX_UNDO_LAST_LOG</code> 最后一个<code>undo log header</code>的位置</p>
+</li>
+<li>
+<p><code>TRX_UNDO_FSEG_HEADER</code> 对应段<code>Segment header</code>信息</p>
+</li>
+<li>
+<p><code>TRX_UNDO_PAGE_LIST</code> undo页面链表基节点</p>
+</li>
+</ul>
+<h3 id="undo-log-header">undo log header</h3>
+<p>每个undo页面链表是一个组，每写入一组undo日志时，会记录关于这个组的属性。</p>
+<p>在第一个页面真正写入undo日志之前，会填充<code>undo page header</code>,<code>undo log segment header</code>, <code>undo log header</code></p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030102244.png" style="zoom:33%;" />
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030102513.png" style="zoom:33%;" />
+<h3 id="总结">总结</h3>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030103145.png" style="zoom:33%;" />
+<h2 id="重用undo页面">重用undo页面</h2>
+<p>大部分事务开启时只修改了几条记录，占用非常少的空间。</p>
+<p>判断是否可重用</p>
+<ul>
+<li>
+<p>链表只包含一个undo页面</p>
+</li>
+<li>
+<p>undo页面占用空间小于整个页面3/4</p>
+</li>
+<li>
+<p>insert undo链表</p>
+<p>事务提交后就没有用了，直接覆盖</p>
+</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030104034.png" style="zoom: 33%;" />
+<ul>
+<li>
+<p>update undo 链表</p>
+<p>不能直接覆盖，因为update undo还要用于mvcc</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030104112.png" style="zoom:33%;" />
+</li>
+</ul>
+<h2 id="回滚段">回滚段</h2>
+<p>为了管理undo链表，设计了Rollback segement header页面，存放了各个undo页面链表的first undo page。</p>
+<img src="C:\Users\xiaoy\AppData\Roaming\Typora\typora-user-images\image-20231030104515862.png" alt="image-20231030104515862" style="zoom:33%;" />
+<h3 id="从回滚段申请undo页面链表">从回滚段申请undo页面链表</h3>
+<p>初始，undo slot设置为FIL_NULL,表示不指向任何页面</p>
+<p>一个rollback segment header页面包含1024个undo slot，可以对应1024个undo页面链表，如果1024个undo slot值都占用了，就会回滚这个事务，并且报错</p>
+<h3 id="多个回滚段">多个回滚段</h3>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231030105822.png" style="zoom:33%;" />
+<h2 id="事务分配undo页面链表的详细过程">事务分配undo页面链表的详细过程</h2>
+<ul>
+<li>
+<p>事务在执行过程中对普通表的记录首次做改动之前，首先会到<strong>系统表空间的第<code>5</code>号页面</strong>中分配一个回滚段（其实就是获取一个<code>Rollback Segment Header</code>页面的地址）。一旦某个回滚段被分配给了这个事务，那么之后该事务中再对普通表的记录做改动时，就不会重复分配了。</p>
+<p>  使用传说中的<code>round-robin</code>（循环使用）方式来分配回滚段。比如当前事务分配了第<code>0</code>号回滚段，那么下一个事务就要分配第<code>33</code>号回滚段，下下个事务就要分配第<code>34</code>号回滚段，简单一点的说就是这些回滚段被轮着分配给不同的事务（就是这么简单粗暴，没什么好说的）。</p>
+</li>
+<li>
+<p>在分配到回滚段后，首先看一下这个回滚段的两个<code>cached链表</code>有没有已经缓存了的<code>undo slot</code>，比如如果事务做的是<code>INSERT</code>操作，就去回滚段对应的<code>insert undo cached链表</code>中看看有没有缓存的<code>undo slot</code>；如果事务做的是<code>DELETE</code>操作，就去回滚段对应的<code>update undo cached链表</code>中看看有没有缓存的<code>undo slot</code>。如果有缓存的<code>undo slot</code>，那么就把这个缓存的<code>undo slot</code>分配给该事务。</p>
+</li>
+<li>
+<p>如果没有缓存的<code>undo slot</code>可供分配，那么就要到<code>Rollback Segment Header</code>页面中找一个可用的<code>undo slot</code>分配给当前事务。</p>
+<p>  从<code>Rollback Segment Header</code>页面中分配可用的<code>undo slot</code>的方式我们上面也说过了，就是从第<code>0</code>个<code>undo slot</code>开始，如果该<code>undo slot</code>的值为<code>FIL_NULL</code>，意味着这个<code>undo slot</code>是空闲的，就把这个<code>undo slot</code>分配给当前事务，否则查看第<code>1</code>个<code>undo slot</code>是否满足条件，依次类推，直到最后一个<code>undo slot</code>。如果这<code>1024</code>个<code>undo slot</code>都没有值为<code>FIL_NULL</code>的情况，就直接报错喽（一般不会出现这种情况）～</p>
+</li>
+<li>
+<p>找到可用的<code>undo slot</code>后，如果该<code>undo slot</code>是从<code>cached链表</code>中获取的，那么它对应的<code>Undo Log Segment</code>已经分配了，否则的话需要重新分配一个<code>Undo Log Segment</code>，然后从该<code>Undo Log Segment</code>中申请一个页面作为<code>Undo页面</code>链表的<code>first undo page</code>。</p>
+</li>
+<li>
+<p>然后事务就可以把<code>undo日志</code>写入到上面申请的<code>Undo页面</code>链表了！</p>
+</li>
+</ul>
+<p>  对临时表的记录做改动的步骤和上述的一样，就不赘述了。不错需要再次强调一次，如果一个事务在执行过程中既对普通表的记录做了改动，又对临时表的记录做了改动，那么需要为这个记录分配2个回滚段。并发执行的不同事务其实也可以被分配相同的回滚段，只要分配不同的undo slot就可以了。</p>
 
     </div>
 
