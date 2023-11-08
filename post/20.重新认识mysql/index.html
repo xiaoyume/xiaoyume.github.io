@@ -48,7 +48,7 @@
 <meta itemprop="name" content="重新认识MySql">
 <meta itemprop="description" content="1 InnoDB页介绍 读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），将数据划分为若干个页，以页作为磁盘与内存"><meta itemprop="datePublished" content="2023-10-08T19:45:38+08:00" />
 <meta itemprop="dateModified" content="2023-10-08T19:45:38+08:00" />
-<meta itemprop="wordCount" content="4509">
+<meta itemprop="wordCount" content="11281">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="重新认识MySql"/>
 <meta name="twitter:description" content="1 InnoDB页介绍 读取记录时，InnoDB存储引擎不是吧记录一条条从磁盘中读出（因为这样非常慢），将数据划分为若干个页，以页作为磁盘与内存"/>
@@ -129,8 +129,8 @@
       <div class="post-meta">
         <span class="post-time"> 2023-10-08 </span>
         
-          <span class="more-meta"> 约 4509 字 </span>
-          <span class="more-meta"> 预计阅读 9 分钟 </span>
+          <span class="more-meta"> 约 11281 字 </span>
+          <span class="more-meta"> 预计阅读 23 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -170,7 +170,7 @@
         </li>
       </ul>
     </li>
-    <li><a href="#22-undo日志">22 UNDO日志</a>
+    <li><a href="#4-undo日志">4 UNDO日志</a>
       <ul>
         <li><a href="#事务回滚的需求">事务回滚的需求</a></li>
         <li><a href="#事务id">事务id</a>
@@ -211,6 +211,42 @@
           </ul>
         </li>
         <li><a href="#事务分配undo页面链表的详细过程">事务分配undo页面链表的详细过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-事务隔离级别">5 事务隔离级别</a>
+      <ul>
+        <li><a href="#事务并发执行可能的问题">事务并发执行可能的问题</a></li>
+        <li><a href="#四种隔离级别">四种隔离级别</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-mvcc原理">6 MVCC原理</a>
+      <ul>
+        <li><a href="#版本链">版本链</a></li>
+        <li><a href="#readview">ReadView</a></li>
+        <li><a href="#read-committed每次读取数据前都会生成一个readview">READ COMMITTED每次读取数据前都会生成一个ReadView</a></li>
+        <li><a href="#repeatable-read---第一次读取数据时生成一个readview">REPEATABLE READ&mdash;第一次读取数据时生成一个readview</a></li>
+        <li><a href="#mvcc">MVCC</a></li>
+        <li><a href="#关于purge">关于purge</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-锁">7 锁</a>
+      <ul>
+        <li><a href="#并发事务访问相同记录的情况">并发事务访问相同记录的情况</a></li>
+        <li><a href="#一致性读consistent-reads">一致性读（Consistent Reads）</a></li>
+        <li><a href="#锁定读locking-reads">锁定读（Locking Reads）</a>
+          <ul>
+            <li><a href="#共享锁和独占锁">共享锁和独占锁</a></li>
+            <li><a href="#加锁语句">加锁语句</a></li>
+          </ul>
+        </li>
+        <li><a href="#多粒度锁">多粒度锁</a></li>
+        <li><a href="#innodb存储引擎中的锁">InnoDB存储引擎中的锁</a>
+          <ul>
+            <li><a href="#表级锁">表级锁</a></li>
+            <li><a href="#行级锁">行级锁</a></li>
+          </ul>
+        </li>
+        <li><a href="#innodb内存锁结构">InnoDB内存锁结构</a></li>
       </ul>
     </li>
   </ul>
@@ -281,7 +317,7 @@
 <h3 id="联合索引">联合索引</h3>
 <h3 id="myisam中的索引方案">MyISAM中的索引方案</h3>
 <p>使用树形结构，但是却将索引和数据分开存储</p>
-<h1 id="22-undo日志">22 UNDO日志</h1>
+<h1 id="4-undo日志">4 UNDO日志</h1>
 <h2 id="事务回滚的需求">事务回滚的需求</h2>
 <h2 id="事务id">事务id</h2>
 <p><code>START TRANSACTION READ ONLY</code></p>
@@ -522,6 +558,708 @@
 </li>
 </ul>
 <p>  对临时表的记录做改动的步骤和上述的一样，就不赘述了。不错需要再次强调一次，如果一个事务在执行过程中既对普通表的记录做了改动，又对临时表的记录做了改动，那么需要为这个记录分配2个回滚段。并发执行的不同事务其实也可以被分配相同的回滚段，只要分配不同的undo slot就可以了。</p>
+<h1 id="5-事务隔离级别">5 事务隔离级别</h1>
+<p>隔离性与性能之间的取舍</p>
+<p>创建一个表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CREATE TABLE hero (
+</span></span><span class="line"><span class="cl">    number INT,
+</span></span><span class="line"><span class="cl">    name VARCHAR(100),
+</span></span><span class="line"><span class="cl">    country varchar(100),
+</span></span><span class="line"><span class="cl">    PRIMARY KEY (number)
+</span></span><span class="line"><span class="cl">) Engine=InnoDB CHARSET=utf8;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="事务并发执行可能的问题">事务并发执行可能的问题</h2>
+<ul>
+<li>脏写（<code>Dirty Write</code>）</li>
+</ul>
+<p>一个事务修改了另一个事务修改未提交的数据，导致事务修改失效</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231031135837.png" style="zoom:25%;" />
+<ul>
+<li>脏读</li>
+</ul>
+<p>一个事务读到了另一个未提交事务修改过的数据</p>
+<ul>
+<li>不可重复读</li>
+</ul>
+<p>事务A读取了两次数据，两次读取之间事务B修改了数据，导致两次读取的数据不一致</p>
+<ul>
+<li>幻读</li>
+</ul>
+<p>事务A读取了两次数据，期间事务B插入了一些数据，导致后一次查询出现了新的记录</p>
+<h2 id="四种隔离级别">四种隔离级别</h2>
+<p>按照严重性来排序</p>
+<p><strong>脏写 &gt; 脏读 &gt; 不可重复读 &gt; 幻读</strong></p>
+<p>隔离级别：</p>
+<ul>
+<li>
+<p><code>READ UNCOMMITTED</code>  读未提交</p>
+</li>
+<li>
+<p><code>READ COMMITTED</code> 读已提交</p>
+</li>
+<li>
+<p><code>REPEATABLE READ  </code>可重复读</p>
+</li>
+<li>
+<p><code>SERIALIZABLE</code> 可串行化</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">隔离级别</th>
+<th style="text-align:center">脏读</th>
+<th style="text-align:center">不可重复读</th>
+<th style="text-align:center">幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><font color=red>READ UNCOMMITTED</font></td>
+<td style="text-align:center">可</td>
+<td style="text-align:center">可</td>
+<td style="text-align:center">可</td>
+</tr>
+<tr>
+<td style="text-align:center"><font color=red>READ COMMITTED</font></td>
+<td style="text-align:center">不</td>
+<td style="text-align:center">可</td>
+<td style="text-align:center">可</td>
+</tr>
+<tr>
+<td style="text-align:center"><font color=red>REPEATABLE READ</font></td>
+<td style="text-align:center">不</td>
+<td style="text-align:center">不</td>
+<td style="text-align:center">可</td>
+</tr>
+<tr>
+<td style="text-align:center"><font color=red>SERIALIZABLE</font></td>
+<td style="text-align:center">不</td>
+<td style="text-align:center">不</td>
+<td style="text-align:center">不</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>脏写问题太严重了，丢失修改在那种隔离级别下都是不被允许的。</p>
+<p><strong>Mysql在可重复读隔离级别下，是可以禁止幻读问题的发生的。</strong></p>
+<p><code>MySQL</code>默认的隔离级别是<strong>可重复读</strong></p>
+<h1 id="6-mvcc原理">6 MVCC原理</h1>
+<h2 id="版本链">版本链</h2>
+<p>对于<code>InnoDB</code>存储引擎来说，它的聚簇索引记录中包含了两个必要的隐藏列</p>
+<ul>
+<li><code>trx_id</code> 事务id，事务对记录进行改动就会修改</li>
+<li>roll_pointer: 修改时，会把旧的版本写入到undo日志中，这个列指向undo日志，可以通过这个找到记录修改前的信息。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//如果插入一条记录
+</span></span><span class="line"><span class="cl">INSERT INTO hero VALUES(1, &#39;刘备&#39;, &#39;蜀&#39;);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231031144650.png" style="zoom:50%;" />
+<p>实际上insert undo只在事务回滚的时候起作用，事务提交后就没用了，占用的Undo Log Segment也会被系统回收。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231031144924.png" alt=""></p>
+<p>每次对记录改动，都记录undo日志，每条日志也有<code>roll_pointer</code>属性（insert没有，因为没有更早的记录），可以把这些undo日志连起来，串成一个链表。</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231031145219.png" style="zoom: 33%;" />
+<p>上面的版本链信息的结构只是示意图，具体undo日志的结构看undo日志一节，里面有更详细的介绍。</p>
+<h2 id="readview">ReadView</h2>
+<p>对于读未提交隔离级别的事务来说。可以读到未提交事务修改过的记录，直接读取记录最新版本就可以。</p>
+<p>对于使用<code>SERIALIZABLE</code>隔离级别的事务来说，使用了加锁来访问记录。</p>
+<p>对于<code>READ COMMITED</code>和<code>REPEATABLE READ</code>隔离级别的事务来说，必须保证度高已经提交的事务修改的记录，如果一个事务修改了记录但是未提交，是不能读取最新版本的记录的，<strong>核心问题是如何判断版本链中的哪些版本是当前事务可见</strong>的。</p>
+<p>提出了<code>ReadView</code>的概念</p>
+<ul>
+<li>
+<p><code>m_ids</code> 表示生成<code>ReadView</code>是当前系统中活跃的读写事务的<code>事务id</code>列表</p>
+</li>
+<li>
+<p><code>min_trx_id</code> 表示生成<code>ReadView</code>时系统中活跃的读写事务中最小的事务id</p>
+</li>
+<li>
+<p><code>max_trx_id</code> 表示生成<code>ReadView</code>时系统应该分配给下一个事务的id</p>
+</li>
+<li>
+<p><code>creator_trx_id</code> 表示生成该<code>ReadView</code>的事务的事务id</p>
+</li>
+</ul>
+<p>有了上面这几个概念，在访问某条记录时，按照下面的步骤判断记录的某个版本是否可见。</p>
+<ul>
+<li>
+<p>如果<strong>被访问版本</strong>的<code>trx_id</code>属性与<code>ReadView</code>中的<code>creator_trx_id</code>值相同，意味就是当前事务访问自己修改的记录，可以被访问</p>
+</li>
+<li>
+<p>如果<code>trx_id</code>属性小于<code>ReadView</code>中的<code>min_trx_id</code>值，表明生成该版本的当前事务在生成<code>ReadView</code>前已提交，所以可以被当前事务访问。</p>
+</li>
+<li>
+<p>如果<code>trx_id</code>大于<code>max_trx_id</code>, 说明生成该版本的事务在当前事务生成<code>ReadView</code>后才开启， 不可被当前事务访问。</p>
+</li>
+<li>
+<p>如果被访问的版本<code>trx_id</code>值在<code>ReadView</code>的<code>min_trx_id</code>和<code>max_trx_id</code>之间，需要判断一下<code>trx_id</code>属性是不是在m_ids列表中，如果在说明创建<code>ReadView</code>时生成该版本的事务还是活跃的，版本不可被访问。不在说明，已经提交，可以被访问。</p>
+</li>
+</ul>
+<p>如果某个版本对当前事务不可见，就顺着版本链找到下一个版本记录。</p>
+<p>在<code>MySQL</code>中，<code>READ COMMITTED</code>和<code>REPEATABLE READ</code>隔离级别的的一个非常大的区别就是它们生成<code>ReadView</code>的时机不同。</p>
+<h2 id="read-committed每次读取数据前都会生成一个readview">READ COMMITTED每次读取数据前都会生成一个ReadView</h2>
+<p>比如现在有两个事务id为100，200的事务，正在执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Transaction 100
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;关羽&#39; WHERE number = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;张飞&#39; WHERE number = 1;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Transaction 200
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 更新了一些别的表的记录
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时表中number为1的记录得到的版本链为：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231031153330.png" alt=""></p>
+<p>假设现在有一个READ COMMITTED隔离级别的事务开始执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 使用READ COMMITTED隔离级别的事务
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># SELECT1：Transaction 100、200未提交
+</span></span><span class="line"><span class="cl">SELECT * FROM hero WHERE number = 1; # 得到的列name的值为&#39;刘备&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行过程：</p>
+<ul>
+<li>在执行select语句时生成一个ReadView, m_ids列表的内容就是[100,200], <code>min_trx_id = 100</code>, max_trx_id = 201, <code>creator_trx_id</code>为0。</li>
+<li>从版本链中挑选可见的记录，最新的trx_id是100， 在m_ids列表里，不可访问，跳到下一版本。</li>
+<li>trx_id还是100，不合要求，继续</li>
+<li>trx_id为80，小于ReadView中min_trx_id值100,符合要求，就把这个版本返回。</li>
+</ul>
+<p>之后，我们提交100的事务。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Transaction 100
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;关羽&#39; WHERE number = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;张飞&#39; WHERE number = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">COMMIT;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>200再更新一下记录。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Transaction 200
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 更新了一些别的表的记录
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;赵云&#39; WHERE number = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;诸葛亮&#39; WHERE number = 1;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231031154146.png" style="zoom: 33%;" />
+<p>同样使用<code>READ COMMITTED</code>隔离级别的事务继续查找这个number为1的记录。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 使用READ COMMITTED隔离级别的事务
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># SELECT1：Transaction 100、200均未提交
+</span></span><span class="line"><span class="cl">SELECT * FROM hero WHERE number = 1; # 得到的列name的值为&#39;刘备&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># SELECT2：Transaction 100提交，Transaction 200未提交
+</span></span><span class="line"><span class="cl">SELECT * FROM hero WHERE number = 1; # 得到的列name的值为&#39;张飞&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>select2执行过程。</p>
+<ul>
+<li>
+<p>执行select时生成一个readview,m_ids列表的内容是[200], (100已经提交了)，<code>min_trx_id=200</code>,<code>max_trx_id=201</code>,<code>creator_trx_id</code>=0</p>
+</li>
+<li>
+<p>从版本链中挑选记录，第一个trx_id = 200, 在m_ids列表内，不合要求，下一个</p>
+</li>
+<li>
+<p>也是200，不合，下</p>
+</li>
+<li>
+<p>trx_id=100, &lt; min_trx_id，符合可见性要求。返回这个版本。</p>
+</li>
+</ul>
+<h2 id="repeatable-read---第一次读取数据时生成一个readview">REPEATABLE READ&mdash;第一次读取数据时生成一个readview</h2>
+<p>第一次查询时生成Readview，后面查询不再生成</p>
+<p>还是之前的例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Transaction 100
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;关羽&#39; WHERE number = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;张飞&#39; WHERE number = 1;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Transaction 200
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 更新了一些别的表的记录
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231031155026.png" style="zoom:33%;" />
+<p>此时一个<code>REPEATABLE READ</code>隔离级别的事务开始执行。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 使用REPEATABLE READ隔离级别的事务
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># SELECT1：Transaction 100、200未提交
+</span></span><span class="line"><span class="cl">SELECT * FROM hero WHERE number = 1; # 得到的列name的值为&#39;刘备&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>select1执行过程</p>
+<p>第一次生成，和前面的一样</p>
+<ul>
+<li>在执行select语句时生成一个ReadView, m_ids列表的内容就是[100,200], <code>min_trx_id = 100</code>, max_trx_id = 201, <code>creator_trx_id</code>为0。</li>
+<li>从版本链中挑选可见的记录，最新的trx_id是100， 在m_ids列表里，不可访问，跳到下一版本。</li>
+<li>trx_id还是100，不合要求，继续</li>
+<li>trx_id为80，小于ReadView中min_trx_id值100,符合要求，就把这个版本返回。</li>
+</ul>
+<p>之后，我们提交100的事务。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Transaction 100
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;关羽&#39; WHERE number = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;张飞&#39; WHERE number = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">COMMIT;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>事务200做更新</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Transaction 200
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 更新了一些别的表的记录
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;赵云&#39; WHERE number = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UPDATE hero SET name = &#39;诸葛亮&#39; WHERE number = 1;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231031154146.png" style="zoom: 33%;" />
+<p>还是上面的查找</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 使用REPEATABLE READ隔离级别的事务
+</span></span><span class="line"><span class="cl">BEGIN;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># SELECT1：Transaction 100、200均未提交
+</span></span><span class="line"><span class="cl">SELECT * FROM hero WHERE number = 1; # 得到的列name的值为&#39;刘备&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># SELECT2：Transaction 100提交，Transaction 200未提交
+</span></span><span class="line"><span class="cl">SELECT * FROM hero WHERE number = 1; # 得到的列name的值仍为&#39;刘备&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>这里开始已经不一样了</strong></p>
+<p>select2执行过程</p>
+<ul>
+<li>
+<p>复用之前的readview, <code>m_ids= [100, 200], min_trx_id = 100, max_trx_id = 201, creator_trx_id = 0</code></p>
+</li>
+<li>
+<p>挑选版本，200， 不合</p>
+</li>
+<li>
+<p>200， 不合</p>
+</li>
+<li>
+<p>100， 不合</p>
+</li>
+<li>
+<p>100， 不合</p>
+</li>
+<li>
+<p>80， &lt; min_trx_id，可见，返回这个。</p>
+</li>
+</ul>
+<p>和第一次查询的结果是一致的，所以这就是<strong>可重复读</strong>的含义</p>
+<h2 id="mvcc">MVCC</h2>
+<p>所谓<code>MVCC</code>多版本并发控制，指的就是READ COMMITTED,REPEATABLE READ这两种隔离级别的事务在执行普通select操作时访问记录的版本链的过程，使得不同事务不同事物，读写操作并发执行，从而提高系统性能。</p>
+<h2 id="关于purge">关于purge</h2>
+<ul>
+<li>insert undo在事务提交之后就可以被释放，而update还需要支持MVCC，不能立即删除。</li>
+<li>为了支持<code>MVCC</code>,对于<code>delete mark</code>操作来说，仅仅是在记录上打上一个删除标记，并未真正删除，delete和update是同一类undo日志。</li>
+</ul>
+<h1 id="7-锁">7 锁</h1>
+<h2 id="并发事务访问相同记录的情况">并发事务访问相同记录的情况</h2>
+<ul>
+<li><strong>读-读</strong>  并发事务读取相同记录</li>
+</ul>
+<p>无影响</p>
+<ul>
+<li><strong>写-写</strong>  并发事务对相同的记录做出改动</li>
+</ul>
+<p>这种情况可能发生<strong>脏写</strong>的问题，任何一种隔离级别都不允许发生。如果多个未提交事务相继对一条记录做出改动，需要排队执行，这个排队过程就是通过<strong>锁</strong>来实现的。锁其实是内存中的结构，在事务执行前是没有锁的，也就是说一开始就是没有锁结构与记录进行关联的。</p>
+<p>事务想要对一条记录做出改动的时候，首先会查看内存中有没有与这条记录关联的<strong>锁结构</strong>，当没有的时候就会在内存中<strong>生成一个锁结构与之关联</strong>。</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108142433.png" style="zoom:33%;" />
+<p><strong>锁结构</strong>里的关键信息：</p>
+<ul>
+<li>
+<p><code>trx信息</code>：代表这个锁结构是在哪个事务生成的。</p>
+</li>
+<li>
+<p><code>is_waiting</code>: 表示事务是否在等待。</p>
+</li>
+</ul>
+<p>这个过程称为<strong>加锁成功</strong>。</p>
+<p>事务T1提交之前，如果另一个事务也想对这条记录做出改动，那么先查看有没有锁结构与这条记录关联，发现已有，然后也生成一个锁结构与这条记录关联，不过锁结构的<code>is_waiting</code>属性设置为<code>true</code>,表示事务需要等待。这个过程就是<strong>加锁失败</strong>。</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108143054.png" style="zoom:33%;" />
+<p>在事务T1提交之后，就会把该事务生成的锁结构释放掉，然后看还有没有别的事务在等待获取锁，发现了事务T2还在等待获取锁，把T2事务生成的锁结构的<code>is_waiting</code>属性设置为<code>false</code>。然后把该事务对应的线程唤醒，继续执行。</p>
+<ul>
+<li><code>写-读</code>或<code>读-写</code> 一个事务读取，一个事务修改</li>
+</ul>
+<p>这种情况可能发生<code>脏读</code>，<code>不可重复读</code>，<code>幻读</code>。</p>
+<p><code>SQL标准</code>规定不同隔离级别下发生的问题不一样</p>
+<p><code>READ UNCOMMITTED</code>  脏读，不可重复读，幻读都可能发生</p>
+<p><code>READ COMMITTED</code> 不可重复读，幻读可能发生，脏读不可发生</p>
+<p><code>REPEATABLE READ</code> 幻读可能发生，脏读和不可重复读不可发生</p>
+<p><code>SERIALIZABLE</code> 都不可发生</p>
+<p><font color=red><code>MySQL</code></font>在<code>REPEATABLE READ</code>隔离级别实际上就可以解决幻读问题。</p>
+<p>如何解决这些问题呢？</p>
+<p>方案一：利用多版本并发控制（MVCC）,写操作进行加锁</p>
+<p>方案二：读写操作都加锁</p>
+<h2 id="一致性读consistent-reads">一致性读（Consistent Reads）</h2>
+<p>利用<code>MVCC</code>进行的读取操作称之为<code>一致性读</code>，或者<code>快照读</code>。</p>
+<p>普通<code>SELECT</code>语句，在<code>READ COMMITTED</code>,<code>REPETABLE READ</code>隔离级别下都是一致性读。</p>
+<h2 id="锁定读locking-reads">锁定读（Locking Reads）</h2>
+<h3 id="共享锁和独占锁">共享锁和独占锁</h3>
+<ul>
+<li><code>共享锁</code>， <code>S锁</code>。在事务读取一条记录前，需要获取记录的<code>S锁</code></li>
+<li><code>独占锁</code>，也称<code>排他锁</code>，<code>Exclusive locks</code>简称<code>X锁</code></li>
+</ul>
+<p>兼容性：只有<code>S锁和S锁兼容</code></p>
+<h3 id="加锁语句">加锁语句</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//加S锁
+</span></span><span class="line"><span class="cl">select ... lock in share mod;
+</span></span><span class="line"><span class="cl">//加X锁
+</span></span><span class="line"><span class="cl">select ... for update;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="多粒度锁">多粒度锁</h2>
+<p>行锁，表锁</p>
+<p>意向锁I</p>
+<ul>
+<li><code>意向共享锁</code>， IS锁。事务准备在某条记录加S锁时，需要在表级加一个IS锁。</li>
+<li><code>意向独占锁</code>， IX锁。准备在某条记录加X锁时，需要在表级加一个IX锁。</li>
+</ul>
+<p>IX,IS锁时表级锁，为了加表级的S锁和X锁时可是快速判断表中的记录是否被上锁。</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108153816.png" style="zoom:33%;" />
+<h2 id="innodb存储引擎中的锁">InnoDB存储引擎中的锁</h2>
+<h3 id="表级锁">表级锁</h3>
+<p>对表执行select、insert、delete、update时，不会为这个表添加标记的S锁或者X锁。</p>
+<ul>
+<li>
+<p>表级<code>IS锁</code>，<code>IX锁</code></p>
+</li>
+<li>
+<p>表级的<code>AUTO-INC</code>锁</p>
+</li>
+</ul>
+<p>表中的列可以添加<code>AUTO_INCREMENT</code>属性。自动赋值</p>
+<p>自动递增赋值原理：</p>
+<ul>
+<li>采用<code>AUTO-INC</code>锁，执行插入语句时就在表级别加上一个AUTO-INC锁，然后为每条待插入记录的列分配递增之，执行完成后把AUTO-INC锁释放掉。一个事务持有AUTO-INC锁的过程中，其它事务的插入语句都要被阻塞来保证分配的递增值连续合理。</li>
+<li>采用一个轻量级的锁，插入时获取这个轻量级锁，然后生成本次插入语句需要用到的<code>AUTO_INCREMENET</code>列的值后，把该锁释放掉，兵不需要等到整个插入语句执行完。</li>
+</ul>
+<h3 id="行级锁">行级锁</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CREATE TABLE hero (
+</span></span><span class="line"><span class="cl">    number INT,
+</span></span><span class="line"><span class="cl">    name VARCHAR(100),
+</span></span><span class="line"><span class="cl">    country varchar(100),
+</span></span><span class="line"><span class="cl">    PRIMARY KEY (number),
+</span></span><span class="line"><span class="cl">    KEY idx_name (name)
+</span></span><span class="line"><span class="cl">) Engine=InnoDB CHARSET=utf8;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">INSERT INTO hero VALUES
+</span></span><span class="line"><span class="cl">    (1, &#39;l刘备&#39;, &#39;蜀&#39;),
+</span></span><span class="line"><span class="cl">    (3, &#39;z诸葛亮&#39;, &#39;蜀&#39;),
+</span></span><span class="line"><span class="cl">    (8, &#39;c曹操&#39;, &#39;魏&#39;),
+</span></span><span class="line"><span class="cl">    (15, &#39;x荀彧&#39;, &#39;魏&#39;),
+</span></span><span class="line"><span class="cl">    (20, &#39;s孙权&#39;, &#39;吴&#39;);
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">  //表里的数据  
+</span></span><span class="line"><span class="cl"> mysql&gt; SELECT * FROM hero;
+</span></span><span class="line"><span class="cl">+--------+------------+---------+
+</span></span><span class="line"><span class="cl">| number | name       | country |
+</span></span><span class="line"><span class="cl">+--------+------------+---------+
+</span></span><span class="line"><span class="cl">|      1 | l刘备      | 蜀      |
+</span></span><span class="line"><span class="cl">|      3 | z诸葛亮    | 蜀      |
+</span></span><span class="line"><span class="cl">|      8 | c曹操      | 魏      |
+</span></span><span class="line"><span class="cl">|     15 | x荀彧      | 魏      |
+</span></span><span class="line"><span class="cl">|     20 | s孙权      | 吴      |
+</span></span><span class="line"><span class="cl">+--------+------------+---------+
+</span></span><span class="line"><span class="cl">5 rows in set (0.01 sec)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108160434.png" style="zoom:33%;" />
+<blockquote>
+<p>name列加字符的意义时utf8字符集汉字不是按拼英顺序排序。</p>
+</blockquote>
+<p>常见<code>行锁类型</code></p>
+<ul>
+<li><code>Record Locks</code>  <code>LOCK_REC_NOT_GAP</code>, <code>正经记录锁</code></li>
+</ul>
+<p>比如把number为8的记录加一个正经记录锁</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108161810.png" style="zoom: 33%;" />
+<ul>
+<li>Gap Locks</li>
+</ul>
+<p>解决幻读问题，可以用MVCC解决，也可以采用加锁翻案解决。使用加锁翻案时有个问题，就是事务第一次执行读取操作的时候，那些记录并不存在，无所加记录锁。gap锁，</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108162102.png" style="zoom:33%;" />
+<p>number值为8的记录加了gap锁，意味着不允许别的事务在number为8的记录前面的间隙插入新的记录，也就是（3，8）之间不允许插入。</p>
+<p>这个gap锁的提出仅仅时<strong>为了防止插入幻影记录而提出</strong>的，对一条记录加gap锁，不影响其它事务加锁。</p>
+<p>问题来了，如何在20记录之后的间隙该怎么办？如何阻止在（20， +∞）区间插入记录呢，</p>
+<p>数据页中有两条记录：</p>
+<ul>
+<li><code>Infimum</code>记录，表示页面中的最小记录</li>
+<li><code>Supremum</code>记录，表示页面中的最大记录</li>
+</ul>
+<p>所以要限制（20， +∞）插入记录，就在<code>Supremum</code>记录上加上一个<code>gap锁</code></p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108163102.png" style="zoom:33%;" />
+<ul>
+<li><code>Next-Key Locks</code></li>
+</ul>
+<p>记录锁和间隙锁的合体</p>
+<ul>
+<li><code>Insert Intention Locks</code></li>
+</ul>
+<p>事务在插入一条记录前需要判断该位置是不是被别的事务加了<code>间隙锁</code>，如果有插入操作需要等待，直到拥有<code>gap锁</code>的事务提交。设计规定事务在等待时也需要在内存中生成一个<code>锁结构</code>，表明事务想在某个间隙插入新记录，但是现在在等待。<code>插入意向锁</code> <code>LOCK_INSERT_INTENTION</code></p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108165637.png" style="zoom:33%;" />
+<p>如果事务T1在number为8的记录加一个gap锁，然后T2和T3分别向hero表中插入4，5两条记录，</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108170052.png" style="zoom:33%;" />
+<p>锁结构中有一个type属性，表示锁的类型。</p>
+<p><code>T1</code>持有间隙锁，<code>T2,T3</code>处于等待状态。<code>T1</code>释放锁，<code>T2,T3</code>就能获得对应的<code>插入意向锁</code>（is_waiting改为false）,T2,T3之间不会相互阻塞，会<code>同时获取到插入意向锁</code>，插入意向锁并不会阻止别的事务继续获取该记录上的任何类型的锁。</p>
+<ul>
+<li>隐式锁</li>
+</ul>
+<p>一般情况的insert操作时不加锁的。如果一个事务插入了一条记录，然会另一个事务对这条记录加锁，就可能发生脏读、脏写的问题。</p>
+<p>事务id起作用了：</p>
+<p><code>情景一</code>：对于聚簇索引，有一个隐藏的<code>trx_id</code>列。当前事务插入了一条记录，trx_id值就表示当前事务的<code>事务id</code>，如果其它事务对该记录添加S锁或X锁时，首先会看记录的<code>trx_id</code>是否是当前的活跃id，如果是就帮当前事务创建一个X锁，然后自己进入等待状态。</p>
+<p><code>情景二</code>：对于二级索引，没有trx_id列，但是在二级索引页面的page Header部分有一个PAGE_MAX_TRX_ID属性，属性表示对该页面进行改动的最大<code>事务id</code>，如果小于当前最小活跃事务id，说明页面修改事务已提交，否则就要在页面中定位到对应的二级索引，回表找到对应的聚簇索引记录，重复情景一的做法。</p>
+<p>由于事务id的存在，导致相当于加了一个隐士锁。别的事务对记录加锁时，会帮助当前事务生成一个锁结构，然后自己再生成一个锁结构进入等待状态。</p>
+<h2 id="innodb内存锁结构">InnoDB内存锁结构</h2>
+<p>在对不同记录加锁时，符合下面的条件：</p>
+<ul>
+<li>在同一个事务里进行加锁操作</li>
+<li>被加锁的记录在同一个页面</li>
+<li>加锁的类型一样</li>
+<li>等待状态一样</li>
+</ul>
+<p>就可以放到一个锁结构中。</p>
+<img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231108191423.png" style="zoom:33%;" />
+<p><code>type_mode</code> 32位 拆分为<code>lock_mode</code>,<code>lock_type</code>,<code>rec_lock_type</code></p>
+<ul>
+<li><code>锁的模式lock_mode</code>,占用低4位，</li>
+</ul>
+<p><code>LOCK_IS</code> 0</p>
+<p><code>LOCK_IX</code> 1</p>
+<p><code>LOCK_S</code> 2</p>
+<p><code>LOCK_X</code> 3</p>
+<p><code>LOCK_AUTO_INC</code> 4</p>
+<ul>
+<li>锁类型（lock_type）占用5-8位</li>
+</ul>
+<p><code>LOCK_TABLE</code>   16 第5位为1</p>
+<p><code>LOCK_REC</code>  32 第6位为1</p>
+<ul>
+<li>行锁的具体类型（rec_lock_type），只有lock_type为LOCK_REC时才能被分为更多的类型。</li>
+</ul>
+<p><code>LOCK_ORDINARY</code>  0表示next-key锁</p>
+<p><code>LOCK_GAP</code>  512</p>
+<p><code>LOCK_REC_NOT_GAP</code>  1024</p>
+<p><code>LOCK_INSERT_INTENTION</code> 2048</p>
+<p><code>is_waiting</code>属性也在这个type_mode里。</p>
+<p><code>LOCK_WAIT</code> 256(第9个bit位),表示<code>is_waiting</code>为<code>true</code></p>
 
     </div>
 
