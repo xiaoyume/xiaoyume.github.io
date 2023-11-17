@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="xiaoyume" /><meta name="description" content="OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 cd OpenBlas make make PREFIX=/installdir install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export LD_LIBRARY_PATH=/your/OpenBLAS/install/lib:$LD_LIBRARY_PATH 用例实测 1 2 3 4 5 6 7 8" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="xiaoyume" /><meta name="description" content="OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 4 5 cd OpenBlas //make命令 make COMMON_OPT=&amp;#34;-O3 -g -fPIC&amp;#34; make PREFIX=/thfs1/home/chengkun_wu/wuxiaoyu/OpenBLAS/install install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -40,18 +40,18 @@
 
 
 <meta property="og:title" content="Openblas" />
-<meta property="og:description" content="OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 cd OpenBlas make make PREFIX=/installdir install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export LD_LIBRARY_PATH=/your/OpenBLAS/install/lib:$LD_LIBRARY_PATH 用例实测 1 2 3 4 5 6 7 8" />
+<meta property="og:description" content="OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 4 5 cd OpenBlas //make命令 make COMMON_OPT=&#34;-O3 -g -fPIC&#34; make PREFIX=/thfs1/home/chengkun_wu/wuxiaoyu/OpenBLAS/install install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xiaoyume.github.io/post/23.openblas%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2023-10-30T19:19:50+08:00" />
 <meta property="article:modified_time" content="2023-10-30T19:19:50+08:00" />
 <meta itemprop="name" content="Openblas">
-<meta itemprop="description" content="OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 cd OpenBlas make make PREFIX=/installdir install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export LD_LIBRARY_PATH=/your/OpenBLAS/install/lib:$LD_LIBRARY_PATH 用例实测 1 2 3 4 5 6 7 8"><meta itemprop="datePublished" content="2023-10-30T19:19:50+08:00" />
+<meta itemprop="description" content="OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 4 5 cd OpenBlas //make命令 make COMMON_OPT=&#34;-O3 -g -fPIC&#34; make PREFIX=/thfs1/home/chengkun_wu/wuxiaoyu/OpenBLAS/install install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export"><meta itemprop="datePublished" content="2023-10-30T19:19:50+08:00" />
 <meta itemprop="dateModified" content="2023-10-30T19:19:50+08:00" />
-<meta itemprop="wordCount" content="418">
+<meta itemprop="wordCount" content="3149">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Openblas"/>
-<meta name="twitter:description" content="OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 cd OpenBlas make make PREFIX=/installdir install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export LD_LIBRARY_PATH=/your/OpenBLAS/install/lib:$LD_LIBRARY_PATH 用例实测 1 2 3 4 5 6 7 8"/>
+<meta name="twitter:description" content="OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 4 5 cd OpenBlas //make命令 make COMMON_OPT=&#34;-O3 -g -fPIC&#34; make PREFIX=/thfs1/home/chengkun_wu/wuxiaoyu/OpenBLAS/install install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -129,8 +129,8 @@
       <div class="post-meta">
         <span class="post-time"> 2023-10-30 </span>
         
-          <span class="more-meta"> 约 418 字 </span>
-          <span class="more-meta"> 预计阅读 1 分钟 </span>
+          <span class="more-meta"> 约 3149 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -149,6 +149,7 @@
         <li><a href="#编译">编译</a></li>
       </ul>
     </li>
+    <li><a href="#调试记录">调试记录</a></li>
   </ul>
 </nav>
   </div>
@@ -170,11 +171,15 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd OpenBlas
-</span></span><span class="line"><span class="cl">make
-</span></span><span class="line"><span class="cl">make PREFIX=/installdir install
+</span></span><span class="line"><span class="cl">//make命令
+</span></span><span class="line"><span class="cl">make COMMON_OPT=&#34;-O3 -g -fPIC&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">make PREFIX=/thfs1/home/chengkun_wu/wuxiaoyu/OpenBLAS/install install
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="环境变量配置">环境变量配置</h2>
@@ -294,12 +299,946 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gcc -o cblastest cblas.c -lopenblas -lpthread
 </span></span><span class="line"><span class="cl">//上面这个不一定能正常，不能就指定openblas库的路径
-</span></span><span class="line"><span class="cl">gcc -o cblastest cblas.c /yourdir/install/lib/libopenblas.a -lpthread -g
+</span></span><span class="line"><span class="cl">gcc -o cblastest cblas.c /thfs1/home/chengkun_wu/wuxiaoyu/OpenBLAS/install/lib/libopenblas.a -lpthread -g -lm
 </span></span><span class="line"><span class="cl">//加上-g生成调试信息
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>无法进入到cblas_dgemm函数里</p>
-
+</div><h1 id="调试记录">调试记录</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">//cblac.c
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cblas.h&gt;  // 包含OpenBLAS的头文件</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 定义矩阵的大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#define M 1000
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define N 2000
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define K 3000
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="o">*</span><span class="n">matrixA</span><span class="p">,</span> <span class="o">*</span><span class="n">matrixB</span><span class="p">,</span> <span class="o">*</span><span class="n">resultMatrix</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 分配内存并初始化矩阵A、矩阵B和结果矩阵
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">matrixA</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">K</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">double</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">matrixB</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="n">K</span> <span class="o">*</span> <span class="n">N</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">double</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">resultMatrix</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">N</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">double</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">M</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">K</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">matrixA</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">K</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="nf">rand</span><span class="p">()</span> <span class="o">/</span> <span class="n">RAND_MAX</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">K</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">matrixB</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">N</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="nf">rand</span><span class="p">()</span> <span class="o">/</span> <span class="n">RAND_MAX</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 使用OpenBLAS库中的cblas_dgemm函数执行矩阵相乘
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">cblas_dgemm</span><span class="p">(</span><span class="n">CblasRowMajor</span><span class="p">,</span> <span class="n">CblasNoTrans</span><span class="p">,</span> <span class="n">CblasNoTrans</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">matrixA</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">matrixB</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">resultMatrix</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span><span class="c1">//每个矩阵后面lda,ldb,ldc表示矩阵较长的维度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 输出结果矩阵的一部分（可选）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Result Matrix (first 5x5):</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%f</span><span class="se">\t</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">resultMatrix</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">MATRIX_SIZE</span> <span class="o">+</span> <span class="n">j</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 释放分配的内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">free</span><span class="p">(</span><span class="n">matrixA</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">matrixB</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">resultMatrix</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gcc -o blastest cblas.c /thfs1/home/chengkun_wu/wuxiaoyu/OpenBLAS/install/lib/libopenblas.a -lpthread -g -lm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span><span class="lnt">329
+</span><span class="lnt">330
+</span><span class="lnt">331
+</span><span class="lnt">332
+</span><span class="lnt">333
+</span><span class="lnt">334
+</span><span class="lnt">335
+</span><span class="lnt">336
+</span><span class="lnt">337
+</span><span class="lnt">338
+</span><span class="lnt">339
+</span><span class="lnt">340
+</span><span class="lnt">341
+</span><span class="lnt">342
+</span><span class="lnt">343
+</span><span class="lnt">344
+</span><span class="lnt">345
+</span><span class="lnt">346
+</span><span class="lnt">347
+</span><span class="lnt">348
+</span><span class="lnt">349
+</span><span class="lnt">350
+</span><span class="lnt">351
+</span><span class="lnt">352
+</span><span class="lnt">353
+</span><span class="lnt">354
+</span><span class="lnt">355
+</span><span class="lnt">356
+</span><span class="lnt">357
+</span><span class="lnt">358
+</span><span class="lnt">359
+</span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span><span class="lnt">367
+</span><span class="lnt">368
+</span><span class="lnt">369
+</span><span class="lnt">370
+</span><span class="lnt">371
+</span><span class="lnt">372
+</span><span class="lnt">373
+</span><span class="lnt">374
+</span><span class="lnt">375
+</span><span class="lnt">376
+</span><span class="lnt">377
+</span><span class="lnt">378
+</span><span class="lnt">379
+</span><span class="lnt">380
+</span><span class="lnt">381
+</span><span class="lnt">382
+</span><span class="lnt">383
+</span><span class="lnt">384
+</span><span class="lnt">385
+</span><span class="lnt">386
+</span><span class="lnt">387
+</span><span class="lnt">388
+</span><span class="lnt">389
+</span><span class="lnt">390
+</span><span class="lnt">391
+</span><span class="lnt">392
+</span><span class="lnt">393
+</span><span class="lnt">394
+</span><span class="lnt">395
+</span><span class="lnt">396
+</span><span class="lnt">397
+</span><span class="lnt">398
+</span><span class="lnt">399
+</span><span class="lnt">400
+</span><span class="lnt">401
+</span><span class="lnt">402
+</span><span class="lnt">403
+</span><span class="lnt">404
+</span><span class="lnt">405
+</span><span class="lnt">406
+</span><span class="lnt">407
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="p">(</span><span class="n">base</span><span class="p">)</span> <span class="n">chengkun_wu</span><span class="err">@</span><span class="nl">ln4</span><span class="p">:</span><span class="o">~/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">test</span><span class="err">$</span> <span class="n">gdb</span> <span class="p">.</span><span class="o">/</span><span class="n">blastest</span> 
+</span></span><span class="line"><span class="cl"><span class="n">GNU</span> <span class="nf">gdb</span> <span class="p">(</span><span class="n">Ubuntu</span> <span class="mf">9.2</span><span class="o">-</span><span class="mi">0u</span><span class="n">buntu1</span><span class="o">~</span><span class="mf">20.04</span><span class="p">)</span> <span class="mf">9.2</span>
+</span></span><span class="line"><span class="cl"><span class="nf">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">2020</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">Inc</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">License</span> <span class="n">GPLv3</span><span class="o">+:</span> <span class="n">GNU</span> <span class="n">GPL</span> <span class="n">version</span> <span class="mi">3</span> <span class="n">or</span> <span class="n">later</span> <span class="o">&lt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//gnu.org/licenses/gpl.html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">This</span> <span class="n">is</span> <span class="n">free</span> <span class="nl">software</span><span class="p">:</span> <span class="n">you</span> <span class="n">are</span> <span class="n">free</span> <span class="n">to</span> <span class="n">change</span> <span class="n">and</span> <span class="n">redistribute</span> <span class="n">it</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">There</span> <span class="n">is</span> <span class="n">NO</span> <span class="n">WARRANTY</span><span class="p">,</span> <span class="n">to</span> <span class="n">the</span> <span class="n">extent</span> <span class="n">permitted</span> <span class="n">by</span> <span class="n">law</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Type</span> <span class="s">&#34;show copying&#34;</span> <span class="n">and</span> <span class="s">&#34;show warranty&#34;</span> <span class="k">for</span> <span class="n">details</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">This</span> <span class="n">GDB</span> <span class="n">was</span> <span class="n">configured</span> <span class="n">as</span> <span class="s">&#34;aarch64-linux-gnu&#34;</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Type</span> <span class="s">&#34;show configuration&#34;</span> <span class="k">for</span> <span class="n">configuration</span> <span class="n">details</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">For</span> <span class="n">bug</span> <span class="n">reporting</span> <span class="n">instructions</span><span class="p">,</span> <span class="n">please</span> <span class="nl">see</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.gnu.org/software/gdb/bugs/&gt;.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Find</span> <span class="n">the</span> <span class="n">GDB</span> <span class="n">manual</span> <span class="n">and</span> <span class="n">other</span> <span class="n">documentation</span> <span class="n">resources</span> <span class="n">online</span> <span class="nl">at</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.gnu.org/software/gdb/documentation/&gt;.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">For</span> <span class="n">help</span><span class="p">,</span> <span class="n">type</span> <span class="s">&#34;help&#34;</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Type</span> <span class="s">&#34;apropos word&#34;</span> <span class="n">to</span> <span class="n">search</span> <span class="k">for</span> <span class="n">commands</span> <span class="n">related</span> <span class="n">to</span> <span class="s">&#34;word&#34;</span><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">Type</span> <span class="o">&lt;</span><span class="n">RET</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">more</span><span class="p">,</span> <span class="n">q</span> <span class="n">to</span> <span class="n">quit</span><span class="p">,</span> <span class="n">c</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">without</span> <span class="n">paging</span><span class="o">--</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="p">.</span><span class="o">/</span><span class="n">blastest</span><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">b</span> <span class="n">blas_dgemm</span>
+</span></span><span class="line"><span class="cl"><span class="n">Function</span> <span class="s">&#34;blas_dgemm&#34;</span> <span class="n">not</span> <span class="n">defined</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Make</span> <span class="n">breakpoint</span> <span class="n">pending</span> <span class="n">on</span> <span class="n">future</span> <span class="n">shared</span> <span class="n">library</span> <span class="n">load</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span> <span class="n">or</span> <span class="p">[</span><span class="n">n</span><span class="p">])</span> <span class="nf">n</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">b</span> <span class="n">cblas_dgemm</span>
+</span></span><span class="line"><span class="cl"><span class="n">Breakpoint</span> <span class="mi">1</span> <span class="n">at</span> <span class="mh">0x1bf0</span><span class="o">:</span> <span class="n">file</span> <span class="n">gemm</span><span class="p">.</span><span class="n">c</span><span class="p">,</span> <span class="n">line</span> <span class="mf">296.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">run</span>
+</span></span><span class="line"><span class="cl"><span class="n">Starting</span> <span class="nl">program</span><span class="p">:</span> <span class="o">/</span><span class="n">thfs1</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">chengkun_wu</span><span class="o">/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">blastest</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Thread</span> <span class="n">debugging</span> <span class="n">using</span> <span class="n">libthread_db</span> <span class="n">enabled</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">Using</span> <span class="n">host</span> <span class="n">libthread_db</span> <span class="n">library</span> <span class="s">&#34;/lib/aarch64-linux-gnu/libthread_db.so.1&#34;</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000004211e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140868</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000006221e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140869</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000028231e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140870</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400004a241e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140871</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400006c251e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140872</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400008e261e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140873</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40000b0271e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140874</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40000f2281e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140875</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40000f4291e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140876</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40001162a1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140877</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40001582b1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140878</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400017a2c1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140879</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400017c2d1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140880</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400019e2e1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140881</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40001c02f1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140882</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40001e2301e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140883</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000204311e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140884</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000226321e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140885</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000248331e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140886</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400026a341e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140887</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400028c351e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140888</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40002ae361e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140889</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40002d0371e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140890</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40002f2381e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140891</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000314391e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140892</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40003363a1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140893</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40003583b1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140894</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400037a3c1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140895</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400039c3d1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140896</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40003be3e1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140897</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40004003f1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140898</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000402401e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140899</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000424411e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140900</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000446421e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140901</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000468431e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140902</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400048a441e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140903</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40004cc451e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140904</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40004ce461e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140905</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40004f0471e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140906</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000512481e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140907</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000534491e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140908</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40005564a1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140909</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40005984b1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140910</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x400059a4c1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140911</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40005dc4d1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140912</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40005de4e1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140913</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40006004f1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140914</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000622501e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140915</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000644511e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140916</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000666521e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140917</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000688531e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140918</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40006aa541e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140919</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40006cc551e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140920</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40006ee561e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140921</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000710571e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140922</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000732581e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140923</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x4000754591e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140924</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40007765a1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140925</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40007985b1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140926</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40007ba5c1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140927</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40007dc5d1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140928</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40007fe5e1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140929</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">New</span> <span class="n">Thread</span> <span class="mh">0x40008405f1e0</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">4140930</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">Type</span> <span class="o">&lt;</span><span class="n">RET</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">more</span><span class="p">,</span> <span class="n">q</span> <span class="n">to</span> <span class="n">quit</span><span class="p">,</span> <span class="n">c</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">without</span> <span class="n">paging</span><span class="o">--</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Thread</span> <span class="mi">1</span> <span class="s">&#34;blastest&#34;</span> <span class="n">hit</span> <span class="n">Breakpoint</span> <span class="mi">1</span><span class="p">,</span> <span class="nf">cblas_dgemm</span> <span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="n">CblasRowMajor</span><span class="p">,</span> <span class="n">TransA</span><span class="o">=</span><span class="n">CblasNoTrans</span><span class="p">,</span> <span class="n">TransB</span><span class="o">=</span><span class="n">CblasNoTrans</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mh">0x400086060010</span><span class="p">,</span> <span class="n">lda</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mh">0x400087744010</span><span class="p">,</span> <span class="n">ldb</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mh">0x40008a50b010</span><span class="p">,</span> <span class="n">ldc</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span> <span class="n">at</span> <span class="n">gemm</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">296</span>
+</span></span><span class="line"><span class="cl"><span class="mi">296</span>                <span class="n">FLOAT</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="n">blasint</span> <span class="n">ldc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">369</span>       <span class="k">if</span> <span class="p">(</span><span class="n">order</span> <span class="o">==</span> <span class="n">CblasColMajor</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">418</span>       <span class="k">if</span> <span class="p">(</span><span class="n">order</span> <span class="o">==</span> <span class="n">CblasRowMajor</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">l</span>
+</span></span><span class="line"><span class="cl"><span class="mi">413</span>         <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">m</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>        <span class="n">info</span> <span class="o">=</span>  <span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">414</span>         <span class="nf">if</span> <span class="p">(</span><span class="n">transb</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>        <span class="n">info</span> <span class="o">=</span>  <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">415</span>         <span class="nf">if</span> <span class="p">(</span><span class="n">transa</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>        <span class="n">info</span> <span class="o">=</span>  <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">416</span>       <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="mi">417</span>
+</span></span><span class="line"><span class="cl"><span class="mi">418</span>       <span class="k">if</span> <span class="p">(</span><span class="n">order</span> <span class="o">==</span> <span class="n">CblasRowMajor</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="mi">419</span>         <span class="n">args</span><span class="p">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">420</span>         <span class="n">args</span><span class="p">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">m</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">421</span>         <span class="n">args</span><span class="p">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">422</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">419</span>         <span class="n">args</span><span class="p">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="n">Undefined</span> <span class="n">info</span> <span class="nl">command</span><span class="p">:</span> <span class="s">&#34;args.m&#34;</span><span class="p">.</span>  <span class="n">Try</span> <span class="s">&#34;help info&#34;</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">421</span>         <span class="n">args</span><span class="p">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="n">Undefined</span> <span class="n">info</span> <span class="nl">command</span><span class="p">:</span> <span class="s">&#34;args.m&#34;</span><span class="p">.</span>  <span class="n">Try</span> <span class="s">&#34;help info&#34;</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">428</span>         <span class="n">args</span><span class="p">.</span><span class="n">ldb</span> <span class="o">=</span> <span class="n">lda</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">431</span>         <span class="k">if</span> <span class="p">(</span><span class="n">TransB</span> <span class="o">==</span> <span class="n">CblasNoTrans</span><span class="p">)</span>     <span class="n">transa</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">440</span>         <span class="k">if</span> <span class="p">(</span><span class="n">TransA</span> <span class="o">==</span> <span class="n">CblasNoTrans</span><span class="p">)</span>     <span class="n">transb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">451</span>         <span class="k">if</span> <span class="p">(</span><span class="n">transa</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">nrowa</span> <span class="o">=</span> <span class="n">args</span><span class="p">.</span><span class="n">k</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">453</span>         <span class="k">if</span> <span class="p">(</span><span class="n">transb</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">nrowb</span> <span class="o">=</span> <span class="n">args</span><span class="p">.</span><span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="n">nrowa</span>
+</span></span><span class="line"><span class="cl"><span class="n">Undefined</span> <span class="n">info</span> <span class="nl">command</span><span class="p">:</span> <span class="s">&#34;nrowa&#34;</span><span class="p">.</span>  <span class="n">Try</span> <span class="s">&#34;help info&#34;</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">1</span> <span class="o">=</span> <span class="mi">2000</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">transa</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">2</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">transb</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">3</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">457</span>         <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">ldc</span> <span class="o">&lt;</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span><span class="p">)</span> <span class="n">info</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">nrowb</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">4</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">transa</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">5</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">transb</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">6</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">458</span>         <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">ldb</span> <span class="o">&lt;</span> <span class="n">nrowb</span><span class="p">)</span>  <span class="n">info</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">459</span>         <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">lda</span> <span class="o">&lt;</span> <span class="n">nrowa</span><span class="p">)</span>  <span class="n">info</span> <span class="o">=</span>  <span class="mi">8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">411</span>         <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">k</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>        <span class="n">info</span> <span class="o">=</span>  <span class="mi">5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">412</span>         <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>        <span class="n">info</span> <span class="o">=</span>  <span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">413</span>         <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">m</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>        <span class="n">info</span> <span class="o">=</span>  <span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">414</span>         <span class="k">if</span> <span class="p">(</span><span class="n">transb</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>        <span class="n">info</span> <span class="o">=</span>  <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">464</span>         <span class="k">if</span> <span class="p">(</span><span class="n">transa</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>        <span class="n">info</span> <span class="o">=</span>  <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">468</span>       <span class="k">if</span> <span class="p">(</span><span class="n">info</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">489</span>       <span class="k">if</span> <span class="p">((</span><span class="n">args</span><span class="p">.</span><span class="n">m</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">info</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">7</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">522</span>       <span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">XFLOAT</span> <span class="o">*</span><span class="p">)</span><span class="nf">blas_memory_alloc</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="nf">blas_memory_alloc</span> <span class="p">(</span><span class="n">procpos</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="n">at</span> <span class="n">memory</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">2761</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2761</span>      <span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">memoryalloc</span><span class="p">[])(</span><span class="kt">void</span> <span class="o">*</span><span class="n">address</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">finish</span>
+</span></span><span class="line"><span class="cl"><span class="n">Run</span> <span class="n">till</span> <span class="n">exit</span> <span class="n">from</span> <span class="err">#</span><span class="mi">0</span>  <span class="nf">blas_memory_alloc</span> <span class="p">(</span><span class="n">procpos</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="n">at</span> <span class="n">memory</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">2761</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0x0000aaaaaaaabd14</span> <span class="n">in</span> <span class="nf">cblas_dgemm</span> <span class="p">(</span><span class="n">order</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">TransA</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">TransB</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">m</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">n</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">k</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">a</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">lda</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mh">0x400087744010</span><span class="p">,</span> <span class="n">ldb</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">beta</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mh">0x40008a50b010</span><span class="p">,</span> <span class="n">ldc</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span> <span class="n">at</span> <span class="n">gemm</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">522</span>
+</span></span><span class="line"><span class="cl"><span class="mi">522</span>       <span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">XFLOAT</span> <span class="o">*</span><span class="p">)</span><span class="nf">blas_memory_alloc</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">Value</span> <span class="n">returned</span> <span class="n">is</span> <span class="err">$</span><span class="mi">8</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="mh">0x40008b44e000</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">525</span>       <span class="n">sb</span> <span class="o">=</span> <span class="p">(</span><span class="n">XFLOAT</span> <span class="o">*</span><span class="p">)(((</span><span class="n">BLASLONG</span><span class="p">)</span><span class="n">sa</span> <span class="o">+</span> <span class="p">((</span><span class="n">GEMM_P</span> <span class="o">*</span> <span class="n">GEMM_Q</span> <span class="o">*</span> <span class="n">COMPSIZE</span> <span class="o">*</span> <span class="n">SIZE</span> <span class="o">+</span> <span class="n">GEMM_ALIGN</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">GEMM_ALIGN</span><span class="p">))</span> <span class="o">+</span> <span class="n">GEMM_OFFSET_B</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">534</span>       <span class="k">if</span> <span class="p">(</span> <span class="n">MNK</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">SMP_THRESHOLD_MIN</span>  <span class="o">*</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">GEMM_MULTITHREAD_THRESHOLD</span><span class="p">)</span>  <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">MNK</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">9</span> <span class="o">=</span> <span class="mi">6000000000</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">537</span>             <span class="n">args</span><span class="p">.</span><span class="n">nthreads</span> <span class="o">=</span> <span class="nf">num_cpu_avail</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="nf">num_cpu_avail</span> <span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="n">at</span> <span class="p">..</span><span class="o">/</span><span class="n">common_thread</span><span class="p">.</span><span class="nl">h</span><span class="p">:</span><span class="mi">148</span>
+</span></span><span class="line"><span class="cl"><span class="mi">148</span>       <span class="k">if</span> <span class="p">(</span><span class="n">blas_cpu_number</span> <span class="o">==</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">finish</span>
+</span></span><span class="line"><span class="cl"><span class="n">Run</span> <span class="n">till</span> <span class="n">exit</span> <span class="n">from</span> <span class="err">#</span><span class="mi">0</span>  <span class="nf">num_cpu_avail</span> <span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="n">at</span> <span class="p">..</span><span class="o">/</span><span class="n">common_thread</span><span class="p">.</span><span class="nl">h</span><span class="p">:</span><span class="mi">148</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cblas_dgemm</span> <span class="p">(</span><span class="n">order</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">TransA</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">TransB</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">m</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">n</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">k</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">a</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">lda</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mh">0x400087744010</span><span class="p">,</span> <span class="n">ldb</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">beta</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mh">0x40008a50b010</span><span class="p">,</span> <span class="n">ldc</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span> <span class="n">at</span> <span class="n">gemm</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">540</span>
+</span></span><span class="line"><span class="cl"><span class="mi">540</span>      <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">nthreads</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">563</span>             <span class="p">(</span><span class="n">gemm</span><span class="p">[</span><span class="mi">16</span> <span class="o">|</span> <span class="p">(</span><span class="n">transb</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">transa</span><span class="p">])(</span><span class="o">&amp;</span><span class="n">args</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">sa</span><span class="p">,</span> <span class="n">sb</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dgemm_thread_nn</span> <span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="mh">0xffffffffed60</span><span class="p">,</span> <span class="n">range_m</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">range_n</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">sa</span><span class="o">=</span><span class="mh">0x40008b44e000</span><span class="p">,</span> <span class="n">sb</span><span class="o">=</span><span class="mh">0x40008b54e000</span><span class="p">,</span> <span class="n">mypos</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="n">at</span> <span class="n">level3_thread</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">748</span>
+</span></span><span class="line"><span class="cl"><span class="mi">748</span>       <span class="n">BLASLONG</span> <span class="n">m</span> <span class="o">=</span> <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="n">source</span>
+</span></span><span class="line"><span class="cl"><span class="n">Current</span> <span class="n">source</span> <span class="n">file</span> <span class="n">is</span> <span class="n">level3_thread</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">Compilation</span> <span class="n">directory</span> <span class="n">is</span> <span class="o">/</span><span class="n">thfs1</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">chengkun_wu</span><span class="o">/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">OpenBLAS</span><span class="o">/</span><span class="n">driver</span><span class="o">/</span><span class="n">level3</span>
+</span></span><span class="line"><span class="cl"><span class="n">Located</span> <span class="n">in</span> <span class="o">/</span><span class="n">thfs1</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">chengkun_wu</span><span class="o">/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">OpenBLAS</span><span class="o">/</span><span class="n">driver</span><span class="o">/</span><span class="n">level3</span><span class="o">/</span><span class="n">level3_thread</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">Contains</span> <span class="mi">794</span> <span class="n">lines</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Source</span> <span class="n">language</span> <span class="n">is</span> <span class="n">c</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Producer</span> <span class="n">is</span> <span class="n">GNU</span> <span class="n">C17</span> <span class="mf">9.3.0</span> <span class="o">-</span><span class="n">march</span><span class="o">=</span><span class="n">armv8</span><span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">mtune</span><span class="o">=</span><span class="n">cortex</span><span class="o">-</span><span class="n">a72</span> <span class="o">-</span><span class="n">mlittle</span><span class="o">-</span><span class="n">endian</span> <span class="o">-</span><span class="n">mabi</span><span class="o">=</span><span class="n">lp64</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">fasynchronous</span><span class="o">-</span><span class="n">unwind</span><span class="o">-</span><span class="n">tables</span> <span class="o">-</span><span class="n">fstack</span><span class="o">-</span><span class="n">protector</span><span class="o">-</span><span class="n">strong</span> <span class="o">-</span><span class="n">fstack</span><span class="o">-</span><span class="n">clash</span><span class="o">-</span><span class="n">protection</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Compiled</span> <span class="n">with</span> <span class="n">DWARF</span> <span class="mi">2</span> <span class="n">debugging</span> <span class="n">format</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Does</span> <span class="n">not</span> <span class="n">include</span> <span class="n">preprocessor</span> <span class="n">macro</span> <span class="n">info</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">l</span>
+</span></span><span class="line"><span class="cl"><span class="mi">743</span>       <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">744</span>     <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="mi">745</span>
+</span></span><span class="line"><span class="cl"><span class="mi">746</span>     <span class="kt">int</span> <span class="nf">CNAME</span><span class="p">(</span><span class="kt">blas_arg_t</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">BLASLONG</span> <span class="o">*</span><span class="n">range_m</span><span class="p">,</span> <span class="n">BLASLONG</span> <span class="o">*</span><span class="n">range_n</span><span class="p">,</span> <span class="n">IFLOAT</span> <span class="o">*</span><span class="n">sa</span><span class="p">,</span> <span class="n">IFLOAT</span> <span class="o">*</span><span class="n">sb</span><span class="p">,</span> <span class="n">BLASLONG</span> <span class="n">mypos</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl"><span class="mi">747</span>
+</span></span><span class="line"><span class="cl"><span class="mi">748</span>       <span class="n">BLASLONG</span> <span class="n">m</span> <span class="o">=</span> <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">749</span>       <span class="n">BLASLONG</span> <span class="n">n</span> <span class="o">=</span> <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">750</span>       <span class="n">BLASLONG</span> <span class="n">nthreads_m</span><span class="p">,</span> <span class="n">nthreads_n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">751</span>     <span class="err">#</span><span class="k">if</span> <span class="nf">defined</span><span class="p">(</span><span class="n">DYNAMIC_ARCH</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">752</span>       <span class="kt">int</span> <span class="n">switch_ratio</span> <span class="o">=</span> <span class="n">gotoblas</span><span class="o">-&gt;</span><span class="n">switch_ratio</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">758</span>       <span class="k">if</span> <span class="p">(</span><span class="n">range_m</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">gotoblas</span><span class="o">-&gt;</span><span class="n">swithch_ratio</span>
+</span></span><span class="line"><span class="cl"><span class="n">No</span> <span class="n">symbol</span> <span class="s">&#34;gotoblas&#34;</span> <span class="n">in</span> <span class="n">current</span> <span class="n">context</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">l</span>
+</span></span><span class="line"><span class="cl"><span class="mi">753</span>     <span class="err">#</span><span class="k">else</span>
+</span></span><span class="line"><span class="cl"><span class="mi">754</span>       <span class="kt">int</span> <span class="n">switch_ratio</span> <span class="o">=</span> <span class="n">SWITCH_RATIO</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">755</span>     <span class="err">#</span><span class="n">endif</span>
+</span></span><span class="line"><span class="cl"><span class="mi">756</span>
+</span></span><span class="line"><span class="cl"><span class="mi">757</span>       <span class="cm">/* Get dimensions from index ranges if available */</span>
+</span></span><span class="line"><span class="cl"><span class="mi">758</span>       <span class="k">if</span> <span class="p">(</span><span class="n">range_m</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="mi">759</span>         <span class="n">m</span> <span class="o">=</span> <span class="n">range_m</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">range_m</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="mi">760</span>       <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="mi">761</span>       <span class="k">if</span> <span class="p">(</span><span class="n">range_n</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="mi">762</span>         <span class="n">n</span> <span class="o">=</span> <span class="n">range_n</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">range_n</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">761</span>       <span class="k">if</span> <span class="p">(</span><span class="n">range_n</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="n">range_n</span>
+</span></span><span class="line"><span class="cl"><span class="n">Undefined</span> <span class="n">info</span> <span class="nl">command</span><span class="p">:</span> <span class="s">&#34;range_n&#34;</span><span class="p">.</span>  <span class="n">Try</span> <span class="s">&#34;help info&#34;</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="n">range_m</span>
+</span></span><span class="line"><span class="cl"><span class="n">Undefined</span> <span class="n">info</span> <span class="nl">command</span><span class="p">:</span> <span class="s">&#34;range_m&#34;</span><span class="p">.</span>  <span class="n">Try</span> <span class="s">&#34;help info&#34;</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">range_m</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">10</span> <span class="o">=</span> <span class="p">(</span><span class="n">BLASLONG</span> <span class="o">*</span><span class="p">)</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">range_n</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">11</span> <span class="o">=</span> <span class="p">(</span><span class="n">BLASLONG</span> <span class="o">*</span><span class="p">)</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">766</span>       <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">switch_ratio</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">12</span> <span class="o">=</span> <span class="mi">2000</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">13</span> <span class="o">=</span> <span class="mi">1000</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">switch_ratio</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">14</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">769</span>         <span class="n">nthreads_m</span> <span class="o">=</span> <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">nthreads</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">770</span>         <span class="k">while</span> <span class="p">(</span><span class="n">m</span> <span class="o">&lt;</span> <span class="n">nthreads_m</span> <span class="o">*</span> <span class="n">switch_ratio</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">nthreads_m</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">15</span> <span class="o">=</span> <span class="mi">64</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">776</span>       <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="n">switch_ratio</span> <span class="o">*</span> <span class="n">nthreads_m</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">16</span> <span class="o">=</span> <span class="mi">1000</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">779</span>         <span class="n">nthreads_n</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">switch_ratio</span> <span class="o">*</span> <span class="n">nthreads_m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">switch_ratio</span> <span class="o">*</span> <span class="n">nthreads_m</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">nthreas_n</span>
+</span></span><span class="line"><span class="cl"><span class="n">No</span> <span class="n">symbol</span> <span class="s">&#34;nthreas_n&#34;</span> <span class="n">in</span> <span class="n">current</span> <span class="n">context</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">780</span>         <span class="k">if</span> <span class="p">(</span><span class="n">nthreads_m</span> <span class="o">*</span> <span class="n">nthreads_n</span> <span class="o">&gt;</span> <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">nthreads</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">nthreas_n</span>
+</span></span><span class="line"><span class="cl"><span class="n">No</span> <span class="n">symbol</span> <span class="s">&#34;nthreas_n&#34;</span> <span class="n">in</span> <span class="n">current</span> <span class="n">context</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">nthreads_n</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">17</span> <span class="o">=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">781</span>           <span class="n">nthreads_n</span> <span class="o">=</span> <span class="nf">blas_quickdivide</span><span class="p">(</span><span class="n">args</span> <span class="o">-&gt;</span> <span class="n">nthreads</span><span class="p">,</span> <span class="n">nthreads_m</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="nf">blas_quickdivide</span> <span class="p">(</span><span class="n">y</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">x</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">at</span> <span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">common_arm64</span><span class="p">.</span><span class="nl">h</span><span class="p">:</span><span class="mi">117</span>
+</span></span><span class="line"><span class="cl"><span class="mi">117</span>       <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">finish</span>
+</span></span><span class="line"><span class="cl"><span class="n">Run</span> <span class="n">till</span> <span class="n">exit</span> <span class="n">from</span> <span class="err">#</span><span class="mi">0</span>  <span class="nf">blas_quickdivide</span> <span class="p">(</span><span class="n">y</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">x</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">at</span> <span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">common_arm64</span><span class="p">.</span><span class="nl">h</span><span class="p">:</span><span class="mi">117</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dgemm_thread_nn</span> <span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="mh">0xffffffffed60</span><span class="p">,</span> <span class="n">range_m</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">range_n</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">sa</span><span class="o">=</span><span class="mh">0x40008b44e000</span><span class="p">,</span> <span class="n">sb</span><span class="o">=</span><span class="mh">0x40008b54e000</span><span class="p">,</span> <span class="n">mypos</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">at</span> <span class="n">level3_thread</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">786</span>
+</span></span><span class="line"><span class="cl"><span class="mi">786</span>       <span class="k">if</span> <span class="p">(</span><span class="n">nthreads_m</span> <span class="o">*</span> <span class="n">nthreads_n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">789</span>         <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">nthreads</span> <span class="o">=</span> <span class="n">nthreads_m</span> <span class="o">*</span> <span class="n">nthreads_n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">nthreads_m</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">18</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">790</span>         <span class="nf">gemm_driver</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">range_m</span><span class="p">,</span> <span class="n">range_n</span><span class="p">,</span> <span class="n">sa</span><span class="p">,</span> <span class="n">sb</span><span class="p">,</span> <span class="n">nthreads_m</span><span class="p">,</span> <span class="n">nthreads_n</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="nf">gemm_driver</span> <span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="mh">0xffffffffed60</span><span class="p">,</span> <span class="n">range_m</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">range_n</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">sa</span><span class="o">=</span><span class="mh">0x40008b44e000</span><span class="p">,</span> <span class="n">sb</span><span class="o">=</span><span class="mh">0x40008b54e000</span><span class="p">,</span> <span class="n">nthreads_m</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">nthreads_n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">at</span> <span class="n">level3_thread</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">572</span>
+</span></span><span class="line"><span class="cl"><span class="mi">572</span>       <span class="n">BLASLONG</span> <span class="n">nthreads</span> <span class="o">=</span> <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">nthreads</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="n">source</span>
+</span></span><span class="line"><span class="cl"><span class="n">Current</span> <span class="n">source</span> <span class="n">file</span> <span class="n">is</span> <span class="n">level3_thread</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">Compilation</span> <span class="n">directory</span> <span class="n">is</span> <span class="o">/</span><span class="n">thfs1</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">chengkun_wu</span><span class="o">/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">OpenBLAS</span><span class="o">/</span><span class="n">driver</span><span class="o">/</span><span class="n">level3</span>
+</span></span><span class="line"><span class="cl"><span class="n">Located</span> <span class="n">in</span> <span class="o">/</span><span class="n">thfs1</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">chengkun_wu</span><span class="o">/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">OpenBLAS</span><span class="o">/</span><span class="n">driver</span><span class="o">/</span><span class="n">level3</span><span class="o">/</span><span class="n">level3_thread</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">Contains</span> <span class="mi">794</span> <span class="n">lines</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Source</span> <span class="n">language</span> <span class="n">is</span> <span class="n">c</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Producer</span> <span class="n">is</span> <span class="n">GNU</span> <span class="n">C17</span> <span class="mf">9.3.0</span> <span class="o">-</span><span class="n">march</span><span class="o">=</span><span class="n">armv8</span><span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">mtune</span><span class="o">=</span><span class="n">cortex</span><span class="o">-</span><span class="n">a72</span> <span class="o">-</span><span class="n">mlittle</span><span class="o">-</span><span class="n">endian</span> <span class="o">-</span><span class="n">mabi</span><span class="o">=</span><span class="n">lp64</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">fasynchronous</span><span class="o">-</span><span class="n">unwind</span><span class="o">-</span><span class="n">tables</span> <span class="o">-</span><span class="n">fstack</span><span class="o">-</span><span class="n">protector</span><span class="o">-</span><span class="n">strong</span> <span class="o">-</span><span class="n">fstack</span><span class="o">-</span><span class="n">clash</span><span class="o">-</span><span class="n">protection</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Compiled</span> <span class="n">with</span> <span class="n">DWARF</span> <span class="mi">2</span> <span class="n">debugging</span> <span class="n">format</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Does</span> <span class="n">not</span> <span class="n">include</span> <span class="n">preprocessor</span> <span class="n">macro</span> <span class="n">info</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">l</span>
+</span></span><span class="line"><span class="cl"><span class="mi">567</span>       <span class="n">BLASLONG</span> <span class="n">range_M_buffer</span><span class="p">[</span><span class="n">MAX_CPU_NUMBER</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="mi">568</span>       <span class="n">BLASLONG</span> <span class="n">range_N_buffer</span><span class="p">[</span><span class="n">MAX_CPU_NUMBER</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="mi">569</span>       <span class="n">BLASLONG</span> <span class="o">*</span><span class="n">range_M</span><span class="p">,</span> <span class="o">*</span><span class="n">range_N</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">570</span>       <span class="n">BLASLONG</span> <span class="n">num_parts</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">571</span>
+</span></span><span class="line"><span class="cl"><span class="mi">572</span>       <span class="n">BLASLONG</span> <span class="n">nthreads</span> <span class="o">=</span> <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">nthreads</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">573</span>
+</span></span><span class="line"><span class="cl"><span class="mi">574</span>       <span class="n">BLASLONG</span> <span class="n">width</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">js</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">575</span>       <span class="n">BLASLONG</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n_from</span><span class="p">,</span> <span class="n">n_to</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">576</span>       <span class="kt">int</span> <span class="n">mode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">604</span>     <span class="nf">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">level3_lock</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="nf">__GI___pthread_mutex_lock</span> <span class="p">(</span><span class="n">mutex</span><span class="o">=</span><span class="n">mutex</span><span class="err">@</span><span class="n">entry</span><span class="o">=</span><span class="mh">0xaaaaaaac8108</span> <span class="o">&lt;</span><span class="n">level3_lock</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">at</span> <span class="n">pthread_mutex_lock</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">67</span>
+</span></span><span class="line"><span class="cl"><span class="mi">67</span>      <span class="n">pthread_mutex_lock</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">finsh</span>
+</span></span><span class="line"><span class="cl"><span class="n">Undefined</span> <span class="nl">command</span><span class="p">:</span> <span class="s">&#34;finsh&#34;</span><span class="p">.</span>  <span class="n">Try</span> <span class="s">&#34;help&#34;</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">finish</span>
+</span></span><span class="line"><span class="cl"><span class="n">Run</span> <span class="n">till</span> <span class="n">exit</span> <span class="n">from</span> <span class="err">#</span><span class="mi">0</span>  <span class="nf">__GI___pthread_mutex_lock</span> <span class="p">(</span><span class="n">mutex</span><span class="o">=</span><span class="n">mutex</span><span class="err">@</span><span class="n">entry</span><span class="o">=</span><span class="mh">0xaaaaaaac8108</span> <span class="o">&lt;</span><span class="n">level3_lock</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">at</span> <span class="n">pthread_mutex_lock</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">67</span>
+</span></span><span class="line"><span class="cl"><span class="nf">gemm_driver</span> <span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="mh">0xffffffffed60</span><span class="p">,</span> <span class="n">range_m</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">range_n</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">sa</span><span class="o">=</span><span class="mh">0x40008b44e000</span><span class="p">,</span> <span class="n">sb</span><span class="o">=</span><span class="mh">0x40008b54e000</span><span class="p">,</span> <span class="n">nthreads_m</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">nthreads_n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">at</span> <span class="n">level3_thread</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">612</span>
+</span></span><span class="line"><span class="cl"><span class="mi">612</span>       <span class="n">job</span> <span class="o">=</span> <span class="p">(</span><span class="kt">job_t</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="n">MAX_CPU_NUMBER</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">job_t</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">Value</span> <span class="n">returned</span> <span class="n">is</span> <span class="err">$</span><span class="mi">19</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">613</span>       <span class="k">if</span><span class="p">(</span><span class="n">job</span><span class="o">==</span><span class="nb">NULL</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">620</span>       <span class="n">newarg</span><span class="p">.</span><span class="n">m</span>        <span class="o">=</span> <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">621</span>       <span class="n">newarg</span><span class="p">.</span><span class="n">n</span>        <span class="o">=</span> <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">645</span>       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">range_m</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">655</span>       <span class="k">while</span> <span class="p">(</span><span class="n">m</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="mi">20</span> <span class="o">=</span> <span class="mi">2000</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="mi">117</span>       <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="n">source</span>
+</span></span><span class="line"><span class="cl"><span class="n">Current</span> <span class="n">source</span> <span class="n">file</span> <span class="n">is</span> <span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">common_arm64</span><span class="p">.</span><span class="n">h</span>
+</span></span><span class="line"><span class="cl"><span class="n">Compilation</span> <span class="n">directory</span> <span class="n">is</span> <span class="o">/</span><span class="n">thfs1</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">chengkun_wu</span><span class="o">/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">OpenBLAS</span><span class="o">/</span><span class="n">driver</span><span class="o">/</span><span class="n">level3</span>
+</span></span><span class="line"><span class="cl"><span class="n">Located</span> <span class="n">in</span> <span class="o">/</span><span class="n">thfs1</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">chengkun_wu</span><span class="o">/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">OpenBLAS</span><span class="o">/</span><span class="n">common_arm64</span><span class="p">.</span><span class="n">h</span>
+</span></span><span class="line"><span class="cl"><span class="n">Contains</span> <span class="mi">177</span> <span class="n">lines</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Source</span> <span class="n">language</span> <span class="n">is</span> <span class="n">c</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Producer</span> <span class="n">is</span> <span class="n">GNU</span> <span class="n">C17</span> <span class="mf">9.3.0</span> <span class="o">-</span><span class="n">march</span><span class="o">=</span><span class="n">armv8</span><span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">mtune</span><span class="o">=</span><span class="n">cortex</span><span class="o">-</span><span class="n">a72</span> <span class="o">-</span><span class="n">mlittle</span><span class="o">-</span><span class="n">endian</span> <span class="o">-</span><span class="n">mabi</span><span class="o">=</span><span class="n">lp64</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">fasynchronous</span><span class="o">-</span><span class="n">unwind</span><span class="o">-</span><span class="n">tables</span> <span class="o">-</span><span class="n">fstack</span><span class="o">-</span><span class="n">protector</span><span class="o">-</span><span class="n">strong</span> <span class="o">-</span><span class="n">fstack</span><span class="o">-</span><span class="n">clash</span><span class="o">-</span><span class="n">protection</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Compiled</span> <span class="n">with</span> <span class="n">DWARF</span> <span class="mi">2</span> <span class="n">debugging</span> <span class="n">format</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Does</span> <span class="n">not</span> <span class="n">include</span> <span class="n">preprocessor</span> <span class="n">macro</span> <span class="n">info</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">finish</span>
+</span></span><span class="line"><span class="cl"><span class="n">Run</span> <span class="n">till</span> <span class="n">exit</span> <span class="n">from</span> <span class="err">#</span><span class="mi">0</span>  <span class="nf">gemm_driver</span> <span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="mh">0xffffffffed60</span><span class="p">,</span> <span class="n">range_m</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">range_n</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">sa</span><span class="o">=</span><span class="mh">0x40008b44e000</span><span class="p">,</span> <span class="n">sb</span><span class="o">=</span><span class="mh">0x40008b54e000</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">nthreads_m</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">nthreads_n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="n">at</span> <span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">common_arm64</span><span class="p">.</span><span class="nl">h</span><span class="p">:</span><span class="mi">117</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dgemm_thread_nn</span> <span class="p">(</span><span class="n">args</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">range_m</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">range_n</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">sa</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">sb</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">mypos</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">at</span> <span class="n">level3_thread</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">793</span>
+</span></span><span class="line"><span class="cl"><span class="mi">793</span>       <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Value</span> <span class="n">returned</span> <span class="n">is</span> <span class="err">$</span><span class="mi">21</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">l</span>
+</span></span><span class="line"><span class="cl"><span class="mi">788</span>       <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="mi">789</span>         <span class="n">args</span> <span class="o">-&gt;</span> <span class="n">nthreads</span> <span class="o">=</span> <span class="n">nthreads_m</span> <span class="o">*</span> <span class="n">nthreads_n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">790</span>         <span class="nf">gemm_driver</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">range_m</span><span class="p">,</span> <span class="n">range_n</span><span class="p">,</span> <span class="n">sa</span><span class="p">,</span> <span class="n">sb</span><span class="p">,</span> <span class="n">nthreads_m</span><span class="p">,</span> <span class="n">nthreads_n</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="mi">791</span>       <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="mi">792</span>
+</span></span><span class="line"><span class="cl"><span class="mi">793</span>       <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">794</span>     <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cblas_dgemm</span> <span class="p">(</span><span class="n">order</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">TransA</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">TransB</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">m</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">n</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">k</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">a</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">lda</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mh">0x400087744010</span><span class="p">,</span> <span class="n">ldb</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">beta</span><span class="o">=&lt;</span><span class="n">optimized</span> <span class="n">out</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mh">0x40008a50b010</span><span class="p">,</span> <span class="n">ldc</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span> <span class="n">at</span> <span class="n">gemm</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">583</span>
+</span></span><span class="line"><span class="cl"><span class="mi">583</span>      <span class="nf">blas_memory_free</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="n">source</span>
+</span></span><span class="line"><span class="cl"><span class="n">Current</span> <span class="n">source</span> <span class="n">file</span> <span class="n">is</span> <span class="n">gemm</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">Compilation</span> <span class="n">directory</span> <span class="n">is</span> <span class="o">/</span><span class="n">thfs1</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">chengkun_wu</span><span class="o">/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">OpenBLAS</span><span class="o">/</span><span class="n">interface</span>
+</span></span><span class="line"><span class="cl"><span class="n">Located</span> <span class="n">in</span> <span class="o">/</span><span class="n">thfs1</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">chengkun_wu</span><span class="o">/</span><span class="n">wuxiaoyu</span><span class="o">/</span><span class="n">OpenBLAS</span><span class="o">/</span><span class="n">interface</span><span class="o">/</span><span class="n">gemm</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">Contains</span> <span class="mi">590</span> <span class="n">lines</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Source</span> <span class="n">language</span> <span class="n">is</span> <span class="n">c</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Producer</span> <span class="n">is</span> <span class="n">GNU</span> <span class="n">C17</span> <span class="mf">9.3.0</span> <span class="o">-</span><span class="n">march</span><span class="o">=</span><span class="n">armv8</span><span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">mtune</span><span class="o">=</span><span class="n">cortex</span><span class="o">-</span><span class="n">a72</span> <span class="o">-</span><span class="n">mlittle</span><span class="o">-</span><span class="n">endian</span> <span class="o">-</span><span class="n">mabi</span><span class="o">=</span><span class="n">lp64</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">fasynchronous</span><span class="o">-</span><span class="n">unwind</span><span class="o">-</span><span class="n">tables</span> <span class="o">-</span><span class="n">fstack</span><span class="o">-</span><span class="n">protector</span><span class="o">-</span><span class="n">strong</span> <span class="o">-</span><span class="n">fstack</span><span class="o">-</span><span class="n">clash</span><span class="o">-</span><span class="n">protection</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Compiled</span> <span class="n">with</span> <span class="n">DWARF</span> <span class="mi">2</span> <span class="n">debugging</span> <span class="n">format</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Does</span> <span class="n">not</span> <span class="n">include</span> <span class="n">preprocessor</span> <span class="n">macro</span> <span class="n">info</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">589</span>       <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">470</span>         <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="nf">main</span> <span class="p">()</span> <span class="n">at</span> <span class="n">cblas</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">35</span>
+</span></span><span class="line"><span class="cl"><span class="mi">35</span>          <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Result Matrix (first 5x5):</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="n">Result</span> <span class="nf">Matrix</span> <span class="p">(</span><span class="n">first</span> <span class="mi">5</span><span class="n">x5</span><span class="p">)</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="mi">36</span>          <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">37</span>              <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">38</span>                  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%f</span><span class="se">\t</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">resultMatrix</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">N</span> <span class="o">+</span> <span class="n">j</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">37</span>              <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">38</span>                  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%f</span><span class="se">\t</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">resultMatrix</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">N</span> <span class="o">+</span> <span class="n">j</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">37</span>              <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">38</span>                  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%f</span><span class="se">\t</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">resultMatrix</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">N</span> <span class="o">+</span> <span class="n">j</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">37</span>              <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl"><span class="mi">38</span>                  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%f</span><span class="se">\t</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">resultMatrix</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">N</span> <span class="o">+</span> <span class="n">j</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">quit</span>
+</span></span><span class="line"><span class="cl"><span class="n">A</span> <span class="n">debugging</span> <span class="n">session</span> <span class="n">is</span> <span class="n">active</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">Inferior</span> <span class="mi">1</span> <span class="p">[</span><span class="n">process</span> <span class="mi">4140865</span><span class="p">]</span> <span class="n">will</span> <span class="n">be</span> <span class="n">killed</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Quit</span> <span class="n">anyway</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span> <span class="n">or</span> <span class="n">n</span><span class="p">)</span> <span class="n">y</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">

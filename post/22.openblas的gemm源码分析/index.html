@@ -48,7 +48,7 @@
 <meta itemprop="name" content="Iii">
 <meta itemprop="description" content="OpenBLAS矩阵乘法源码结构分析 - 台部落 (twblogs.net) 源码结构 interface 接口层 在OpenBLAS接口层中，运算分为三个类型，分别是level1-3，leve"><meta itemprop="datePublished" content="2023-10-30T15:44:52+08:00" />
 <meta itemprop="dateModified" content="2023-10-30T15:44:52+08:00" />
-<meta itemprop="wordCount" content="6372">
+<meta itemprop="wordCount" content="8503">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Iii"/>
 <meta name="twitter:description" content="OpenBLAS矩阵乘法源码结构分析 - 台部落 (twblogs.net) 源码结构 interface 接口层 在OpenBLAS接口层中，运算分为三个类型，分别是level1-3，leve"/>
@@ -129,8 +129,8 @@
       <div class="post-meta">
         <span class="post-time"> 2023-10-30 </span>
         
-          <span class="more-meta"> 约 6372 字 </span>
-          <span class="more-meta"> 预计阅读 13 分钟 </span>
+          <span class="more-meta"> 约 8503 字 </span>
+          <span class="more-meta"> 预计阅读 17 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -142,8 +142,15 @@
   <ul>
     <li><a href="#源码结构">源码结构</a>
       <ul>
-        <li><a href="#interface-接口层">interface 接口层</a></li>
-        <li><a href="#heading"></a></li>
+        <li><a href="#interface-接口层">interface 接口层</a>
+          <ul>
+            <li><a href="#gemmc">gemm.c</a></li>
+            <li><a href="#blas_arg_t结构">blas_arg_t结构</a></li>
+            <li><a href="#gemmc--namecname">gemm.c&ndash;name/cname</a></li>
+            <li><a href="#blas_memory_alloc">blas_memory_alloc</a></li>
+            <li><a href="#gotoblas_t">gotoblas_t</a></li>
+          </ul>
+        </li>
         <li><a href="#核心函数层-kernel层">核心函数层 kernel层</a></li>
       </ul>
     </li>
@@ -165,6 +172,7 @@
 <img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231113101835.png" style="zoom:33%;" />
 <p>在OpenBLAS接口层中，运算分为三个类型，分别是level1-3，level3表示矩阵与矩阵之间的运算，低级表示低维度的运算。level1-3都是blas内部使用的接口，对外事不暴露的。</p>
 <p>每种源代码文件表示对应的一种操作，这里的gemm指的是普通的矩阵乘。</p>
+<h3 id="gemmc">gemm.c</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -298,7 +306,7 @@
 </div>
 </div><p>可以看到，这个sgemm的接口define了CNAME，且include了gemm.c，这样gemm.c源代码就会被粘贴进来，而且CNAME会被替换成这个接口真正的名字，形成一个有效的编译单元。同理interface的zgemm,cgemm等都会include上面的gemm.c，生成一个完整的函数实现。这种写法省去了大量的冗余的代码，因为无论是zgemm,sgemm,cgemm等等他们都是矩阵乘，大致实现相同，只是一些细节不同，不需要每个函数都从头写。</p>
 <p>c代表复数运算，Z表示双精度运算，s代表单精度</p>
-<h2 id="heading"></h2>
+<h3 id="blas_arg_t结构">blas_arg_t结构</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -341,7 +349,8 @@
 </span></span><span class="line"><span class="cl">} blas_arg_t;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><h3 id="gemmc--namecname">gemm.c&ndash;name/cname</h3>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -787,6 +796,11 @@
 </span><span class="lnt">442
 </span><span class="lnt">443
 </span><span class="lnt">444
+</span><span class="lnt">445
+</span><span class="lnt">446
+</span><span class="lnt">447
+</span><span class="lnt">448
+</span><span class="lnt">449
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">NAME</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">TRANSA</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">TRANSB</span><span class="p">,</span>
@@ -1119,7 +1133,8 @@
 </span></span><span class="line"><span class="cl">           <span class="c1">//linux x86 bfloat16
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#if defined(__linux__) &amp;&amp; defined(__x86_64__) &amp;&amp; defined(BFLOAT16)
 </span></span></span><span class="line"><span class="cl"><span class="cp">#if defined(DYNAMIC_ARCH)
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="k">if</span> <span class="p">(</span><span class="n">gotoblas</span><span class="o">-&gt;</span><span class="n">need_amxtile_permission</span> <span class="o">&amp;&amp;</span>
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>           <span class="c1">//amx指令支持 &amp;&amp; openblas_amxtile_permission
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="n">gotoblas</span><span class="o">-&gt;</span><span class="n">need_amxtile_permission</span> <span class="o">&amp;&amp;</span>
 </span></span><span class="line"><span class="cl">      <span class="n">openblas_amxtile_permission</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nf">init_amxtile_permission</span><span class="p">()</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
@@ -1140,11 +1155,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl">  <span class="n">IDEBUG_START</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nf">FUNCTION_PROFILE_START</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="cp">#if USE_SMALL_MATRIX_OPT
-</span></span></span><span class="line"><span class="cl"><span class="cp">#if !defined(COMPLEX)
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="k">if</span><span class="p">(</span><span class="nf">GEMM_SMALL_MATRIX_PERMIT</span><span class="p">(</span><span class="n">transa</span><span class="p">,</span> <span class="n">transb</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">n</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">k</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">FLOAT</span> <span class="o">*</span><span class="p">)(</span><span class="n">args</span><span class="p">.</span><span class="n">alpha</span><span class="p">),</span> <span class="o">*</span><span class="p">(</span><span class="n">FLOAT</span> <span class="o">*</span><span class="p">)(</span><span class="n">args</span><span class="p">.</span><span class="n">beta</span><span class="p">))){</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">FUNCTION_PROFILE_START</span><span class="p">();</span><span class="c1">//性能分析
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#if USE_SMALL_MATRIX_OPT</span><span class="c1">//小矩阵优化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#if !defined(COMPLEX)</span><span class="c1">//常数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span><span class="p">(</span><span class="nf">GEMM_SMALL_MATRIX_PERMIT</span><span class="p">(</span><span class="n">transa</span><span class="p">,</span> <span class="n">transb</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">n</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">k</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">FLOAT</span> <span class="o">*</span><span class="p">)(</span><span class="n">args</span><span class="p">.</span><span class="n">alpha</span><span class="p">),</span> <span class="o">*</span><span class="p">(</span><span class="n">FLOAT</span> <span class="o">*</span><span class="p">)(</span><span class="n">args</span><span class="p">.</span><span class="n">beta</span><span class="p">))){</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">FLOAT</span> <span class="o">*</span><span class="p">)(</span><span class="n">args</span><span class="p">.</span><span class="n">beta</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">){</span>
 </span></span><span class="line"><span class="cl">		<span class="p">(</span><span class="nf">GEMM_SMALL_KERNEL_B0</span><span class="p">((</span><span class="n">transb</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">transa</span><span class="p">))(</span><span class="n">args</span><span class="p">.</span><span class="n">m</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">n</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">k</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">a</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">lda</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">FLOAT</span> <span class="o">*</span><span class="p">)(</span><span class="n">args</span><span class="p">.</span><span class="n">alpha</span><span class="p">),</span> <span class="n">args</span><span class="p">.</span><span class="n">b</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">ldb</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">c</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">ldc</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
@@ -1152,8 +1167,8 @@
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">return</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="cp">#else
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="k">if</span><span class="p">(</span><span class="nf">GEMM_SMALL_MATRIX_PERMIT</span><span class="p">(</span><span class="n">transa</span><span class="p">,</span> <span class="n">transb</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">n</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">k</span><span class="p">,</span> <span class="n">alpha</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#else</span><span class="c1">//复数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span><span class="p">(</span><span class="nf">GEMM_SMALL_MATRIX_PERMIT</span><span class="p">(</span><span class="n">transa</span><span class="p">,</span> <span class="n">transb</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">n</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">k</span><span class="p">,</span> <span class="n">alpha</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">])){</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="o">&amp;&amp;</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">){</span>
 </span></span><span class="line"><span class="cl">		<span class="p">(</span><span class="nf">ZGEMM_SMALL_KERNEL_B0</span><span class="p">((</span><span class="n">transb</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">transa</span><span class="p">))(</span><span class="n">args</span><span class="p">.</span><span class="n">m</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">n</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">k</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">a</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">lda</span><span class="p">,</span> <span class="n">alpha</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">args</span><span class="p">.</span><span class="n">b</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">ldb</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">c</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">ldc</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
@@ -1164,29 +1179,33 @@
 </span></span><span class="line"><span class="cl"><span class="cp">#endif
 </span></span></span><span class="line"><span class="cl"><span class="cp">#endif
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl">  <span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">XFLOAT</span> <span class="o">*</span><span class="p">)</span><span class="nf">blas_memory_alloc</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">sa</span> <span class="o">=</span> <span class="p">(</span><span class="n">XFLOAT</span> <span class="o">*</span><span class="p">)((</span><span class="n">BLASLONG</span><span class="p">)</span><span class="n">buffer</span> <span class="o">+</span><span class="n">GEMM_OFFSET_A</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="n">sb</span> <span class="o">=</span> <span class="p">(</span><span class="n">XFLOAT</span> <span class="o">*</span><span class="p">)(((</span><span class="n">BLASLONG</span><span class="p">)</span><span class="n">sa</span> <span class="o">+</span> <span class="p">((</span><span class="n">GEMM_P</span> <span class="o">*</span> <span class="n">GEMM_Q</span> <span class="o">*</span> <span class="n">COMPSIZE</span> <span class="o">*</span> <span class="n">SIZE</span> <span class="o">+</span> <span class="n">GEMM_ALIGN</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">GEMM_ALIGN</span><span class="p">))</span> <span class="o">+</span> <span class="n">GEMM_OFFSET_B</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">XFLOAT</span> <span class="o">*</span><span class="p">)</span><span class="nf">blas_memory_alloc</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="c1">//分配内存，0表示level3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">           <span class="c1">//计算矩阵a偏移量赋值给sa
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">sa</span> <span class="o">=</span> <span class="p">(</span><span class="n">XFLOAT</span> <span class="o">*</span><span class="p">)((</span><span class="n">BLASLONG</span><span class="p">)</span><span class="n">buffer</span> <span class="o">+</span><span class="n">GEMM_OFFSET_A</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">           <span class="c1">//GEMM_P * GEMM_Q * COMPSIZE * SIZE a矩阵的字节数  这是一个与操作，用于将之前计算的偏移值和对齐值相结合并向下取整，以确保对齐。这样得到的值就是进行对齐后的偏移。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">sb</span> <span class="o">=</span> <span class="p">(</span><span class="n">XFLOAT</span> <span class="o">*</span><span class="p">)(((</span><span class="n">BLASLONG</span><span class="p">)</span><span class="n">sa</span> <span class="o">+</span> <span class="p">((</span><span class="n">GEMM_P</span> <span class="o">*</span> <span class="n">GEMM_Q</span> <span class="o">*</span> <span class="n">COMPSIZE</span> <span class="o">*</span> <span class="n">SIZE</span> <span class="o">+</span> <span class="n">GEMM_ALIGN</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">GEMM_ALIGN</span><span class="p">))</span> <span class="o">+</span> <span class="n">GEMM_OFFSET_B</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="cp">#ifdef SMP
 </span></span></span><span class="line"><span class="cl"><span class="cp">#if defined(USE_SIMPLE_THREADED_LEVEL3) || !defined(NO_AFFINITY)
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="n">mode</span> <span class="o">|=</span> <span class="p">(</span><span class="n">transa</span> <span class="o">&lt;&lt;</span> <span class="n">BLAS_TRANSA_SHIFT</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="n">mode</span> <span class="o">|=</span> <span class="p">(</span><span class="n">transb</span> <span class="o">&lt;&lt;</span> <span class="n">BLAS_TRANSB_SHIFT</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="n">mode</span> <span class="o">|=</span> <span class="p">(</span><span class="n">transa</span> <span class="o">&lt;&lt;</span> <span class="n">BLAS_TRANSA_SHIFT</span><span class="p">);</span><span class="c1">//左移4位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">mode</span> <span class="o">|=</span> <span class="p">(</span><span class="n">transb</span> <span class="o">&lt;&lt;</span> <span class="n">BLAS_TRANSB_SHIFT</span><span class="p">);</span><span class="c1">//左移8位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#endif
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl">  <span class="n">MNK</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span> <span class="o">*</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">args</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">args</span><span class="p">.</span><span class="n">k</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span> <span class="n">MNK</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">SMP_THRESHOLD_MIN</span>  <span class="o">*</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">GEMM_MULTITHREAD_THRESHOLD</span><span class="p">)</span>  <span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">args</span><span class="p">.</span><span class="n">nthreads</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="n">args</span><span class="p">.</span><span class="n">nthreads</span> <span class="o">=</span> <span class="nf">num_cpu_avail</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="n">args</span><span class="p">.</span><span class="n">common</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">           <span class="c1">//阈值判断，确定使用的线程数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">MNK</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">args</span><span class="p">.</span><span class="n">m</span> <span class="o">*</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">args</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">args</span><span class="p">.</span><span class="n">k</span><span class="p">;</span><span class="c1">//总数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>           <span class="c1">//65535 * 4
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span> <span class="n">MNK</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">SMP_THRESHOLD_MIN</span>  <span class="o">*</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">GEMM_MULTITHREAD_THRESHOLD</span><span class="p">)</span>  <span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">args</span><span class="p">.</span><span class="n">nthreads</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="c1">//小于阈值线程设置为1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="n">args</span><span class="p">.</span><span class="n">nthreads</span> <span class="o">=</span> <span class="nf">num_cpu_avail</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="c1">//大于这个值设置为3，因为是小矩阵
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">args</span><span class="p">.</span><span class="n">common</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"> <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">nthreads</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"><span class="cp">#endif
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="n">gemm</span><span class="p">[(</span><span class="n">transb</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">transa</span><span class="p">])(</span><span class="o">&amp;</span><span class="n">args</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">sa</span><span class="p">,</span> <span class="n">sb</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="n">gemm</span><span class="p">[(</span><span class="n">transb</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">transa</span><span class="p">])(</span><span class="o">&amp;</span><span class="n">args</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">sa</span><span class="p">,</span> <span class="n">sb</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span><span class="c1">//根据trasb 和transa到数组里选择一个函数进行计算
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"><span class="cp">#ifdef SMP
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -1233,6 +1252,568 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">return</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="blas_memory_alloc">blas_memory_alloc</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">void *blas_memory_alloc(int procpos){
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  int position;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  void *map_address;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  void *(*memoryalloc[])(void *address) = {
+</span></span><span class="line"><span class="cl">#ifdef ALLOC_DEVICEDRIVER
+</span></span><span class="line"><span class="cl">    alloc_devicedirver,
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">/* Hugetlb implicitly assumes ALLOC_SHM */
+</span></span><span class="line"><span class="cl">#ifdef ALLOC_SHM
+</span></span><span class="line"><span class="cl">    alloc_shm,
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">#if ((defined ALLOC_SHM) &amp;&amp; (defined OS_LINUX  || defined OS_AIX  || defined __sun__  || defined OS_WINDOWS))
+</span></span><span class="line"><span class="cl">    alloc_hugetlb,
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">#ifdef ALLOC_MMAP
+</span></span><span class="line"><span class="cl">    alloc_mmap,
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">#ifdef ALLOC_QALLOC
+</span></span><span class="line"><span class="cl">    alloc_qalloc,
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">#ifdef ALLOC_WINDOWS
+</span></span><span class="line"><span class="cl">    alloc_windows,
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">#ifdef ALLOC_MALLOC
+</span></span><span class="line"><span class="cl">    alloc_malloc,
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">    NULL,
+</span></span><span class="line"><span class="cl">  };
+</span></span><span class="line"><span class="cl">  void *(**func)(void *address);
+</span></span><span class="line"><span class="cl">  struct alloc_t * alloc_info;
+</span></span><span class="line"><span class="cl">  struct alloc_t ** alloc_table;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#if defined(SMP) &amp;&amp; !defined(USE_OPENMP)
+</span></span><span class="line"><span class="cl">int mi;
+</span></span><span class="line"><span class="cl">LOCK_COMMAND(&amp;alloc_lock);
+</span></span><span class="line"><span class="cl">mi=memory_initialized;
+</span></span><span class="line"><span class="cl">UNLOCK_COMMAND(&amp;alloc_lock);
+</span></span><span class="line"><span class="cl">  if (!LIKELY_ONE(mi)) {
+</span></span><span class="line"><span class="cl">#else
+</span></span><span class="line"><span class="cl">  if (!LIKELY_ONE(memory_initialized)) {
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">#if defined(SMP) &amp;&amp; !defined(USE_OPENMP)
+</span></span><span class="line"><span class="cl">    /* Only allow a single thread to initialize memory system */
+</span></span><span class="line"><span class="cl">    LOCK_COMMAND(&amp;alloc_lock);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (!memory_initialized) {
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">      blas_memory_init();
+</span></span><span class="line"><span class="cl">#ifdef DYNAMIC_ARCH
+</span></span><span class="line"><span class="cl">      gotoblas_dynamic_init();
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#if defined(SMP) &amp;&amp; defined(OS_LINUX) &amp;&amp; !defined(NO_AFFINITY)
+</span></span><span class="line"><span class="cl">      gotoblas_affinity_init();
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#ifdef SMP
+</span></span><span class="line"><span class="cl">      if (!blas_num_threads) blas_cpu_number = blas_get_cpu_number();
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#if defined(ARCH_X86) || defined(ARCH_X86_64) || defined(ARCH_IA64) || defined(ARCH_MIPS64) || defined(ARCH_ARM64)
+</span></span><span class="line"><span class="cl">#ifndef DYNAMIC_ARCH
+</span></span><span class="line"><span class="cl">      blas_set_parameter();
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      memory_initialized = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#if defined(SMP) &amp;&amp; !defined(USE_OPENMP)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    UNLOCK_COMMAND(&amp;alloc_lock);
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#ifdef DEBUG
+</span></span><span class="line"><span class="cl">  printf(&#34;Alloc Start ...\n&#34;);
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  position = 0;
+</span></span><span class="line"><span class="cl">  alloc_table = get_memory_table();
+</span></span><span class="line"><span class="cl">  do {
+</span></span><span class="line"><span class="cl">      if (!alloc_table[position] || !alloc_table[position]-&gt;used) goto allocation;
+</span></span><span class="line"><span class="cl">    position ++;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  } while (position &lt; NUM_BUFFERS);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  goto error;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  allocation :
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#ifdef DEBUG
+</span></span><span class="line"><span class="cl">  printf(&#34;  Position -&gt; %d\n&#34;, position);
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  alloc_info = alloc_table[position];
+</span></span><span class="line"><span class="cl">  if (!alloc_info) {
+</span></span><span class="line"><span class="cl">    do {
+</span></span><span class="line"><span class="cl">#ifdef DEBUG
+</span></span><span class="line"><span class="cl">      printf(&#34;Allocation Start : %lx\n&#34;, base_address);
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      map_address = (void *)-1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      func = &amp;memoryalloc[0];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      while ((*func != NULL) &amp;&amp; (map_address == (void *) -1)) {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        map_address = (*func)((void *)base_address);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#ifdef ALLOC_DEVICEDRIVER
+</span></span><span class="line"><span class="cl">        if ((*func ==  alloc_devicedirver) &amp;&amp; (map_address == (void *)-1)) {
+</span></span><span class="line"><span class="cl">            fprintf(stderr, &#34;OpenBLAS Warning ... Physically contiguous allocation failed.\n&#34;);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#ifdef ALLOC_HUGETLBFILE
+</span></span><span class="line"><span class="cl">        if ((*func == alloc_hugetlbfile) &amp;&amp; (map_address == (void *)-1)) {
+</span></span><span class="line"><span class="cl">#ifndef OS_WINDOWS
+</span></span><span class="line"><span class="cl">            fprintf(stderr, &#34;OpenBLAS Warning ... HugeTLB(File) allocation failed.\n&#34;);
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#if (defined ALLOC_SHM) &amp;&amp; (defined OS_LINUX  || defined OS_AIX  || defined __sun__  || defined OS_WINDOWS)
+</span></span><span class="line"><span class="cl">        if ((*func == alloc_hugetlb) &amp;&amp; (map_address != (void *)-1)) hugetlb_allocated = 1;
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        func ++;
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#ifdef DEBUG
+</span></span><span class="line"><span class="cl">      printf(&#34;  Success -&gt; %08lx\n&#34;, map_address);
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">      if (((BLASLONG) map_address) == -1) base_address = 0UL;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      if (base_address) base_address += allocation_block_size + FIXED_PAGESIZE;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    } while ((BLASLONG)map_address == -1);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    alloc_table[position] = alloc_info = map_address;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#ifdef DEBUG
+</span></span><span class="line"><span class="cl">    printf(&#34;  Mapping Succeeded. %p(%d)\n&#34;, (void *)alloc_info, position);
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#ifdef DEBUG
+</span></span><span class="line"><span class="cl">  printf(&#34;Mapped   : %p  %3d\n\n&#34;, (void *)alloc_info, position);
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  alloc_info-&gt;used = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  return (void *)(((char *)alloc_info) + sizeof(struct alloc_t));
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> error:
+</span></span><span class="line"><span class="cl">  printf(&#34;OpenBLAS : Program will terminate because you tried to allocate too many TLS memory regions.\n&#34;);
+</span></span><span class="line"><span class="cl">  printf(&#34;This library was built to support a maximum of %d threads - either rebuild OpenBLAS\n&#34;, NUM_BUFFERS);
+</span></span><span class="line"><span class="cl">  printf(&#34;with a larger NUM_THREADS value or set the environment variable OPENBLAS_NUM_THREADS to\n&#34;);
+</span></span><span class="line"><span class="cl">  printf(&#34;a sufficiently small number. This error typically occurs when the software that relies on\n&#34;);
+</span></span><span class="line"><span class="cl">  printf(&#34;OpenBLAS calls BLAS functions from many threads in parallel, or when your computer has more\n&#34;);
+</span></span><span class="line"><span class="cl">  printf(&#34;cpu cores than what OpenBLAS was configured to handle.\n&#34;); 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  return NULL;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="gotoblas_t">gotoblas_t</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">//这个结构体定义了一系列和运算相关的参数和函数指针。这些参数和指针用于配置和执行矩阵运算的不同方面，包括数据类型转换，矩阵乘，矩阵转置。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">dtb_entries</span><span class="p">;</span><span class="c1">//数据表条目
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">switch_ratio</span><span class="p">;</span><span class="c1">//切比率
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">offsetA</span><span class="p">,</span> <span class="n">offsetB</span><span class="p">,</span> <span class="n">align</span><span class="p">;</span><span class="c1">//矩阵偏移和对齐
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#if BUILD_BFLOAT16 == 1</span><span class="c1">//是否构建包含bfloat16数据类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">sbgemm_p</span><span class="p">,</span> <span class="n">sbgemm_q</span><span class="p">,</span> <span class="n">sbgemm_r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">sbgemm_unroll_m</span><span class="p">,</span> <span class="n">sbgemm_unroll_n</span><span class="p">,</span> <span class="n">sbgemm_unroll_mn</span><span class="p">;</span><span class="c1">//循环展开参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">sbgemm_align_k</span><span class="p">;</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">need_amxtile_permission</span><span class="p">;</span>  <span class="c1">// 0 default, 1 for device support amx. amx指令权限
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//类型转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">void</span>   <span class="p">(</span><span class="o">*</span><span class="n">sbstobf16_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span>    <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span>   <span class="p">(</span><span class="o">*</span><span class="n">sbdtobf16_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">double</span>   <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span>   <span class="p">(</span><span class="o">*</span><span class="n">sbf16tos_k</span><span class="p">)</span>  <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span>    <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span>   <span class="p">(</span><span class="o">*</span><span class="n">dbf16tod_k</span><span class="p">)</span>  <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">double</span>   <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">float</span>  <span class="p">(</span><span class="o">*</span><span class="n">sbamax_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">float</span>  <span class="p">(</span><span class="o">*</span><span class="n">sbamin_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">float</span>  <span class="p">(</span><span class="o">*</span><span class="n">sbmax_k</span><span class="p">)</span>  <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">float</span>  <span class="p">(</span><span class="o">*</span><span class="n">sbmin_k</span><span class="p">)</span>  <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">BLASLONG</span> <span class="p">(</span><span class="o">*</span><span class="n">isbamax_k</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">BLASLONG</span> <span class="p">(</span><span class="o">*</span><span class="n">isbamin_k</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">BLASLONG</span> <span class="p">(</span><span class="o">*</span><span class="n">isbmax_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">BLASLONG</span> <span class="p">(</span><span class="o">*</span><span class="n">isbmin_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">float</span>  <span class="p">(</span><span class="o">*</span><span class="n">sbnrm2_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">float</span>  <span class="p">(</span><span class="o">*</span><span class="n">sbasum_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">float</span>  <span class="p">(</span><span class="o">*</span><span class="n">sbsum_k</span><span class="p">)</span>  <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbcopy_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">float</span>  <span class="p">(</span><span class="o">*</span><span class="n">sbdot_k</span><span class="p">)</span>  <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">double</span> <span class="p">(</span><span class="o">*</span><span class="n">dsbdot_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbrot_k</span><span class="p">)</span>  <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbaxpy_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbscal_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbswap_k</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbgemv_n</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="kt">sbgemv_t</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbger_k</span><span class="p">)</span>  <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbsymv_L</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span>  <span class="kt">float</span>  <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span>  <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span>  <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbsymv_U</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span>  <span class="kt">float</span>  <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span>  <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span>  <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbgemm_kernel</span>   <span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbgemm_beta</span>     <span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbgemm_incopy</span>   <span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbgemm_itcopy</span>   <span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbgemm_oncopy</span>   <span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbgemm_otcopy</span>   <span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">bfloat16</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_kernel_LN</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_kernel_LT</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_kernel_RN</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_kernel_RT</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_iunucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_iunncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_iutucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_iutncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_ilnucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_ilnncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_iltucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_iltncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_ounucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_ounncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_outucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_outncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_olnucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_olnncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_oltucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrsm_oltncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_kernel_RN</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_kernel_RT</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_kernel_LN</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_kernel_LT</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_iunucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_iunncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_iutucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_iutncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_ilnucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_ilnncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_iltucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_iltncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_ounucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_ounncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_outucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_outncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_olnucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_olnncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_oltucopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbtrmm_oltncopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbsymm_iutcopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbsymm_iltcopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbsymm_outcopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sbsymm_oltcopy</span><span class="p">)(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>	 <span class="p">(</span><span class="o">*</span><span class="n">sbneg_tcopy</span><span class="p">)</span>   <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span>    <span class="p">(</span><span class="o">*</span><span class="n">sblaswp_ncopy</span><span class="p">)</span> <span class="p">(</span><span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">,</span> <span class="n">BLASLONG</span><span class="p">,</span> <span class="n">blasint</span> <span class="o">*</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="核心函数层-kernel层">核心函数层 kernel层</h2>

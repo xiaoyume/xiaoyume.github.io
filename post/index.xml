@@ -13,7 +13,7 @@
       <pubDate>Mon, 30 Oct 2023 19:19:50 +0800</pubDate>
       
       <guid>https://xiaoyume.github.io/post/23.openblas%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</guid>
-      <description>OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 cd OpenBlas make make PREFIX=/installdir install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export LD_LIBRARY_PATH=/your/OpenBLAS/install/lib:$LD_LIBRARY_PATH 用例实测 1 2 3 4 5 6 7 8</description>
+      <description>OpenBlas的安装与简单使用 源码下载 1 git clone https://github.com/xianyi/OpenBLAS.git 安装 1 2 3 4 5 cd OpenBlas //make命令 make COMMON_OPT=&amp;#34;-O3 -g -fPIC&amp;#34; make PREFIX=/thfs1/home/chengkun_wu/wuxiaoyu/OpenBLAS/install install 环境变量配置 1 2 3 export C_INCLUDE_PATH=/your/OpenBLAS/install/include:$C_INCLUDE_PATH //这一条不一定生效 export</description>
     </item>
     
     <item>

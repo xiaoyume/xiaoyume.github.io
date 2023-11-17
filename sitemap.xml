@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://xiaoyume.github.io/ai4s/</loc>
+    <lastmod>2023-11-17T14:51:35+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/ai4s/lammps%E6%BA%90%E7%A0%81%E4%BF%AE%E6%94%B9/</loc>
+    <lastmod>2023-11-17T14:51:35+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/</loc>
+    <lastmod>2023-11-17T14:51:35+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://xiaoyume.github.io/post/23.openblas%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2023-10-30T19:19:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -10,13 +31,6 @@
   
   <url>
     <loc>https://xiaoyume.github.io/post/</loc>
-    <lastmod>2023-10-30T19:19:50+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://xiaoyume.github.io/</loc>
     <lastmod>2023-10-30T19:19:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
