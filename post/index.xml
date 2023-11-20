@@ -6,7 +6,16 @@
     <description>Recent content in Posts on xiaoyume&#39;s local blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 30 Oct 2023 19:19:50 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 20 Nov 2023 20:19:19 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用运行时插桩的方式替换lmp运行时调用的blas库函数</title>
+      <link>https://xiaoyume.github.io/post/24.%E5%8A%A8%E6%80%81%E6%8F%92%E6%A1%A9/</link>
+      <pubDate>Mon, 20 Nov 2023 20:19:19 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/24.%E5%8A%A8%E6%80%81%E6%8F%92%E6%A1%A9/</guid>
+      <description>使用运行时插桩的方式替换lmp运行时调用的blas库函数 dgemm.c这个函数就是一个将lammps里使用的dgemm接口替换成mtblas</description>
+    </item>
+    
     <item>
       <title>Openblas</title>
       <link>https://xiaoyume.github.io/post/23.openblas%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</link>

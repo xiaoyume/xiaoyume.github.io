@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>使用运行时插桩的方式替换lmp运行时调用的blas库函数 - xiaoyume&#39;s local blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoyume" /><meta name="description" content="使用运行时插桩的方式替换lmp运行时调用的blas库函数 dgemm.c这个函数就是一个将lammps里使用的dgemm接口替换成mtblas" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.111.3 with theme even" />
+
+
+<link rel="canonical" href="https://xiaoyume.github.io/post/24.%E5%8A%A8%E6%80%81%E6%8F%92%E6%A1%A9/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="使用运行时插桩的方式替换lmp运行时调用的blas库函数" />
+<meta property="og:description" content="使用运行时插桩的方式替换lmp运行时调用的blas库函数 dgemm.c这个函数就是一个将lammps里使用的dgemm接口替换成mtblas" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaoyume.github.io/post/24.%E5%8A%A8%E6%80%81%E6%8F%92%E6%A1%A9/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-11-20T20:19:19+08:00" />
+<meta property="article:modified_time" content="2023-11-20T20:19:19+08:00" />
+<meta itemprop="name" content="使用运行时插桩的方式替换lmp运行时调用的blas库函数">
+<meta itemprop="description" content="使用运行时插桩的方式替换lmp运行时调用的blas库函数 dgemm.c这个函数就是一个将lammps里使用的dgemm接口替换成mtblas"><meta itemprop="datePublished" content="2023-11-20T20:19:19+08:00" />
+<meta itemprop="dateModified" content="2023-11-20T20:19:19+08:00" />
+<meta itemprop="wordCount" content="833">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用运行时插桩的方式替换lmp运行时调用的blas库函数"/>
+<meta name="twitter:description" content="使用运行时插桩的方式替换lmp运行时调用的blas库函数 dgemm.c这个函数就是一个将lammps里使用的dgemm接口替换成mtblas"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">xiaoyume&lt;</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">xiaoyume&lt;</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">使用运行时插桩的方式替换lmp运行时调用的blas库函数</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-11-20 </span>
+        
+          <span class="more-meta"> 约 833 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#使用运行时插桩的方式替换lmp运行时调用的blas库函数">使用运行时插桩的方式替换lmp运行时调用的blas库函数</a>
+      <ul>
+        <li><a href="#正常运行测试">正常运行测试</a></li>
+        <li><a href="#运行时插桩">运行时插桩</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="使用运行时插桩的方式替换lmp运行时调用的blas库函数">使用运行时插桩的方式替换lmp运行时调用的blas库函数</h1>
+<p><code>dgemm.c</code>这个函数就是一个将lammps里使用的dgemm接口替换成mtblas里的dgemm接口</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span><span class="cpf">&lt;stdint.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span><span class="cpf">&#34;tools.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">//#include &#34;hthread_host.h&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1">//#include &#34;mt_hybrid.h&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span><span class="cpf">&#34;mtblas.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span><span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span><span class="cpf">&lt;sys/time.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;omp.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">//lammps里使用的接口
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">dgemm_</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">ta</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="o">*</span><span class="n">tb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">M</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">N</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">K</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">alpha</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span><span class="o">*</span> <span class="n">A</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">lda</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span><span class="o">*</span> <span class="n">B</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ldb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">beta</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ldc</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">cluster_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">mt_blas_init</span><span class="p">(</span><span class="n">cluster_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">M_t</span> <span class="o">=</span> <span class="o">*</span><span class="n">M</span><span class="p">,</span> <span class="n">N_t</span> <span class="o">=</span> <span class="o">*</span><span class="n">N</span><span class="p">,</span> <span class="n">K_t</span> <span class="o">=</span> <span class="o">*</span><span class="n">K</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int64_t</span> <span class="kt">lda_t</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)</span><span class="o">*</span><span class="n">lda</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int64_t</span> <span class="kt">ldb_t</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)</span><span class="o">*</span><span class="n">ldb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int64_t</span> <span class="kt">ldc_t</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)</span><span class="o">*</span><span class="n">ldc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="kt">alpha_t</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="o">*</span><span class="n">alpha</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="kt">beta_t</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="o">*</span><span class="n">beta</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">double</span> <span class="o">*</span><span class="n">A_t</span><span class="p">,</span> <span class="o">*</span><span class="n">B_t</span><span class="p">,</span> <span class="o">*</span><span class="n">C_t</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">q</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">A_t</span> <span class="o">=</span> <span class="nf">hthread_malloc</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">M_t</span><span class="o">*</span><span class="kt">lda_t</span><span class="p">,</span> <span class="n">HT_MEM_RO</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">B_t</span> <span class="o">=</span> <span class="nf">hthread_malloc</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">K_t</span><span class="o">*</span><span class="kt">ldb_t</span><span class="p">,</span> <span class="n">HT_MEM_RO</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">C_t</span> <span class="o">=</span> <span class="nf">hthread_malloc</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">M_t</span><span class="o">*</span><span class="kt">ldc_t</span><span class="p">,</span> <span class="n">HT_MEM_RW</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">memcpy</span><span class="p">(</span><span class="n">A_t</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">M_t</span><span class="o">*</span><span class="n">K_t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">memcpy</span><span class="p">(</span><span class="n">B_t</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">K_t</span><span class="o">*</span><span class="n">N_t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;DSP begin computing!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">mt_hthread_dgemm</span><span class="p">(</span><span class="n">M_t</span><span class="p">,</span> <span class="n">N_t</span><span class="p">,</span> <span class="n">K_t</span><span class="p">,</span> <span class="kt">alpha_t</span><span class="p">,</span> <span class="n">A_t</span><span class="p">,</span> <span class="kt">lda_t</span><span class="p">,</span> <span class="n">B_t</span><span class="p">,</span> <span class="kt">ldb_t</span><span class="p">,</span> <span class="kt">beta_t</span><span class="p">,</span> <span class="n">C_t</span><span class="p">,</span> <span class="kt">ldc_t</span> <span class="p">,</span> <span class="n">cluster_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">memcpy</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">C_t</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">M_t</span><span class="o">*</span><span class="n">N_t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Success!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">hthread_free</span><span class="p">(</span><span class="n">A_t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">hthread_free</span><span class="p">(</span><span class="n">B_t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">hthread_free</span><span class="p">(</span><span class="n">C_t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">hthread_dev_close</span><span class="p">(</span><span class="n">cluster_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">//makefile文件生成动态库
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">CFLAGS</span> <span class="o">+=</span> <span class="o">-</span><span class="n">fopenmp</span> <span class="o">-</span><span class="n">lpthread</span> <span class="o">-</span><span class="n">lm</span> <span class="o">-</span><span class="n">g</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#ENV_OPENBLAS = ${LIBOBMTDIR}/libopenblas-mt
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">ENV_ROOT</span> <span class="o">=</span> <span class="err">$</span><span class="p">{</span><span class="n">MTENVDIR</span><span class="p">}</span><span class="o">/</span><span class="n">mt3000_programming_env</span>
+</span></span><span class="line"><span class="cl"><span class="n">CFLAGS</span> <span class="o">+=</span> <span class="o">-</span><span class="n">I</span><span class="err">$</span><span class="p">{</span><span class="n">LIBOBMTDIR</span><span class="p">}</span><span class="o">/</span><span class="n">libmtblas</span><span class="o">/</span><span class="n">include</span> \
+</span></span><span class="line"><span class="cl">	<span class="o">-</span><span class="n">I</span><span class="p">.</span><span class="o">/</span> <span class="o">-</span><span class="n">I</span><span class="err">$</span><span class="p">{</span><span class="n">ENV_ROOT</span><span class="p">}</span><span class="o">/</span><span class="n">hthreads</span><span class="o">/</span><span class="n">include</span> \
+</span></span><span class="line"><span class="cl">	<span class="o">-</span><span class="n">I</span><span class="err">$</span><span class="p">{</span><span class="n">ENV_ROOT</span><span class="p">}</span><span class="o">/</span><span class="n">libmt</span><span class="o">/</span><span class="n">include</span> 
+</span></span><span class="line"><span class="cl"><span class="n">CFLAGS</span> <span class="o">+=</span> <span class="err">$</span><span class="p">{</span><span class="n">ENV_ROOT</span><span class="p">}</span><span class="o">/</span><span class="n">hthreads</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libhthread_host</span><span class="p">.</span><span class="n">a</span> \
+</span></span><span class="line"><span class="cl">	<span class="err">$</span><span class="p">{</span><span class="n">LIBOBMTDIR</span><span class="p">}</span><span class="o">/</span><span class="n">libmtblas</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libmtblas</span><span class="p">.</span><span class="n">a</span> <span class="o">-</span><span class="n">lm</span> 
+</span></span><span class="line"><span class="cl"><span class="n">include</span> <span class="p">.</span><span class="o">/</span><span class="n">parament</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">SRC_DGEMM</span> <span class="o">=</span> <span class="n">dgemm</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">OBJ_DGEMM</span> <span class="o">=</span> <span class="n">dgemm</span><span class="p">.</span><span class="n">so</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">SRC_MTBLAS</span> <span class="o">=</span> <span class="n">mtdgemm</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">OBJ_MTBLAS</span> <span class="o">=</span> <span class="n">mtdgemm</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="p">{</span><span class="n">OBJ_DGEMM</span><span class="p">}</span><span class="o">:</span><span class="err">$</span><span class="p">{</span><span class="n">SRC_DGEMM</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">gcc</span> <span class="o">-</span><span class="n">DRUNTIME</span> <span class="o">-</span><span class="n">shared</span> <span class="o">-</span><span class="n">fpic</span> <span class="o">-</span><span class="n">o</span> <span class="err">$</span><span class="p">{</span><span class="n">OBJ_DGEMM</span><span class="p">}</span> <span class="err">$</span><span class="p">{</span><span class="n">SRC_DGEMM</span><span class="p">}</span> <span class="err">$</span><span class="p">{</span><span class="n">CFLAGS</span><span class="p">}</span> \
+</span></span><span class="line"><span class="cl">	<span class="o">-</span><span class="n">ldl</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="p">{</span><span class="n">OBJ_MTBLAS</span><span class="p">}</span><span class="o">:</span><span class="err">$</span><span class="p">{</span><span class="n">SRC_MTBLAS</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="err">$</span><span class="p">{</span><span class="n">OBJ_DGEMM</span><span class="p">}</span> <span class="err">$</span><span class="p">{</span><span class="n">SRC_DGEMM</span><span class="p">}</span> <span class="err">$</span><span class="p">{</span><span class="n">CFLAGS</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>make dgemm</code>生成一个<code>dgemm.so</code></p>
+<p>由于lmp推理端还没跑通，所以自己写一个本地测试的例子进行模拟。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">//testdgemm.c
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">//接口声明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">dgemm_</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">ta</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span><span class="o">*</span> <span class="n">tb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">M</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">N</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">K</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">alpha</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span><span class="o">*</span> <span class="n">A</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">lda</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span><span class="o">*</span> <span class="n">B</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ldb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">beta</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ldc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">K</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">lda</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">ldb</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">ldc</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   	<span class="kt">double</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">double</span> <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>	
+</span></span><span class="line"><span class="cl">	<span class="kt">double</span> <span class="n">A</span><span class="p">[</span><span class="mi">100000000</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">double</span> <span class="n">B</span><span class="p">[</span><span class="mi">100000000</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">100</span><span class="o">+</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="mi">10000</span><span class="o">+</span><span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">100</span><span class="o">+</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="mi">10000</span><span class="o">+</span><span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">double</span> <span class="n">C</span><span class="p">[</span><span class="mi">100000000</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">dgemm_</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">M</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">N</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">K</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lda</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldb</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">beta</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// for(int i = 0; i &lt; 100; i++){
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// 	for(int j = 0; j &lt; 10000; j++){
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// 		printf(&#34;C[%d]=%.2f\t&#34;, i*10000+j, C[i*10000+j]);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// 	}
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// 	printf(&#34;\n&#34;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我们需要模拟一个blas接口的库，写一个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">//fake.c 这里就是生成一个动态库，测试文件编译时候需要链接这个库，正常运行是经过这段代码，输出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">dgemm_</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">ta</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span><span class="o">*</span> <span class="n">tb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">M</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">N</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">K</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">alpha</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span><span class="o">*</span> <span class="n">A</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">lda</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span><span class="o">*</span> <span class="n">B</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ldb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">beta</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ldc</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;没有被拦截!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编译库</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gcc -shared -fPIC -o libfake.so fake.c
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编译测试文件，生成执行文件a.out</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gcc testdgemm.c ./libfake.so
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="正常运行测试">正常运行测试</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./a.out
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231120202044.png" alt=""></p>
+<p>测试结果说明正常使用写的库</p>
+<h2 id="运行时插桩">运行时插桩</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">LD_PRELOAD=&#34;./dgemm.so&#34; yhrun -p thmt1 ./a.out
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20231120202412.png" alt=""></p>
+<p>拦截到函数，并进行了替换</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoyume</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-11-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/23.openblas%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+            <span class="next-text nav-default">Openblas</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://xiaoyume.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>xiaoyume</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
