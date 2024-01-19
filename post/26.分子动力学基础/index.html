@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>分子动力学基础 - xiaoyume&#39;s local blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoyume" /><meta name="description" content="分子动力学 Molecular Dynamics 1 分子动力学 什么是分子动力学 分子动力学是一门结合物理，数学和化学，研究处理原子、分子状态的故吏或液体的微观动力学特性的科学，一" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.111.3 with theme even" />
+
+
+<link rel="canonical" href="https://xiaoyume.github.io/post/26.%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="分子动力学基础" />
+<meta property="og:description" content="分子动力学 Molecular Dynamics 1 分子动力学 什么是分子动力学 分子动力学是一门结合物理，数学和化学，研究处理原子、分子状态的故吏或液体的微观动力学特性的科学，一" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaoyume.github.io/post/26.%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-15T10:20:17+08:00" />
+<meta property="article:modified_time" content="2024-01-15T10:20:17+08:00" />
+<meta itemprop="name" content="分子动力学基础">
+<meta itemprop="description" content="分子动力学 Molecular Dynamics 1 分子动力学 什么是分子动力学 分子动力学是一门结合物理，数学和化学，研究处理原子、分子状态的故吏或液体的微观动力学特性的科学，一"><meta itemprop="datePublished" content="2024-01-15T10:20:17+08:00" />
+<meta itemprop="dateModified" content="2024-01-15T10:20:17+08:00" />
+<meta itemprop="wordCount" content="597">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="分子动力学基础"/>
+<meta name="twitter:description" content="分子动力学 Molecular Dynamics 1 分子动力学 什么是分子动力学 分子动力学是一门结合物理，数学和化学，研究处理原子、分子状态的故吏或液体的微观动力学特性的科学，一"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">xiaoyume&lt;</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">xiaoyume&lt;</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">分子动力学基础</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-01-15 </span>
+        
+          <span class="more-meta"> 约 597 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#分子动力学-molecular-dynamics">分子动力学 Molecular Dynamics</a>
+      <ul>
+        <li><a href="#1-分子动力学">1 分子动力学</a>
+          <ul>
+            <li><a href="#什么是分子动力学">什么是分子动力学</a></li>
+            <li><a href="#什么是分子动力学模拟">什么是分子动力学模拟</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-分子动力学的基本原理及特点">2 分子动力学的基本原理及特点</a>
+          <ul>
+            <li><a href="#基本原理">基本原理</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="分子动力学-molecular-dynamics">分子动力学 Molecular Dynamics</h1>
+<h2 id="1-分子动力学">1 分子动力学</h2>
+<h3 id="什么是分子动力学">什么是分子动力学</h3>
+<p>分子动力学是一门结合物理，数学和化学，研究处理原子、分子状态的故吏或液体的微观动力学特性的科学，一种计算机模拟实验方法，是研究凝聚态系统的有利工具。</p>
+<p>分子动力学是一套分子模拟方法，该方法主要是依靠牛顿力学来模拟分子体系的运动，以再由分子体系的不同状态构成的系统中抽取样本，从而计算体系的构型积分，并以构型积分的结果为基础进一步计算体系的热力学量和其它宏观性质。</p>
+<h3 id="什么是分子动力学模拟">什么是分子动力学模拟</h3>
+<ul>
+<li>
+<p>是从统计物理学发展起来的一种描述纳米级这类处于原子、分子状态的固体或者液体的动力学特性的微观现象的有效方法。</p>
+</li>
+<li>
+<p>分子动力学总是假定原子的运动服从某种确定的描述，这种描述可以是牛顿方程，拉格朗日方程或哈密顿方程所确定的描述，也就是说原子的运动和确定的轨迹联系在一起。在忽略核子的量子效应和Born-Oppenheimer绝热近似下，分子动力学的这一假设是可行的。</p>
+</li>
+<li>
+<p>是对理论计算和实验的有力补充，广泛应用于材料科学、生物物理和药物设计等。经典MD模拟，其系统规模在一般的计算机上也可以到数万原子，模拟时间为纳秒量级。</p>
+</li>
+</ul>
+<h2 id="2-分子动力学的基本原理及特点">2 分子动力学的基本原理及特点</h2>
+<h3 id="基本原理">基本原理</h3>
+<ul>
+<li>建立一个粒子系统来模拟所研究的微观现象，系统中各粒子的相互作用根据量子力学来确定</li>
+<li>对符合经典牛顿力学规律的大量粒子系统，通过粒子运动学方程组的数值求解，决定各粒子在相空间的运动规律和轨迹</li>
+<li>然后按照统计物理原理得出该系统相应的宏观物理特性</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115105847.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115105908.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115105931.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115110039.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115110401.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115110545.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115110825.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115110858.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115142457.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115142612.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115142849.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115143010.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115143340.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115143406.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/20240115143438.png" alt=""></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoyume</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-01-15
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/25.%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/">
+            <span class="next-text nav-default">25.刷题笔记</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://xiaoyume.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2023 - 
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>xiaoyume</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
