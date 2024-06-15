@@ -6,7 +6,16 @@
     <description>Recent content in Posts on xiaoyume&#39;s local blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 15 Jan 2024 10:20:17 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Apr 2024 13:53:11 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java Socket编程</title>
+      <link>https://xiaoyume.github.io/post/27.javasocket%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Mon, 01 Apr 2024 13:53:11 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/27.javasocket%E7%BC%96%E7%A8%8B/</guid>
+      <description>server端 1 2 3 4 5 6 7 8 9 10 11 12 13 14 ServerSocket ss = new ServerSocket(8888);//指定端口号 Socket s = ss.accept();//等待</description>
+    </item>
+    
     <item>
       <title>分子动力学基础</title>
       <link>https://xiaoyume.github.io/post/26.%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80/</link>
