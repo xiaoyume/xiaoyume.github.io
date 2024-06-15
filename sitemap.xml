@@ -2,21 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://xiaoyume.github.io/post/27.javasocket%E7%BC%96%E7%A8%8B/</loc>
-    <lastmod>2024-04-01T13:53:11+08:00</lastmod>
+    <loc>https://xiaoyume.github.io/post/29.docker%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2024-06-15T15:38:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaoyume.github.io/post/</loc>
-    <lastmod>2024-04-01T13:53:11+08:00</lastmod>
+    <lastmod>2024-06-15T15:38:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaoyume.github.io/</loc>
+    <lastmod>2024-06-15T15:38:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/post/28.java-stream%E6%B5%81/</loc>
+    <lastmod>2024-06-13T10:53:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/post/27.javasocket%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2024-04-01T13:53:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

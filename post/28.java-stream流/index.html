@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Java Stream流 - xiaoyume&#39;s local blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="xiaoyume" /><meta name="description" content="1 导入 现在假如又一个People类，其对象存放到一个list集合里 1 2 3 4 5 6 7 List&amp;lt;People&amp;gt; people = List.of( new People(&amp;#34;Neo&amp;#34;, 45, &amp;#34;USA&amp;#34;), new People(&amp;#34;Stran&amp;#34;, 10, &amp;#34;USA&amp;#34;), new People(&amp;#34;Grace&amp;#34;, 16, &amp;#34;UK&amp;#34;), new People(&amp;#34;Alex&amp;#34;, 20, &amp;#34;UK&amp;#34;), new People(&amp;#34;Seb&amp;#34;, 40, &amp;#34;CN&amp;#34;) ); 现在有一个" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.111.3 with theme even" />
+
+
+<link rel="canonical" href="https://xiaoyume.github.io/post/28.java-stream%E6%B5%81/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Java Stream流" />
+<meta property="og:description" content="1 导入 现在假如又一个People类，其对象存放到一个list集合里 1 2 3 4 5 6 7 List&lt;People&gt; people = List.of( new People(&#34;Neo&#34;, 45, &#34;USA&#34;), new People(&#34;Stran&#34;, 10, &#34;USA&#34;), new People(&#34;Grace&#34;, 16, &#34;UK&#34;), new People(&#34;Alex&#34;, 20, &#34;UK&#34;), new People(&#34;Seb&#34;, 40, &#34;CN&#34;) ); 现在有一个" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaoyume.github.io/post/28.java-stream%E6%B5%81/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-06-13T10:53:11+08:00" />
+<meta property="article:modified_time" content="2024-06-13T10:53:11+08:00" />
+<meta itemprop="name" content="Java Stream流">
+<meta itemprop="description" content="1 导入 现在假如又一个People类，其对象存放到一个list集合里 1 2 3 4 5 6 7 List&lt;People&gt; people = List.of( new People(&#34;Neo&#34;, 45, &#34;USA&#34;), new People(&#34;Stran&#34;, 10, &#34;USA&#34;), new People(&#34;Grace&#34;, 16, &#34;UK&#34;), new People(&#34;Alex&#34;, 20, &#34;UK&#34;), new People(&#34;Seb&#34;, 40, &#34;CN&#34;) ); 现在有一个"><meta itemprop="datePublished" content="2024-06-13T10:53:11+08:00" />
+<meta itemprop="dateModified" content="2024-06-13T10:53:11+08:00" />
+<meta itemprop="wordCount" content="1582">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java Stream流"/>
+<meta name="twitter:description" content="1 导入 现在假如又一个People类，其对象存放到一个list集合里 1 2 3 4 5 6 7 List&lt;People&gt; people = List.of( new People(&#34;Neo&#34;, 45, &#34;USA&#34;), new People(&#34;Stran&#34;, 10, &#34;USA&#34;), new People(&#34;Grace&#34;, 16, &#34;UK&#34;), new People(&#34;Alex&#34;, 20, &#34;UK&#34;), new People(&#34;Seb&#34;, 40, &#34;CN&#34;) ); 现在有一个"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">xiaoyume&lt;</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">xiaoyume&lt;</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Java Stream流</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-06-13 </span>
+        
+          <span class="more-meta"> 约 1582 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-导入">1 导入</a></li>
+    <li><a href="#2-创建stream流">2 创建Stream流</a>
+      <ul>
+        <li><a href="#collection接口">Collection接口</a></li>
+        <li><a href="#通过数组创建流">通过数组创建流</a></li>
+        <li><a href="#streamof方法">Stream.of方法</a></li>
+        <li><a href="#动态构建-streambuilder">动态构建 StreamBuilder</a></li>
+        <li><a href="#文件创建流">文件创建流</a></li>
+        <li><a href="#基本数据数据类型流">基本数据数据类型流</a></li>
+        <li><a href="#无限流generate方法">无限流generate方法</a></li>
+        <li><a href="#iterate">iterate</a></li>
+        <li><a href="#创建并行流">创建并行流</a></li>
+      </ul>
+    </li>
+    <li><a href="#中间操作">中间操作</a>
+      <ul>
+        <li><a href="#映射-map">映射 map</a></li>
+        <li><a href="#flatmap">flatMap</a></li>
+        <li><a href="#sorted">sorted</a></li>
+      </ul>
+    </li>
+    <li><a href="#综合案例">综合案例</a></li>
+    <li><a href="#终端操作">终端操作</a>
+      <ul>
+        <li><a href="#搜索和匹配">搜索和匹配</a>
+          <ul>
+            <li><a href="#anymatch">anyMatch</a></li>
+            <li><a href="#nonematch">noneMatch</a></li>
+            <li><a href="#allmatch">allMatch</a></li>
+            <li><a href="#findfirst">findFirst</a></li>
+          </ul>
+        </li>
+        <li><a href="#聚合">聚合</a>
+          <ul>
+            <li><a href="#count">count</a></li>
+            <li><a href="#max">max</a></li>
+            <li><a href="#sumaverage">sum、average</a></li>
+          </ul>
+        </li>
+        <li><a href="#规约">规约</a></li>
+        <li><a href="#收集">收集</a>
+          <ul>
+            <li><a href="#分组功能">分组功能</a></li>
+            <li><a href="#分区功能">分区功能</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#并行流">并行流</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="1-导入">1 导入</h1>
+<p>现在假如又一个People类，其对象存放到一个list集合里</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">List&lt;People&gt; people = List.of(
+</span></span><span class="line"><span class="cl">                new People(&#34;Neo&#34;, 45, &#34;USA&#34;),
+</span></span><span class="line"><span class="cl">                new People(&#34;Stran&#34;, 10, &#34;USA&#34;),
+</span></span><span class="line"><span class="cl">                new People(&#34;Grace&#34;, 16, &#34;UK&#34;),
+</span></span><span class="line"><span class="cl">                new People(&#34;Alex&#34;, 20, &#34;UK&#34;),
+</span></span><span class="line"><span class="cl">                new People(&#34;Seb&#34;, 40, &#34;CN&#34;)
+</span></span><span class="line"><span class="cl">        );
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在有一个需求就是要把筛选出其中的成年人，放到一个新的集合里，传统方式应该怎么做，遍历集合，判断</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">List&lt;People&gt; adults = new ArrayList&lt;&gt;();
+</span></span><span class="line"><span class="cl">        for(People peo : people){
+</span></span><span class="line"><span class="cl">            if(peo.getAge() &gt; 18){
+</span></span><span class="line"><span class="cl">                adults.add(peo);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这种方式虽然直观，但是当情况变地负责时，代码会变得复杂。</p>
+<p>使用Stream API来实现一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">List&lt;People&gt; adults = people.stream()
+</span></span><span class="line"><span class="cl">                .filter(peo -&gt; peo.getAge() &gt; 18)
+</span></span><span class="line"><span class="cl">                .collect(Collectors.toList());
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Stream Api地引入为数据集合的操作提供了一种新的范式，Stream本身并不是数据结构，不会存储数据或者改变数据源，它仅定义处理方式，可以视为一种高级迭代器，不仅能够支持顺序处理，还能进行并行处理，为集合的过滤、映射、聚等操作提供了一种高效的实现方式。</p>
+<p>Stream流的3个核心步骤</p>
+<p>第一步：创建流Stream Creation</p>
+<p>可以从多种数据源创建，集合，数组，IO等</p>
+<p>第二步：中间操作 Intermediate Operations</p>
+<p>第三步：终端操作 Terminal Operations</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240613111327756.png" alt="image-20240613111327756"></p>
+<h1 id="2-创建stream流">2 创建Stream流</h1>
+<h2 id="collection接口">Collection接口</h2>
+<p>对任何实现了Collection接口的集合，比如list,set，可以通过stream方法创建流</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">List&lt;Character&gt; a = List.of(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;);
+</span></span><span class="line"><span class="cl">a.stream().forEach(System.out::println);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="通过数组创建流">通过数组创建流</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">String[] arr = {&#34;a&#34;, &#34;b&#34;, &#34;c&#34;};
+</span></span><span class="line"><span class="cl">Stream&lt;String&gt; stream = Arrays.stream(arr);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="streamof方法">Stream.of方法</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Stream&lt;String&gt; a = Stream.of(&#34;a&#34;, &#34;b&#34;, &#34;c&#34;);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>合并两个流可以使用concat方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Stream&lt;String&gt; concat = Stream.concat(stream1, stream2);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="动态构建-streambuilder">动态构建 StreamBuilder</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Stream.Builder&lt;String&gt; builder = Stream.builder();
+</span></span><span class="line"><span class="cl">builder.add(&#34;a&#34;);
+</span></span><span class="line"><span class="cl">builder.add(&#34;b&#34;);
+</span></span><span class="line"><span class="cl">builder.add(&#34;c&#34;);
+</span></span><span class="line"><span class="cl">if(Math.random() &gt; 0.5){
+</span></span><span class="line"><span class="cl">    builder.add(&#34;d&#34;);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">Stream&lt;String&gt; build = builder.build();
+</span></span><span class="line"><span class="cl">build.forEach(System.out::println);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="文件创建流">文件创建流</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Path path = Paths.get(&#34;file.txt&#34;);
+</span></span><span class="line"><span class="cl">try(Stream&lt;String&gt; lines = Files.lines(path)){
+</span></span><span class="line"><span class="cl">  lines.forEach(System.out::println);
+</span></span><span class="line"><span class="cl">}catch (IOException e){
+</span></span><span class="line"><span class="cl">   e.getStackTrace();
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="基本数据数据类型流">基本数据数据类型流</h2>
+<p><strong>IntStream</strong>,DoubleStream</p>
+<p>range,rangeClosed创建流</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">IntStream range = IntStream.range(1, 4);
+</span></span><span class="line"><span class="cl">IntStream range = IntStream.rangeClosed(1, 4);
+</span></span><span class="line"><span class="cl">IntStream ints = new Random().ints(5);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Stream&lt;Integer&gt; integerStream = ints.boxed();//转为对象类型Stream
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="无限流generate方法">无限流generate方法</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Stream&lt;String&gt; limit1 = Stream.generate(() -&gt; &#34;Albert&#34;).limit(5);
+</span></span><span class="line"><span class="cl">Stream&lt;Double&gt; limit = Stream.generate(Math::random).limit(5);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="iterate">iterate</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Stream.iterate(0, n -&gt; n+2).limit(10).forEach(System.out::println);
+</span></span><span class="line"><span class="cl">//生成有界的等差数列
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="创建并行流">创建并行流</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">list.parallelStream()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="中间操作">中间操作</h1>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240613140225108.png" alt="image-20240613140225108"></p>
+<p>filter过滤流种的元素</p>
+<p>distinct去重，需要重写equal和hashcode</p>
+<p>limit截取流程元素</p>
+<h2 id="映射-map">映射 map</h2>
+<p>将流种的每个元素转为新的元素</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240613141752500.png" alt="image-20240613141752500"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Stream&lt;People&gt; stream = people.stream();
+</span></span><span class="line"><span class="cl">//对象流转成人名字符串流
+</span></span><span class="line"><span class="cl">Stream&lt;String&gt; stringStream = stream.map(People::getName);
+</span></span><span class="line"><span class="cl">stringStream.forEach(System.out::println);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>map适合单层结构的流，进行元素一对一转换，</p>
+<p>对于嵌套的集合处理不够灵活，使用flatMap</p>
+<h2 id="flatmap">flatMap</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240613145442566.png" alt="image-20240613145442566"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">List&lt;List&lt;People&gt;&gt; peopleGroups = List.of(
+</span></span><span class="line"><span class="cl">                List.of(
+</span></span><span class="line"><span class="cl">                        new People(&#34;Neo&#34;, 45, &#34;USA&#34;),
+</span></span><span class="line"><span class="cl">                        new People(&#34;Stran&#34;, 10, &#34;USA&#34;)
+</span></span><span class="line"><span class="cl">                ),
+</span></span><span class="line"><span class="cl">                List.of(
+</span></span><span class="line"><span class="cl">                        new People(&#34;Grace&#34;, 16, &#34;UK&#34;),
+</span></span><span class="line"><span class="cl">                        new People(&#34;Alex&#34;, 20, &#34;UK&#34;)
+</span></span><span class="line"><span class="cl">                ),
+</span></span><span class="line"><span class="cl">                List.of(
+</span></span><span class="line"><span class="cl">                        new People(&#34;Seb&#34;, 40, &#34;CN&#34;)
+</span></span><span class="line"><span class="cl">                )
+</span></span><span class="line"><span class="cl">        );
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一个嵌套的list，转换成单层流</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Stream&lt;List&lt;People&gt;&gt; listStream = peopleGroups.stream();
+</span></span><span class="line"><span class="cl">Stream&lt;People&gt; peopleStream = listStream.flatMap(peo -&gt; peo.stream());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//一次处理
+</span></span><span class="line"><span class="cl">peopleGroups.stream()
+</span></span><span class="line"><span class="cl">                .flatMap(people -&gt; people.stream().map(People::getName))
+</span></span><span class="line"><span class="cl">                .forEach(System.out::println);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">people.stream()
+</span></span><span class="line"><span class="cl">	.map(Peopel::getName)
+</span></span><span class="line"><span class="cl">	.forEach(System.out::println);
+</span></span><span class="line"><span class="cl">//使用flatMap实现map,不推荐
+</span></span><span class="line"><span class="cl">people.stream()
+</span></span><span class="line"><span class="cl">	.flatMap(person -&gt; Stream.of(person.getName))
+</span></span><span class="line"><span class="cl">	.forEach(System.out::println);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="sorted">sorted</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Stream.of(&#34;bl&#34;, &#34;aaa&#34;, &#34;bssfef&#34;)
+</span></span><span class="line"><span class="cl">                .sorted(Comparator.comparingInt(String::length).reversed())
+</span></span><span class="line"><span class="cl">                .forEach(System.out::println);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="综合案例">综合案例</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">List&lt;List&lt;People&gt;&gt; peopleGroups = List.of(
+</span></span><span class="line"><span class="cl">                List.of(
+</span></span><span class="line"><span class="cl">                        new People(&#34;Neo&#34;, 45, &#34;USA&#34;),
+</span></span><span class="line"><span class="cl">                        new People(&#34;Stran&#34;, 10, &#34;USA&#34;)
+</span></span><span class="line"><span class="cl">                ),
+</span></span><span class="line"><span class="cl">                List.of(
+</span></span><span class="line"><span class="cl">                        new People(&#34;Grace&#34;, 16, &#34;UK&#34;),
+</span></span><span class="line"><span class="cl">                        new People(&#34;Alex&#34;, 20, &#34;UK&#34;),
+</span></span><span class="line"><span class="cl">                        new People(&#34;Alex&#34;, 20, &#34;UK&#34;)
+</span></span><span class="line"><span class="cl">                ),
+</span></span><span class="line"><span class="cl">                List.of(
+</span></span><span class="line"><span class="cl">                        new People(&#34;Seb&#34;, 40, &#34;CN&#34;),
+</span></span><span class="line"><span class="cl">                        new People(&#34;Seb&#34;, 40, &#34;CN&#34;)
+</span></span><span class="line"><span class="cl">                )
+</span></span><span class="line"><span class="cl">        );
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">peopleGroups.stream()
+</span></span><span class="line"><span class="cl">                .flatMap(people -&gt; people.stream())
+</span></span><span class="line"><span class="cl">                .filter(person -&gt; person.getAge() &gt; 18)
+</span></span><span class="line"><span class="cl">                .distinct()
+</span></span><span class="line"><span class="cl">                .sorted(Comparator.comparingInt(People::getAge).reversed())
+</span></span><span class="line"><span class="cl">                .map(People::getName)
+</span></span><span class="line"><span class="cl">                .limit(3)
+</span></span><span class="line"><span class="cl">                .skip(1)
+</span></span><span class="line"><span class="cl">                .forEach(System.out::println);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="终端操作">终端操作</h1>
+<blockquote>
+<p>终端操作时流处理的最后步骤，一旦执行，流就会被消费，无法再被处理</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240613152352333.png" alt="image-20240613152352333"></p>
+<h2 id="搜索和匹配">搜索和匹配</h2>
+<h3 id="anymatch">anyMatch</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">boolean b = people.stream().anyMatch(person -&gt; person.getAge() &gt; 18);
+</span></span><span class="line"><span class="cl">System.out.println(b);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="nonematch">noneMatch</h3>
+<h3 id="allmatch">allMatch</h3>
+<h3 id="findfirst">findFirst</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Optional&lt;People&gt; first = people.stream().findFirst();
+</span></span><span class="line"><span class="cl">first.ifPresent(System.out::println);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="聚合">聚合</h2>
+<h3 id="count">count</h3>
+<h3 id="max">max</h3>
+<h3 id="sumaverage">sum、average</h3>
+<p>求和，求平均值，需要先把流转为基本数值类型</p>
+<h2 id="规约">规约</h2>
+<p>聚合是规约的一种特殊形式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int reduce = intStream.reduce(0, (a, b) -&gt; a + b);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">String reduce = people.stream()
+</span></span><span class="line"><span class="cl">                .map(People::getName)
+</span></span><span class="line"><span class="cl">                .reduce(&#34;&#34;, (a, b) -&gt; a + b + &#34;,&#34;);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="收集">收集</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">List&lt;People&gt; collect = people.stream()
+</span></span><span class="line"><span class="cl">					.filter(people1 -&gt; people1.getAge() &gt; 18)
+</span></span><span class="line"><span class="cl">                	.collect(Collectors.toList());
+</span></span><span class="line"><span class="cl">collect.forEach(System.out::println);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Map&lt;String, Integer&gt; collect = people.stream().filter(people1 -&gt; people1.getAge() &gt; 18)
+</span></span><span class="line"><span class="cl">                .collect(Collectors.toMap(
+</span></span><span class="line"><span class="cl">                        People::getName,
+</span></span><span class="line"><span class="cl">                        People::getAge
+</span></span><span class="line"><span class="cl">                ));
+</span></span><span class="line"><span class="cl">        System.out.println(collect);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="分组功能">分组功能</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Map&lt;String, List&lt;People&gt;&gt; collect = people.stream()
+</span></span><span class="line"><span class="cl">                .collect(Collectors.groupingBy(People::getCountry));
+</span></span><span class="line"><span class="cl">collect.forEach((k, v) -&gt; System.out.println(k + &#34; = &#34; + v));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="分区功能">分区功能</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//按照年龄分区，大于18为true,小于为false
+</span></span><span class="line"><span class="cl">Map&lt;Boolean, List&lt;People&gt;&gt; collect = people.stream()
+</span></span><span class="line"><span class="cl">                .collect(Collectors.partitioningBy(people1 -&gt; people1.getAge() &gt; 18));
+</span></span><span class="line"><span class="cl">        collect.forEach((k, v) -&gt; System.out.println(k + &#34; = &#34; + v));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//字符串拼接
+</span></span><span class="line"><span class="cl">String collect = people.stream().map(People::getName)
+</span></span><span class="line"><span class="cl">                .collect(Collectors.joining(&#34;,&#34;));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">IntSummaryStatistics collect = people.stream().collect(Collectors.summarizingInt(People::getAge));
+</span></span><span class="line"><span class="cl">        System.out.println(collect.getAverage());
+</span></span><span class="line"><span class="cl">        System.out.println(collect.getMax());
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//实现一个tolist
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">People</span><span class="o">&gt;</span> <span class="n">collect</span> <span class="o">=</span> <span class="n">people</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="cm">/*public static &lt;T, R&gt; Collector&lt;T, R, R&gt; of(     @NotNull  java.util.function.Supplier&lt;R&gt; supplier, 容器
+</span></span></span><span class="line"><span class="cl"><span class="cm">@NotNull  java.util.function.BiConsumer&lt;R, T&gt; accumulator, 累加，元素如何
+</span></span></span><span class="line"><span class="cl"><span class="cm">@NotNull  java.util.function.BinaryOperator&lt;R&gt; combiner, 多线程的适合
+</span></span></span><span class="line"><span class="cl"><span class="cm">@NotNull  Collector.Characteristics... characteristics ) */</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collector</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;(),</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="n">person</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;accumulator: &#34;</span> <span class="o">+</span> <span class="n">person</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">person</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">},</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;combiner: &#34;</span> <span class="o">+</span> <span class="n">left</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">left</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">right</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">return</span> <span class="n">left</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">},</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">Collector</span><span class="o">.</span><span class="na">Characteristics</span><span class="o">.</span><span class="na">IDENTITY_FINISH</span>
+</span></span><span class="line"><span class="cl">                <span class="o">));</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">collect</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//实现一个分组
+</span></span><span class="line"><span class="cl">HashMap&lt;String, List&lt;People&gt;&gt; collect = people.stream()
+</span></span><span class="line"><span class="cl">                .collect(Collector.of(
+</span></span><span class="line"><span class="cl">                        HashMap::new,
+</span></span><span class="line"><span class="cl">                        (map, person) -&gt; {
+</span></span><span class="line"><span class="cl">                            System.out.println(&#34;combiner: &#34; + person);
+</span></span><span class="line"><span class="cl">                            map.computeIfAbsent(person.getCountry(), k -&gt; new ArrayList&lt;&gt;()).add(person);
+</span></span><span class="line"><span class="cl">                        },
+</span></span><span class="line"><span class="cl">                        (left, right) -&gt; {
+</span></span><span class="line"><span class="cl">                            right.forEach((key, value) -&gt; left.merge(key, value, (list, newList) -&gt; {
+</span></span><span class="line"><span class="cl">                                list.addAll(newList);
+</span></span><span class="line"><span class="cl">                                return list;
+</span></span><span class="line"><span class="cl">                            }));
+</span></span><span class="line"><span class="cl">                            return left;
+</span></span><span class="line"><span class="cl">                        }，
+</span></span><span class="line"><span class="cl">                        Collector.Characteristics.IDENTITY_FINISH；
+</span></span><span class="line"><span class="cl">                ));
+</span></span><span class="line"><span class="cl">collect.forEach((k, v) -&gt; System.out.println(k + &#34; = &#34; + v));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="并行流">并行流</h1>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240613163137995.png" alt="image-20240613163137995"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">xiaoyume</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-06-13
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/29.docker%E4%BD%BF%E7%94%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">1111</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/27.javasocket%E7%BC%96%E7%A8%8B/">
+            <span class="next-text nav-default">Java Socket编程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="https://xiaoyume.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2023 - 
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>xiaoyume</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

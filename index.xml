@@ -6,7 +6,25 @@
     <description>Recent content on xiaoyume&#39;s local blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 01 Apr 2024 13:53:11 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 15 Jun 2024 15:38:26 +0800</lastBuildDate><atom:link href="https://xiaoyume.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>1111</title>
+      <link>https://xiaoyume.github.io/post/29.docker%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sat, 15 Jun 2024 15:38:26 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/29.docker%E4%BD%BF%E7%94%A8/</guid>
+      <description> 1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql </description>
+    </item>
+    
+    <item>
+      <title>Java Stream流</title>
+      <link>https://xiaoyume.github.io/post/28.java-stream%E6%B5%81/</link>
+      <pubDate>Thu, 13 Jun 2024 10:53:11 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/28.java-stream%E6%B5%81/</guid>
+      <description>1 导入 现在假如又一个People类，其对象存放到一个list集合里 1 2 3 4 5 6 7 List&amp;lt;People&amp;gt; people = List.of( new People(&amp;#34;Neo&amp;#34;, 45, &amp;#34;USA&amp;#34;), new People(&amp;#34;Stran&amp;#34;, 10, &amp;#34;USA&amp;#34;), new People(&amp;#34;Grace&amp;#34;, 16, &amp;#34;UK&amp;#34;), new People(&amp;#34;Alex&amp;#34;, 20, &amp;#34;UK&amp;#34;), new People(&amp;#34;Seb&amp;#34;, 40, &amp;#34;CN&amp;#34;) ); 现在有一个</description>
+    </item>
+    
     <item>
       <title>Java Socket编程</title>
       <link>https://xiaoyume.github.io/post/27.javasocket%E7%BC%96%E7%A8%8B/</link>
