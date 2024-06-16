@@ -13,7 +13,16 @@
       <pubDate>Sat, 15 Jun 2024 15:38:26 +0800</pubDate>
       
       <guid>https://xiaoyume.github.io/post/29.docker%E4%BD%BF%E7%94%A8/</guid>
-      <description> 1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql </description>
+      <description>1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜像名 Dockerfile目录 docker</description>
+    </item>
+    
+    <item>
+      <title>1111</title>
+      <link>https://xiaoyume.github.io/post/29.docker%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sat, 15 Jun 2024 15:38:26 +0800</pubDate>
+      
+      <guid>https://xiaoyume.github.io/post/29.docker%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8/</guid>
+      <description>1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜像名 Dockerfile目录 docker</description>
     </item>
     
     <item>
