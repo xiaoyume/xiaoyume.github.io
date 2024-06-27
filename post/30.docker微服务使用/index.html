@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>1111 - xiaoyume&#39;s local blog</title>
+  <title>docker微服务 - xiaoyume&#39;s local blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="xiaoyume" /><meta name="description" content="1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜像名 Dockerfile目录 docker" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="xiaoyume" /><meta name="description" content="1 docker 部署 1、mysql部署 1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 2、自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.111.3 with theme even" />
 
 
-<link rel="canonical" href="https://xiaoyume.github.io/post/29.docker%E4%BD%BF%E7%94%A8/" />
+<link rel="canonical" href="https://xiaoyume.github.io/post/30.docker%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -39,19 +39,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="1111" />
-<meta property="og:description" content="1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜像名 Dockerfile目录 docker" />
+<meta property="og:title" content="docker微服务" />
+<meta property="og:description" content="1 docker 部署 1、mysql部署 1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 2、自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xiaoyume.github.io/post/29.docker%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="https://xiaoyume.github.io/post/30.docker%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-06-15T15:38:26+08:00" />
 <meta property="article:modified_time" content="2024-06-15T15:38:26+08:00" />
-<meta itemprop="name" content="1111">
-<meta itemprop="description" content="1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜像名 Dockerfile目录 docker"><meta itemprop="datePublished" content="2024-06-15T15:38:26+08:00" />
+<meta itemprop="name" content="docker微服务">
+<meta itemprop="description" content="1 docker 部署 1、mysql部署 1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 2、自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜"><meta itemprop="datePublished" content="2024-06-15T15:38:26+08:00" />
 <meta itemprop="dateModified" content="2024-06-15T15:38:26+08:00" />
-<meta itemprop="wordCount" content="392">
+<meta itemprop="wordCount" content="683">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="1111"/>
-<meta name="twitter:description" content="1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜像名 Dockerfile目录 docker"/>
+<meta name="twitter:title" content="docker微服务"/>
+<meta name="twitter:description" content="1 docker 部署 1、mysql部署 1 2 3 4 5 6 7 8 9 docker run -d \ --name mysql \ -p 3306:3306 \ -e TZ=Asia/Shanghai \ -e MYSQL_ROOT_PASSWORD=135 \ -v /root/mysql/data:/var/lib/mysql \ -v /root/mysql/init:/docker-entrypoint-initdb.d \ -v /root/mysql/conf:/etc/mysql/conf.d \ mysql 2、自定义镜像 Dockerfile 1 2 3 4 5 6 docker load -i jdk.tar docker build -t 镜"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -124,13 +124,13 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">1111</h1>
+      <h1 class="post-title">docker微服务</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2024-06-15 </span>
         
-          <span class="more-meta"> 约 392 字 </span>
-          <span class="more-meta"> 预计阅读 1 分钟 </span>
+          <span class="more-meta"> 约 683 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -140,20 +140,38 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#自定义镜像">自定义镜像</a></li>
-    <li><a href="#网络">网络</a>
+    <li><a href="#1-docker-部署">1 docker 部署</a>
       <ul>
-        <li><a href="#1-部署java项目">1 部署java项目</a></li>
+        <li><a href="#1mysql部署">1、mysql部署</a></li>
+        <li><a href="#2自定义镜像">2、自定义镜像</a></li>
+        <li><a href="#3网络">3、网络</a></li>
+        <li><a href="#4部署java项目">4、部署java项目</a></li>
+        <li><a href="#5前端部署">5、前端部署</a></li>
+        <li><a href="#6docker-compose">6、docker compose</a></li>
       </ul>
     </li>
-    <li><a href="#2-前端部署">2 前端部署</a></li>
-    <li><a href="#3-docker-compose">3 docker compose</a></li>
+    <li><a href="#2-微服务">2 微服务</a>
+      <ul>
+        <li><a href="#1单体项目">1、单体项目</a></li>
+        <li><a href="#2springcloud">2、SpringCloud</a></li>
+      </ul>
+    </li>
+    <li><a href="#黑马商城">黑马商城</a>
+      <ul>
+        <li><a href="#服务治理">服务治理</a></li>
+        <li><a href="#openfeign">OpenFeign</a></li>
+        <li><a href="#连接池">连接池</a></li>
+        <li><a href="#抽取公共服务">抽取公共服务</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <div class="highlight"><div class="chroma">
+      <h1 id="1-docker-部署">1 docker 部署</h1>
+<h2 id="1mysql部署">1、mysql部署</h2>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -177,7 +195,7 @@
 </span></span><span class="line"><span class="cl">mysql
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="自定义镜像">自定义镜像</h1>
+</div><h2 id="2自定义镜像">2、自定义镜像</h2>
 <p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240615154932092.png" alt="image-20240615154932092"></p>
 <p>Dockerfile</p>
 <div class="highlight"><div class="chroma">
@@ -198,7 +216,7 @@
 </span></span><span class="line"><span class="cl">demo
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="网络">网络</h1>
+</div><h2 id="3网络">3、网络</h2>
 <p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240615162454637.png" alt="image-20240615162454637"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240615162800726.png" alt="image-20240615162800726"></p>
 <div class="highlight"><div class="chroma">
@@ -219,7 +237,7 @@
 </span></span><span class="line"><span class="cl">docker run -d --name dd -p 8080:8080 --network heima docker-demo
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="1-部署java项目">1 部署java项目</h2>
+</div><h2 id="4部署java项目">4、部署java项目</h2>
 <p>1.打包.jar文件</p>
 <p>2.写Dockerfile</p>
 <div class="highlight"><div class="chroma">
@@ -264,7 +282,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run -d --name hm -p 8080:8080 --network heima hmall
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="2-前端部署">2 前端部署</h1>
+</div><h2 id="5前端部署">5、前端部署</h2>
 <p>//静态资源挂载</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -288,7 +306,7 @@
 </span></span><span class="line"><span class="cl">nginx
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="3-docker-compose">3 docker compose</h1>
+</div><h2 id="6docker-compose">6、docker compose</h2>
 <p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240615175215206.png" alt="image-20240615175215206"></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -396,6 +414,114 @@
 </span></span><span class="line"><span class="cl">docker compose down
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h1 id="2-微服务">2 微服务</h1>
+<h2 id="1单体项目">1、单体项目</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616094901728.png" alt="image-20240616094901728"></p>
+<h2 id="2springcloud">2、SpringCloud</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616100738872.png" alt="image-20240616100738872"></p>
+<h1 id="黑马商城">黑马商城</h1>
+<p>微服务拆分</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616152125866.png" alt="image-20240616152125866"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616152613250.png" alt="image-20240616152613250"></p>
+<p>cart-service</p>
+<p>查询购物车时需要查询item商品信息，也就是需要itemservcie,这个是在另外的微服务里的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616163450418.png" alt="image-20240616163450418"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616164534073.png" alt="image-20240616164534073"></p>
+<h2 id="服务治理">服务治理</h2>
+<p>nacos</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616171259425.png" alt="image-20240616171259425"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">--name nacos \
+</span></span><span class="line"><span class="cl">--env-file ./nacos/custom.env \
+</span></span><span class="line"><span class="cl">-p 8848:8848 \
+</span></span><span class="line"><span class="cl">-p 9848:9848 \
+</span></span><span class="line"><span class="cl">-p 9849:9849 \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">nacos/nacos-server:v2.1.0-slim
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>访问</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://172.30.195.141:8848/nacos/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616212114523.png" alt="image-20240616212114523"></p>
+<p>导入依赖</p>
+<p>添加配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="kd">final</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">private</span> <span class="kd">final</span> <span class="n">DiscoveryClient</span> <span class="n">discoveryClient</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">List</span><span class="o">&lt;</span><span class="n">ServiceInstance</span><span class="o">&gt;</span> <span class="n">instances</span> <span class="o">=</span> <span class="n">discoveryClient</span><span class="o">.</span><span class="na">getInstances</span><span class="o">(</span><span class="s">&#34;item-service&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="o">(</span><span class="n">CollUtil</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">instances</span><span class="o">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//2.2从实例列表中获取一个服务
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">ServiceInstance</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">instances</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">RandomUtil</span><span class="o">.</span><span class="na">randomInt</span><span class="o">(</span><span class="n">instances</span><span class="o">.</span><span class="na">size</span><span class="o">()));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//2.1利用restTemplate发起http请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">ItemDTO</span><span class="o">&gt;&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">exchange</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">instance</span><span class="o">.</span><span class="na">getUri</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;/items?ids={ids}&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">HttpMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="kc">null</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">ParameterizedTypeReference</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">ItemDTO</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="o">},</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Map</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&#34;ids&#34;</span><span class="o">,</span> <span class="n">CollUtil</span><span class="o">.</span><span class="na">join</span><span class="o">(</span><span class="n">itemIds</span><span class="o">,</span> <span class="s">&#34;,&#34;</span><span class="o">))</span>
+</span></span><span class="line"><span class="cl">        <span class="o">);</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="openfeign">OpenFeign</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616214937749.png" alt="image-20240616214937749"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20240616215808134.png" alt="image-20240616215808134"></p>
+<h2 id="连接池">连接池</h2>
+<p>okhttp</p>
+<h2 id="抽取公共服务">抽取公共服务</h2>
+<p>hm-api</p>
+<p>在需要用到的模块的pon里引入hm-api模块</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@EnableFeignClients(basePackages = &#34;com.hmall.api.client&#34;)
+</span></span></code></pre></td></tr></table>
+</div>
 </div>
     </div>
 
@@ -417,13 +543,13 @@
 <footer class="post-footer">
       
       <nav class="post-nav">
-        <a class="prev" href="/post/31.git%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA/">
+        <a class="prev" href="/post/29.docker%E4%BD%BF%E7%94%A8/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">git仓库搭建</span>
+            <span class="prev-text nav-default">1111</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/30.docker%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8/">
-            <span class="next-text nav-default">docker微服务</span>
+        <a class="next" href="/post/28.java-stream%E6%B5%81/">
+            <span class="next-text nav-default">Java Stream流</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

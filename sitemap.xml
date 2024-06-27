@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://xiaoyume.github.io/post/31.git%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2024-06-27T09:58:45+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/post/</loc>
+    <lastmod>2024-06-27T09:58:45+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/</loc>
+    <lastmod>2024-06-27T09:58:45+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://xiaoyume.github.io/post/29.docker%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2024-06-15T15:38:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -9,21 +30,7 @@
   </url>
   
   <url>
-    <loc>https://xiaoyume.github.io/post/29.docker%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8/</loc>
-    <lastmod>2024-06-15T15:38:26+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://xiaoyume.github.io/post/</loc>
-    <lastmod>2024-06-15T15:38:26+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://xiaoyume.github.io/</loc>
+    <loc>https://xiaoyume.github.io/post/30.docker%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2024-06-15T15:38:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
