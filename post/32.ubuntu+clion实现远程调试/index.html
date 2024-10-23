@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="xiaoyume" /><meta name="description" content="1231" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="xiaoyume" /><meta name="description" content="1、JDK11安装 编译jdk12需要使用jdk11作为编译 环境说明： windows11 WSL &#43; Ubuntu 22.04.5 LTS 切换root用户 1 su apt安装openjdk-11-jdk 1" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -40,18 +40,18 @@
 
 
 <meta property="og:title" content="Ubuntu&#43;CLion实现远程调试" />
-<meta property="og:description" content="1231" />
+<meta property="og:description" content="1、JDK11安装 编译jdk12需要使用jdk11作为编译 环境说明： windows11 WSL &#43; Ubuntu 22.04.5 LTS 切换root用户 1 su apt安装openjdk-11-jdk 1" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xiaoyume.github.io/post/32.ubuntu&#43;clion%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-10-23T18:02:24+08:00" />
 <meta property="article:modified_time" content="2024-10-23T18:02:24+08:00" />
 <meta itemprop="name" content="Ubuntu&#43;CLion实现远程调试">
-<meta itemprop="description" content="1231"><meta itemprop="datePublished" content="2024-10-23T18:02:24+08:00" />
+<meta itemprop="description" content="1、JDK11安装 编译jdk12需要使用jdk11作为编译 环境说明： windows11 WSL &#43; Ubuntu 22.04.5 LTS 切换root用户 1 su apt安装openjdk-11-jdk 1"><meta itemprop="datePublished" content="2024-10-23T18:02:24+08:00" />
 <meta itemprop="dateModified" content="2024-10-23T18:02:24+08:00" />
-<meta itemprop="wordCount" content="1">
+<meta itemprop="wordCount" content="2237">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Ubuntu&#43;CLion实现远程调试"/>
-<meta name="twitter:description" content="1231"/>
+<meta name="twitter:description" content="1、JDK11安装 编译jdk12需要使用jdk11作为编译 环境说明： windows11 WSL &#43; Ubuntu 22.04.5 LTS 切换root用户 1 su apt安装openjdk-11-jdk 1"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -129,8 +129,8 @@
       <div class="post-meta">
         <span class="post-time"> 2024-10-23 </span>
         
-          <span class="more-meta"> 约 1 字 </span>
-          <span class="more-meta"> 预计阅读 1 分钟 </span>
+          <span class="more-meta"> 约 2237 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -140,13 +140,461 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#1231">1231</a></li>
+    <li><a href="#heading"></a></li>
+    <li><a href="#1jdk11安装">1、JDK11安装</a></li>
+    <li><a href="#2jdk12编译">2、jdk12编译</a>
+      <ul>
+        <li><a href="#1获取源码">1.获取源码</a></li>
+        <li><a href="#2安装依赖库">2.安装依赖库</a>
+          <ul>
+            <li><a href="#问题处理">问题处理</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#3clion配置">3、CLion配置</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h1 id="1231">1231</h1>
+      <h1 id="heading"></h1>
+<h1 id="1jdk11安装">1、JDK11安装</h1>
+<p>编译jdk12需要使用jdk11作为编译</p>
+<p>环境说明：</p>
+<ul>
+<li>
+<p>windows11</p>
+</li>
+<li>
+<p>WSL + Ubuntu 22.04.5 LTS</p>
+</li>
+</ul>
+<p>切换root用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">su
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>apt安装openjdk-11-jdk</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apt-get install openjdk-11-jdk
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置java环境变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vim /etc/profile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>追加文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64  
+</span></span><span class="line"><span class="cl">export PATH=${JAVA_HOME}/bin:$PATH
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>激活配置文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">source /etc/profile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以使用<code>echo $PATH</code>查看是否生效</p>
+<h1 id="2jdk12编译">2、jdk12编译</h1>
+<h2 id="1获取源码">1.获取源码</h2>
+<p>使用mercurial获取源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apt install mercurial
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>clone源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hg clone https://hg.openjdk.java.net/jdk/jdk12
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2安装依赖库">2.安装依赖库</h2>
+<p>安装gcc 和 g++</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apt-get install -y build-essential
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>切换gcc版本，默认安装是gcc11</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># ubuntu软件源配置文件
+</span></span><span class="line"><span class="cl">gedit /etc/apt/sources.list
+</span></span><span class="line"><span class="cl"># 向文件中添加如下代码,追加一个软件源
+</span></span><span class="line"><span class="cl">deb [arch=amd64] http://archive.ubuntu.com/ubuntu focal main universe
+</span></span><span class="line"><span class="cl"># 更新源文件
+</span></span><span class="line"><span class="cl">apt-get update
+</span></span><span class="line"><span class="cl"># 安装 gcc-7 g++-7
+</span></span><span class="line"><span class="cl">apt-get -y install gcc-7 g++-7
+</span></span><span class="line"><span class="cl"># 多版本管理 最后的数字越大，优先级越高,设置完成后默认是版本7
+</span></span><span class="line"><span class="cl">update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 50
+</span></span><span class="line"><span class="cl">update-alternatives  --install /usr/bin/g++ g++ /usr/bin/g++-7 50
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 30
+</span></span><span class="line"><span class="cl">update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 30
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看当前版本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">update-alternatives --config gcc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023182931000.png" alt="image-20241023182931000"></p>
+<p>安装其它依赖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apt-get install -y libfreetype6-dev
+</span></span><span class="line"><span class="cl">apt-get install -y libcups2-dev
+</span></span><span class="line"><span class="cl">apt-get install -y libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev
+</span></span><span class="line"><span class="cl">apt-get install -y libasound2-dev
+</span></span><span class="line"><span class="cl">apt-get install -y libffi-dev
+</span></span><span class="line"><span class="cl">apt-get install -y autoconf
+</span></span><span class="line"><span class="cl">apt-get install -y libfontconfig1-dev
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="问题处理">问题处理</h3>
+<p>make 版本问题的处理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Building target &#39;images&#39; in configuration &#39;linux-x86_64-server-fastdebug&#39;
+</span></span><span class="line"><span class="cl">gmake[3]: *** 没有规则可制作目标“/home/gx/sourcecode/jdk/build/linux-x86_64-server-fastdebug/buildtools/langtools_tools_classes/_the.BUILD_TOOLS_LANGTOOLS.vardeps”，由“/home/gx/sourcecode/jdk/build/linux-x86_64-server-fastdebug/buildtools/langtools_tools_classes/_the.BUILD_TOOLS_LANGTOOLS_batch” 需求。 停止。
+</span></span><span class="line"><span class="cl">gmake[3]: *** 正在等待未完成的任务....
+</span></span><span class="line"><span class="cl">gmake[2]: *** [make/Main.gmk:73：buildtools-langtools] 错误 2
+</span></span><span class="line"><span class="cl">gmake[2]: *** 正在等待未完成的任务....
+</span></span><span class="line"><span class="cl">gmake[3]: *** 没有规则可制作目标“/home/gx/sourcecode/jdk/build/linux-x86_64-server-fastdebug/make-support/vardeps/make/ModuleWrapper.gmk/java.base/ORDERED_CFG_VARIANTS.vardeps”，由“/home/gx/sourcecode/jdk/build/linux-x86_64-server-fastdebug/support/modules_libs/java.base/jvm.cfg” 需求。 停止。
+</span></span><span class="line"><span class="cl">gmake[3]: *** 正在等待未完成的任务....
+</span></span><span class="line"><span class="cl">gmake[2]: *** [make/Main.gmk:162：java.base-copy] 错误 2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ERROR: Build failed for target &#39;images&#39; in configuration &#39;linux-x86_64-server-fastdebug&#39; (exit code 2) 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">No indication of failed target found.
+</span></span><span class="line"><span class="cl">Hint: Try searching the build log for &#39;] Error&#39;.
+</span></span><span class="line"><span class="cl">Hint: See doc/building.html#troubleshooting for assistance.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">make[1]: *** [/home/gx/sourcecode/jdk/make/Init.gmk:310：main] 错误 2
+</span></span><span class="line"><span class="cl">make: *** [/home/gx/sourcecode/jdk/make/Init.gmk:186：images] 错误 2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>出现上面这个问题就是make版本的问题，默认是4.3</p>
+<p>需要修改<code>make/common/MakeBase.gmk</code>，在文件的末尾位置上一点</p>
+<p>修改前</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Does the actual work with parameters stripped.
+</span></span><span class="line"><span class="cl"># If the file exists AND the contents is the same as the variable, do nothing
+</span></span><span class="line"><span class="cl"># else print a new file.
+</span></span><span class="line"><span class="cl"># Always returns the name of the file where the value was printed.
+</span></span><span class="line"><span class="cl"># Param 1 - Name of variable
+</span></span><span class="line"><span class="cl"># Param 2 - (optional) name of file to store value in
+</span></span><span class="line"><span class="cl">DependOnVariableHelper = \
+</span></span><span class="line"><span class="cl">    $(strip \
+</span></span><span class="line"><span class="cl">        $(eval -include $(call DependOnVariableFileName, $1, $2)) \
+</span></span><span class="line"><span class="cl">        $(if $(call equals, $(strip $($1)), $(strip $($1_old))),,\
+</span></span><span class="line"><span class="cl">          $(call MakeDir, $(dir $(call DependOnVariableFileName, $1, $2))) \
+</span></span><span class="line"><span class="cl">          $(if $(findstring $(LOG_LEVEL), trace), \
+</span></span><span class="line"><span class="cl">              $(info NewVariable $1: &gt;$(strip $($1))&lt;) \
+</span></span><span class="line"><span class="cl">              $(info OldVariable $1: &gt;$(strip $($1_old))&lt;)) \
+</span></span><span class="line"><span class="cl">          $(call WriteFile, $1_old:=$(call DoubleDollar,$(call EscapeHash,$($1))), \
+</span></span><span class="line"><span class="cl">              $(call DependOnVariableFileName, $1, $2))) \
+</span></span><span class="line"><span class="cl">        $(call DependOnVariableFileName, $1, $2) \
+</span></span><span class="line"><span class="cl">    )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改后</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Does the actual work with parameters stripped.
+</span></span><span class="line"><span class="cl"># If the file exists AND the contents is the same as the variable, do nothing
+</span></span><span class="line"><span class="cl"># else print a new file.
+</span></span><span class="line"><span class="cl"># Always returns the name of the file where the value was printed.
+</span></span><span class="line"><span class="cl"># Param 1 - Name of variable
+</span></span><span class="line"><span class="cl"># Param 2 - (optional) name of file to store value in
+</span></span><span class="line"><span class="cl">DependOnVariableHelper = \
+</span></span><span class="line"><span class="cl">    $(strip \
+</span></span><span class="line"><span class="cl">        $(eval $1_filename := $(call DependOnVariableFileName, $1, $2)) \
+</span></span><span class="line"><span class="cl">        $(if $(wildcard $($1_filename)), $(eval include $($1_filename))) \
+</span></span><span class="line"><span class="cl">        $(if $(call equals, $(strip $($1)), $(strip $($1_old))),,\
+</span></span><span class="line"><span class="cl">          $(call MakeDir, $(dir $($1_filename))) \
+</span></span><span class="line"><span class="cl">          $(if $(findstring $(LOG_LEVEL), trace), \
+</span></span><span class="line"><span class="cl">              $(info NewVariable $1: &gt;$(strip $($1))&lt;) \
+</span></span><span class="line"><span class="cl">              $(info OldVariable $1: &gt;$(strip $($1_old))&lt;)) \
+</span></span><span class="line"><span class="cl">          $(call WriteFile, $1_old:=$(call DoubleDollar,$(call EscapeHash,$($1))), \
+</span></span><span class="line"><span class="cl">              $($1_filename))) \
+</span></span><span class="line"><span class="cl">        $($1_filename) \
+</span></span><span class="line"><span class="cl">    )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行configure</p>
+<p>在jdk<strong>源码根</strong>目录下面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">bash configure --enable-debug --with-jvm-variants=server --disable-warnings-as-errors
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果执行成功，会看到类似下面的输出内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">====================================================
+</span></span><span class="line"><span class="cl">A new configuration has been successfully created in
+</span></span><span class="line"><span class="cl">/home/gx/sourcecode/jdk/build/linux-x86_64-server-fastdebug
+</span></span><span class="line"><span class="cl">using configure arguments &#39;--enable-debug --with-jvm-variants=server --disable-warnings-as-errors&#39;.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Configuration summary:
+</span></span><span class="line"><span class="cl">* Debug level:    fastdebug
+</span></span><span class="line"><span class="cl">* HS debug level: fastdebug
+</span></span><span class="line"><span class="cl">* JVM variants:   server
+</span></span><span class="line"><span class="cl">* JVM features:   server: &#39;aot cds cmsgc compiler1 compiler2 epsilongc g1gc graal jfr jni-check jvmci jvmti management nmt parallelgc serialgc services shenandoahgc vm-structs zgc&#39; 
+</span></span><span class="line"><span class="cl">* OpenJDK target: OS: linux, CPU architecture: x86, address length: 64
+</span></span><span class="line"><span class="cl">* Version string: 12-internal+0-adhoc.gx.jdk (12-internal)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Tools summary:
+</span></span><span class="line"><span class="cl">* Boot JDK:       openjdk version &#34;11.0.16&#34; 2022-07-19 OpenJDK Runtime Environment (build 11.0.16+8-post-Ubuntu-0ubuntu122.04) OpenJDK 64-Bit Server VM (build 11.0.16+8-post-Ubuntu-0ubuntu122.04, mixed mode, sharing)  (at /usr/lib/jvm/java-11-openjdk-amd64)
+</span></span><span class="line"><span class="cl">* Toolchain:      gcc (GNU Compiler Collection)
+</span></span><span class="line"><span class="cl">* C Compiler:     Version 7.5.0 (at /usr/bin/gcc)
+</span></span><span class="line"><span class="cl">* C++ Compiler:   Version 7.5.0 (at /usr/bin/g++)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Build performance summary:
+</span></span><span class="line"><span class="cl">* Cores to use:   2
+</span></span><span class="line"><span class="cl">* Memory limit:   3889 MB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>多次编译，需要清除上次编译记录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">make clean &amp;&amp; make dist-clean
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行make</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">make images
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编译成功后可以使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./build/linux-x86_64-server-fastdebug/jdk/bin/java --version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023184443829.png" alt="image-20241023184443829"></p>
+<p>代表编译成功</p>
+<h1 id="3clion配置">3、CLion配置</h1>
+<p>新建一个新项目，把生成的文件都删了，留一个<code>cmake-build-debug</code></p>
+<p>配置toolchains,这里选择的wsl，如果是别的服务器选择ssh</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023185438211.png" alt="image-20241023185438211"></p>
+<p>配置deployment</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023185559166.png" alt="image-20241023185559166"></p>
+<p>注意wsl的ip可以直接使用localhost，如果是ssh，使用ip即可</p>
+<p>文件夹映射，本机项目文件夹到服务器项目文件夹，后续需要把服务器代码同步过来</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023185656193.png" alt="image-20241023185656193"></p>
+<p>设置excluded paths</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023185752018.png" alt="image-20241023185752018"></p>
+<p>添加启动配置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023185845731.png" alt="image-20241023185845731"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tcp:localhost:1234
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>wsl可以使用localhost进行连接，1234是服务器gdbserver启动设置的端口号</p>
+<p>服务器安装gdb和gdbserver</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apt install gdb
+</span></span><span class="line"><span class="cl">apt install gdbserver
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装完成后可以使用gdbservber启动程序，</p>
+<p>例如，这里只是调用一下java -version，程序会监听1234端口，后续可以在clion里开启调试</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gdbserver :1234 ./build/linux-x86_64-server-fastdebug/jdk/bin/java -version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以在</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">src/java.base/share/native/libjli/java.c
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>JavaMain函数里打一个断点</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023190427292.png" alt="image-20241023190427292"></p>
+<p>点击启动debug,</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023190509760.png" alt="image-20241023190509760"></p>
+<p>等待连接，这个过程需要一点时间，耐心等待</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoyume/bpic@main/img/image-20241023190602504.png" alt="image-20241023190602504"></p>
+<p>成功进入代码调试。</p>
 
     </div>
 

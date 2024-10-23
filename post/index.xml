@@ -13,7 +13,7 @@
       <pubDate>Wed, 23 Oct 2024 18:02:24 +0800</pubDate>
       
       <guid>https://xiaoyume.github.io/post/32.ubuntu&#43;clion%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/</guid>
-      <description>1231</description>
+      <description>1、JDK11安装 编译jdk12需要使用jdk11作为编译 环境说明： windows11 WSL + Ubuntu 22.04.5 LTS 切换root用户 1 su apt安装openjdk-11-jdk 1</description>
     </item>
     
     <item>
