@@ -2,21 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://xiaoyume.github.io/post/31.git%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2024-06-27T09:58:45+08:00</lastmod>
+    <loc>https://xiaoyume.github.io/post/</loc>
+    <lastmod>2024-10-23T18:02:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaoyume.github.io/post/</loc>
-    <lastmod>2024-06-27T09:58:45+08:00</lastmod>
+    <loc>https://xiaoyume.github.io/post/32.ubuntu&#43;clion%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/</loc>
+    <lastmod>2024-10-23T18:02:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaoyume.github.io/</loc>
+    <lastmod>2024-10-23T18:02:24+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaoyume.github.io/post/31.git%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2024-06-27T09:58:45+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
